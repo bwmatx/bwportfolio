@@ -570,8 +570,8 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* Hero Section */
-        .hero {
+        /* Main Section */
+        .main {
             min-height: 90vh;
             display: flex;
             align-items: center;
@@ -582,7 +582,7 @@
             overflow: hidden;
         }
 
-        .hero::before {
+        .main::before {
             content: '';
             position: absolute;
             top: 0;
@@ -594,11 +594,11 @@
             transition: background 0.3s ease;
         }
 
-        body.dark-mode .hero::before {
+        body.dark-mode .main::before {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
         }
 
-        .hero::after {
+        .main::after {
             content: '';
             position: absolute;
             top: 0;
@@ -612,24 +612,24 @@
             transition: filter 0.3s ease, opacity 0.3s ease;
         }
 
-        body.dark-mode .hero::after {
+        body.dark-mode .main::after {
             filter: blur(4px) brightness(0.6);
         }
 
-        /* Page-specific hero backgrounds */
-        #wedding-page .hero::after {
+        /* Page-specific main backgrounds */
+        #wedding-page .main::after {
             background-image: url('https://ik.imagekit.io/bwindonesiaimg/wedding.jpg?updatedAt=1761710383526');
         }
 
-        #graduation-page .hero::after {
+        #graduation-page .main::after {
             background-image: url('https://ik.imagekit.io/bwindonesiaimg/Graduation%20Photoshoot.jpg?updatedAt=1761711445714');
         }
 
-        #graphic-design-page .hero::after {
+        #graphic-design-page .main::after {
             background-image: url('https://ik.imagekit.io/bwindonesiaimg/graphic%20Design.jpg?updatedAt=1761710872159');
         }
 
-        .hero-content {
+        .main-content {
             animation: fadeInUp 0.8s ease-out;
             position: relative;
             z-index: 1;
@@ -646,7 +646,7 @@
             }
         }
 
-        .hero h1 {
+        .main h1 {
             font-size: 56px;
             font-weight: 700;
             margin-bottom: 20px;
@@ -656,7 +656,7 @@
             background-clip: text;
         }
 
-        .hero p {
+        .main p {
             font-size: 20px;
             color: #ffffff;
             margin-bottom: 40px;
