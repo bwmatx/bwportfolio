@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Portfolio - BW Indonesia</title>
+    <link rel="stylesheet" href="css/style.css">
+<body class="loading">
+    <!-- Loading Screen with Line Progress Bar -->
+    <div id="loadingScreen">
+        <div class="loading-percentage" id="loadingPercentage">0%</div>
+        <div class="progress-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <div class="loading-text">Loading Wedding Portfolio...</div>
+    </div>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle visible" id="darkModeToggle" data-tooltip="Toggle Dark Mode" aria-label="Toggle dark mode">
+        <svg class="icon sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <svg class="icon moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Khurniawan Adhi Wibowo</a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+                <div class="mobile-menu" id="mobileMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Wedding Portfolio</h1>
+                <p>Mengabadikan Setiap Momen Terbaik dalam Perjalanan Cinta Anda. Dari Persiapan hingga Pesta, Kami Hadirkan Cerita Visual yang Tak Terlupakan.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="ceremony">Akad & Pemberkatan</button>
+                <button class="filter-btn" data-filter="reception">Resepsi</button>
+                <button class="filter-btn" data-filter="candid">Candid Moments</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery scroll-animate">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item" data-category="ceremony">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/akad%20nikah.jpg?updatedAt=1761833065243" alt="Bride and groom exchanging vows during sacred wedding ceremony with emotional expressions and elegant traditional attire">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Akad Nikah Sakral</h3>
+                            <p>Momen ijab kabul yang penuh haru</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Ceremony</span>
+                                <span class="tag">Traditional</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item" data-category="reception">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose.jpg?updatedAt=1761833065788" alt="Elegant wedding reception hall decorated with luxurious floral arrangements crystal chandeliers and romantic lighting">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Pose Romantis Outdoor</h3>
+                            <p>Momen untuk Pengantin sebagai pemanis Album</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Pose</span>
+                                <span class="tag">Outdoor Pose</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item" data-category="candid">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid.JPG?updatedAt=1761833988385" alt="Natural candid moment of bride laughing joyfully while surrounded by bridesmaids in matching pastel colored dresses">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Candid Saat Make Up</h3>
+                            <p>Kecantikan yang terpancar alami</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Candid</span>
+                                <span class="tag">Emotion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item" data-category="ceremony">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/tukar%20cincin.jpg?updatedAt=1761833065526" alt="Couple exchanging wedding rings during ceremony with close up detail shot showing emotional hands and elegant rings">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Pertukaran Cincin</h3>
+                            <p>Detail momen yang penuh makna</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Ceremony</span>
+                                <span class="tag">Detail</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item" data-category="reception">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose%202.JPG?updatedAt=1761833065168" alt="Bride and groom cutting elegant multi tiered white wedding cake decorated with fresh flowers at reception celebration">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Resepsi Pose</h3>
+                            <p>Momen manis yang tak terlupakan</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Pose</span>
+                                <span class="tag">Celebration</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item" data-category="candid">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid%203.jpg?updatedAt=1761833988040" alt="Groom wiping tears of joy from brides eyes during emotional first look moment with soft natural lighting">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Upacara Adat Jawa</h3>
+                            <p>Pasrah Tinampi</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Candid</span>
+                                <span class="tag">Adat Jawa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 7 -->
+                <div class="gallery-item" data-category="reception">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose%203.jpg?updatedAt=1761833065401" alt="Couple sharing first dance at wedding reception under sparkling disco ball with romantic lighting and guests watching">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>First Dance</h3>
+                            <p>Tarian pertama sebagai pasangan suami istri</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Reception</span>
+                                <span class="tag">Pose</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 8 -->
+                <div class="gallery-item" data-category="ceremony">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/restu%20orang%20tua.jpg?updatedAt=1761833065825" alt="Family blessing ceremony with parents giving emotional prayers to newlywed couple in traditional cultural wedding attire">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Restu Orangtua</h3>
+                            <p>Doa dan restu dari kedua orangtua</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Ceremony</span>
+                                <span class="tag">Family</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 9 -->
+                <div class="gallery-item" data-category="candid">
+                    <div class="gallery-image">
+                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid%202.jpg?updatedAt=1761833987954" alt="Flower girl and ring bearer walking down wedding aisle with adorable innocent expressions holding basket and pillow">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Candid Akad</h3>
+                            <p>Haru pengantin wanita</p>
+                            <div class="gallery-tags">
+                                <span class="tag">Candid</span>
+                                <span class="tag">Akad</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">×</button>
+            <img src="" alt="Wedding photo in full screen view with high resolution detail" id="lightboxImage">
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 12</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://www.youtube.com/@bwmatx" title="Youtube" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="Youtube logo in red and white representing video sharing platform" style="width: 24px; height: 24px; object-fit: contain;">
+                </a>
+                <a href="https://www.tiktok.com/@bw_matx" title="Tiktok" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Tiktok_icon.svg/2048px-Tiktok_icon.svg.png" alt="TikTok logo in black and cyan colors representing short form video platform" style="width: 24px; height: 24px; object-fit: contain;">
+                </a>
+                <a href="https://www.instagram.com/bw_matx/" title="Instagram" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1200px-Instagram_icon.png" alt="Instagram logo with colorful gradient representing photo sharing social media" style="width: 24px; height: 24px; object-fit: contain;">
+                </a>
+            </div>
+            <p>© 2025 Wedding Portfolio. Credit by Awan</p>
+        </div>
+    </footer>
+
+    <script src="js/wedding.js"></script>
+</body>
+</html>
