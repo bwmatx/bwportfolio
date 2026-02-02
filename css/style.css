@@ -677,6 +677,7 @@
             border: 2px solid transparent;
             cursor: pointer;
             font-size: 16px;
+            margin-top: 20px;
         }
 
         .btn-primary {
@@ -731,6 +732,16 @@
             display: inline-block;
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        .about-text {
+            text-align: center;
+        }
+
+        .about.btn {
+            display: inline-block;
+            margin: 20px auto 0 auto;
+            width: fit-content;
         }
 
         .section-title::after {
@@ -814,7 +825,7 @@
         /* Skills */
         .skills {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             margin-top: 30px;
         }
@@ -841,6 +852,14 @@
         .skill-item h4 {
             font-size: 16px;
             color: var(--text-color);
+        }
+        @media (max-width: 768px) {
+            .skills {
+                grid-template-columns: (2, 1fr);
+            }
+            .skill-item {
+                padding: 20px;
+            }
         }
 
         /* Language Skills Section */
@@ -1372,110 +1391,6 @@
             color: white;
             border-color: var(--primary-color);
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        /* Gallery Section */
-        .gallery {
-            padding: 80px 0;
-            background: var(--bg-color);
-            transition: background-color 0.3s ease;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            animation: fadeInScale 0.6s ease-out;
-            animation-fill-mode: both;
-            background: white;
-        }
-
-        body.dark-mode .gallery-item {
-            background: var(--card-bg);
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Wedding & Graduation galleries: Variable aspect ratio */
-        #wedding-page .gallery-image,
-        #graduation-page .gallery-image {
-            width: 100%;
-            padding-bottom: 100%; /* 1:1 square */
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Graphic Design gallery: 4:5 Portrait ratio (1080x1350) */
-        #graphic-design-page .gallery-image {
-            width: 100%;
-            padding-bottom: 125%; /* 1350/1080 = 1.25 = 125% */
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gallery-image img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover .gallery-image img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 25px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-info h3 {
-            color: white;
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .gallery-info p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
-
-        .gallery-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
         }
 
         /* Lightbox Modal */
@@ -2851,4 +2766,87 @@
         .scroll-animate.active {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Graduaition BG */
+        .head {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .head::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(30, 64, 175, 0.05) 100%);
+            z-index: -1;
+            transition: background 0.3s ease;
+        }
+
+        body.dark-mode .head::before {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+        }
+
+        .head::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://ik.imagekit.io/bwindonesiaimg/Graduation%20Photoshoot.jpg?updatedAt=1761711445714') center/cover no-repeat;
+            filter: blur(4px);
+            z-index: -2;
+            background-attachment: fixed;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+
+        body.dark-mode .head::after {
+            filter: blur(4px) brightness(0.6);
+        }
+
+        .head-content {
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .head h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .head p {
+            font-size: 20px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
