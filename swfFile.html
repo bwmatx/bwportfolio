@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas UAS - Khurniawan Adhi Wibowo</title>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle@latest"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif; /* Font minimalis */
+        }
+        #swf-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1; /* Di bawah header */
+        }
+        .head {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white; /* Warna teks putih untuk kontras */
+            z-index: 10000; /* Di atas SWF */
+            background: rgba(0, 0, 0, 0.7); /* Background semi-transparan hitam agar tidak tumpang tindih visual */
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 10px; /* Ukuran font lebih kecil untuk minimalis */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        .head h1, .head h2 {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tempat di mana SWF akan diputar -->
+    <div id="swf-container"></div>
+    <div class="head">
+        <h1>Tugas UAS - Khurniawan Adhi Wibowo <BR> NIM : 1122080180</BR></h1> 
+    </div>
+
+    <script>
+      // Nama file SWF yang akan dimuat
+      const swfFile = "swf/ramadantime.swf"; // Pastikan nama file benar
+      
+      // Inisialisasi ruffle player
+      const ruffle = window.RufflePlayer.newest();
+      const player = ruffle.createPlayer();
+      
+      // Atur ukuran player agar full screen
+      player.style.width = '100%';
+      player.style.height = '100%';
+      
+      // Tempatkan player di div dengan id swf-container
+      document.getElementById("swf-container").appendChild(player);
+      
+      // Memuat file SWF
+      player.load({ url: swfFile });
+    </script>
+</body>
+</html>
