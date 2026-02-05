@@ -416,32 +416,27 @@
         });
 
         // ============================================
-        // LANGUAGE SKILLS ANIMATION
-        // ============================================
-        
-        const languageObserverOptions = {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
-        };
+// LANGUAGE SKILLS ANIMATION
+// ============================================
 
-        const languageObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
-                    entry.target.classList.add('animate');
-                    
-                    const progressBar = entry.target.querySelector('.progress-bar');
-                    const progressWidth = entry.target.getAttribute('data-progress');
-                    
-                    setTimeout(() => {
-                        progressBar.style.width = progressWidth + '%';
-                    }, 100);
-                }
-            });
-        }, languageObserverOptions);
+const languageObserverOptions = {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+};
 
-        document.querySelectorAll('.language-item').forEach(item => {
-            languageObserver.observe(item);
-        });
+const languageObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
+            entry.target.classList.add('animate');
+            
+            // No progress bar animation needed anymore
+        }
+    });
+}, languageObserverOptions);
+
+document.querySelectorAll('.language-item').forEach(item => {
+    languageObserver.observe(item);
+});
 
         // ============================================
         // FILTER FUNCTIONALITY (GALLERY PAGES)
