@@ -249,6 +249,47 @@
         .modal-btn-cancel { background: #f3f4f6; color: #374151; }
         .modal-btn-cancel:hover { background: #e5e7eb; }
         .modal-btn-cancel:active { background: #d1d5db; }
+
+        /* === JOKER OVERLAY (KOBONG) === */
+        .joker-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        .joker-content {
+            animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .joker-content img {
+            max-width: 90vw;
+            max-height: 55vh;
+            border-radius: 16px;
+            /* Glow removed to blend with back screen */
+            box-shadow: none; 
+        }
+        .joker-content h2 {
+            color: #ffffff;
+            margin-top: 25px;
+            font-size: 26px;
+            font-weight: 900;
+            text-shadow: 2px 2px 8px #000000;
+            text-align: center;
+        }
+        .joker-btn {
+            margin-top: 20px;
+            background: var(--danger);
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
@@ -259,6 +300,15 @@
             <h3 id="modal-title">Konfirmasi</h3>
             <p id="modal-message">Pesan dialog</p>
             <div class="modal-actions" id="modal-actions"></div>
+        </div>
+    </div>
+
+    <!-- JOKER KOBONG UI -->
+    <div id="joker-overlay" class="joker-overlay">
+        <div class="joker-content">
+            <img src="https://ik.imagekit.io/bwindonesiaimg/Remi/joker.gif" alt="Joker Kobong">
+            <h2 id="joker-text">Selamat Anda Kobong/Di Gedik Yoker!</h2>
+            <button class="joker-btn" onclick="document.getElementById('joker-overlay').style.display='none'">Tutup</button>
         </div>
     </div>
 
@@ -331,13 +381,13 @@
         function renderSetup() {
             app.innerHTML = `
                 <div class="card">
-                    <h1>Setup Permainan</h1>
-                    <p class="subtitle">Atur jumlah dan nama pemain</p>
+                    <h1>REMI YOKER</h1>
+                    <p class="subtitle">Atur jumlah dan nama player</p>
                     <div class="form-group">
-                        <label>Jumlah Pemain</label>
+                        <label>Jumlah Player</label>
                         <select id="sel-players" onchange="updateSetupInputs()">
-                            <option value="3" ${state.numPlayers === 3 ? 'selected' : ''}>3 Pemain</option>
-                            <option value="4" ${state.numPlayers === 4 ? 'selected' : ''}>4 Pemain</option>
+                            <option value="3" ${state.numPlayers === 3 ? 'selected' : ''}>3 Player</option>
+                            <option value="4" ${state.numPlayers === 4 ? 'selected' : ''}>4 Player</option>
                         </select>
                     </div>
                     <div id="player-inputs"></div>
@@ -352,10 +402,8 @@
             state.numPlayers = num;
             const container = document.getElementById('player-inputs');
             
-            // === KONFIGURASI NAMA DEFAULT / PLACEHOLDER ===
-            // Ganti nama di bawah ini dengan nama yang Anda inginkan
             const defaultNames = {
-                1: "Bowo", // Ganti "Pemain 1" dengan nama sebenarnya, misal "Budi"
+                1: "Bowo",
                 2: "Solebo",
                 3: "Dani",
                 4: "Kaisar Wondo"
@@ -366,7 +414,7 @@
                 let pName = defaultNames[i] || `Pemain ${i}`;
                 html += `
                     <div class="form-group">
-                        <label>Nama Pemain ${i}</label>
+                        <label>Player ${i}</label>
                         <input type="text" id="pname-${i}" placeholder="${pName}" value="${pName}">
                     </div>
                 `;
@@ -375,14 +423,11 @@
         }
 
         function startGame() {
-            // === KONFIGURASI LINK AVATAR KUSTOM ===
-            // Isi string kosong ("") di bawah ini dengan link gambar yang Anda inginkan
-            // Contoh: "https://i.imgur.com/contoh_gambar.png"
             const customAvatars = {
-                1: "https://ik.imagekit.io/bwindonesiaimg/bw", // Link Avatar Pemain 1
-                2: "https://ik.imagekit.io/bwindonesiaimg/solebo", // Link Avatar Pemain 2
-                3: "https://ik.imagekit.io/bwindonesiaimg/dani", // Link Avatar Pemain 3
-                4: "https://ik.imagekit.io/bwindonesiaimg/wondo"  // Link Avatar Pemain 4
+                1: "https://ik.imagekit.io/bwindonesiaimg/bw", 
+                2: "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                3: "https://ik.imagekit.io/bwindonesiaimg/dani", 
+                4: "https://ik.imagekit.io/bwindonesiaimg/wondo"  
             };
 
             state.players = [];
@@ -390,8 +435,6 @@
             for (let i = 1; i <= state.numPlayers; i++) {
                 let name = document.getElementById(`pname-${i}`).value.trim() || `Pemain ${i}`;
                 let defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=100`;
-                
-                // Gunakan custom avatar jika link diisi, jika kosong/tidak valid gunakan default inisial
                 let avatarUrl = customAvatars[i] && customAvatars[i].trim() !== "" ? customAvatars[i] : defaultAvatar;
 
                 state.players.push({
@@ -423,9 +466,9 @@
 
             app.innerHTML = `
                 <div class="card" style="padding: 15px;">
-                    <h2 style="font-size: 18px; margin-bottom: 15px;">Papan Skor</h2>
+                    <h2 style="font-size: 18px; margin-bottom: 15px;">Score Board</h2>
 
-                    <div class="streak-banner" style="display: ${showStreak}">
+                    <div class="streak-banner" id="streak-banner-ui" style="display: ${showStreak}">
                         ⚠️ ${streakPlayerName} termendo selama ${state.lowestStreak.count} match berturut-turut!
                     </div>
 
@@ -434,7 +477,7 @@
                             let isLowestNow = hasPlayed && (p.total === currentMinTotal);
                             return `
                             <div class="player-col ${isLowestNow ? 'is-lowest' : ''}">
-                                <img src="${p.avatar}" alt="${p.name}" class="player-avatar">
+                                <img src="${p.avatar}" alt="${p.name}" class="player-avatar" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=random&color=fff&size=100'">
                                 <div class="player-name">${p.name}</div>
                                 <div class="player-score" id="score-${p.id}">${p.total}</div>
                                 <div class="score-change" id="change-${p.id}"></div>
@@ -489,6 +532,9 @@
 
         function submitMatch() {
             let inputs = {};
+            let isKobongTriggered = false;
+            let kobongPlayers = [];
+
             for (let p of state.players) {
                 let valStr = document.getElementById(`input-${p.id}`).value;
                 let val = valStr === '' ? 0 : parseInt(valStr);
@@ -497,10 +543,16 @@
                     showModal('Input Tidak Valid', `Poin untuk ${p.name} tidak valid (harus kelipatan 5).`, 'alert');
                     return;
                 }
+                
+                // Cek kondisi Kobong Yoker (Input <= -200)
+                if (val <= -200) {
+                    isKobongTriggered = true;
+                    kobongPlayers.push(p.name);
+                }
+
                 inputs[p.id] = val;
             }
 
-            // Simpan state lama sebelum diupdate
             state.players.forEach(p => {
                 p.prevTotals.push(p.total);
                 p.prevMinusTotals.push(p.minusTotal);
@@ -528,7 +580,6 @@
             let currentTotals = {};
             state.players.forEach(p => currentTotals[p.id] = p.total);
 
-            // Simpan streak lama
             let oldStreak = { ...state.lowestStreak };
 
             state.matchHistory.push({ 
@@ -540,11 +591,19 @@
 
             updateStreak();
 
+            // CEK STREAK 10 UNTUK SELESAI
             if (state.lowestStreak.count >= 10) {
                 triggerGameEnd('rule2', state.lowestStreak.playerId);
                 return;
             }
 
+            // CEK STREAK 5 UNTUK MODAL WARNING
+            if (state.lowestStreak.count === 5) {
+                const streakPlayer = state.players.find(p => p.id === state.lowestStreak.playerId);
+                showModal('TERLALU MENDO', `${streakPlayer.name} sudah MENDO selama 5 kali berturut-turut! Hati-hati jangan sampai CENGOH!`, 'alert');
+            }
+
+            // CEK LIMIT POIN
             let hitLimit = state.players.find(p => p.total >= 1500 || p.total <= -1500);
             if (hitLimit) {
                 triggerGameEnd('rule3');
@@ -553,6 +612,12 @@
 
             renderGame();
             animateChanges(inputs, resetsThisMatch);
+
+            // MUNCULKAN POPUP JOKER JIKA KOBONG
+            if (isKobongTriggered) {
+                document.getElementById('joker-text').textContent = `Si Mendo ${kobongPlayers.join(' & ')} Kobong/Di Gedik Yoker!`;
+                document.getElementById('joker-overlay').style.display = 'flex';
+            }
         }
 
         function updateStreak() {
@@ -573,12 +638,11 @@
             }
         }
 
-        // FUNGSI BARU menggunakan Modal
         function requestDeleteLastMatch() {
             if (state.matchHistory.length === 0) return;
             showModal(
                 'Hapus Match', 
-                'Apakah Anda yakin ingin menghapus hasil match terakhir?', 
+                'Kleru tenan poraaaa?!', 
                 'confirm', 
                 () => { deleteLastMatchConfirmed(); }
             );
@@ -586,20 +650,14 @@
 
         function deleteLastMatchConfirmed() {
             const lastMatch = state.matchHistory.pop();
-
-            // Kembalikan total poin ke poin sebelumnya
             state.players.forEach(p => {
                 p.total = p.prevTotals.pop();
                 p.minusTotal = p.prevMinusTotals.pop();
             });
-
-            // Kembalikan streak ke streak sebelumnya
             state.lowestStreak = { ...lastMatch.oldStreak };
-
             renderGame();
         }
 
-        // FUNGSI BARU menggunakan Modal
         function requestForceEndGame() {
             showModal(
                 'Akhiri Game', 
@@ -609,20 +667,28 @@
             );
         }
 
-        function triggerGameEnd(reason, rule2WinnerId = null) {
+        function triggerGameEnd(reason, rule2LoserId = null) {
             state.screen = 'result';
             state.endReason = reason;
-            let sorted = [...state.players].sort((a, b) => {
-                if (b.total !== a.total) return b.total - a.total;
+            
+            let sortedByTotal = [...state.players].sort((a, b) => {
+                if (b.total !== a.total) return b.total - a.total; 
                 return a.minusTotal - b.minusTotal;
             });
 
+            let sortedByMinus = [...state.players].sort((a, b) => {
+                return b.minusTotal - a.minusTotal; 
+            });
+
             if (reason === 'rule2') {
-                state.winner = state.players.find(p => p.id === rule2WinnerId);
-                state.loser = sorted[0].id === state.winner.id ? sorted[1] : sorted[0]; 
+                state.loser = state.players.find(p => p.id === rule2LoserId);
+                state.winner = sortedByTotal[0].id === state.loser.id ? sortedByTotal[1] : sortedByTotal[0];
             } else {
-                state.winner = sorted[0];
-                state.loser = sorted[sorted.length - 1];
+                state.winner = sortedByTotal[0]; 
+                state.loser = sortedByMinus[0];
+                if (state.winner.id === state.loser.id) {
+                    state.loser = sortedByMinus[1];
+                }
             }
             render();
         }
@@ -645,12 +711,12 @@
 
                     <div style="margin-bottom: 25px; display: flex; gap: 10px; justify-content: center;">
                         <div style="flex: 1; background: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 15px;">
-                            <img src="${state.winner.avatar}" style="width: 50px; height: 50px; border-radius: 50%; margin: 5px auto; border: 2px solid #10b981;">
+                            <img src="${state.winner.avatar}" style="width: 50px; height: 50px; border-radius: 50%; margin: 5px auto; border: 2px solid #10b981;" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(state.winner.name)}&background=random&color=fff&size=100'">
                             <div style="font-weight: bold; color: #10b981; font-size: 14px;">HOKI</div>
                             <div style="font-size: 18px; font-weight: 900; color: #065f46;">${state.winner.name}</div>
                         </div>
                         <div style="flex: 1; background: #fef2f2; border: 1px solid #ef4444; border-radius: 8px; padding: 15px;">
-                            <img src="${state.loser.avatar}" style="width: 50px; height: 50px; border-radius: 50%; margin: 5px auto; border: 2px solid #ef4444;">
+                            <img src="${state.loser.avatar}" style="width: 50px; height: 50px; border-radius: 50%; margin: 5px auto; border: 2px solid #ef4444;" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(state.loser.name)}&background=random&color=fff&size=100'">
                             <div style="font-weight: bold; color: #ef4444; font-size: 14px;">CENGOH</div>
                             <div style="font-size: 18px; font-weight: 900; color: #991b1b;">${state.loser.name}</div>
                         </div>
@@ -660,8 +726,7 @@
                         <thead>
                             <tr>
                                 <th>Pemain</th>
-                                <th style="text-align: center;">Poin</th>
-                                <th style="text-align: center; font-size: 11px;">Minus</th>
+                                <th style="text-align: center;">Poin Akhir</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -669,8 +734,7 @@
                                 let cls = p.id === state.winner.id ? "highlight-win" : p.id === state.loser.id ? "highlight-lose" : "";
                                 return `<tr class="${cls}">
                                     <td style="font-weight: bold;">${p.name}</td>
-                                    <td style="text-align: center; font-weight: 900;">${p.total}</td>
-                                    <td style="text-align: center; color: #ef4444;">-${p.minusTotal}</td>
+                                    <td style="text-align: center; font-weight: 900; font-size: 22px;">${p.total}</td>
                                 </tr>`;
                             }).join('')}
                         </tbody>
@@ -685,15 +749,21 @@
                 let changeEl = document.getElementById(`change-${p.id}`);
                 let scoreEl = document.getElementById(`score-${p.id}`);
                 if (resets.includes(p.id)) {
-                    changeEl.innerHTML = `<span class="text-red">RESET!</span>`;
+                    if(changeEl) changeEl.innerHTML = `<span class="text-red">RESET!</span>`;
                 } else if (inputs[p.id] !== 0) {
                     let isPos = inputs[p.id] > 0;
-                    changeEl.innerHTML = `<span class="${isPos ? 'text-green' : 'text-red'}">${isPos ? '+' : ''}${inputs[p.id]}</span>`;
+                    if(changeEl) changeEl.innerHTML = `<span class="${isPos ? 'text-green' : 'text-red'}">${isPos ? '+' : ''}${inputs[p.id]}</span>`;
                 }
-                scoreEl.classList.remove('animate-pop');
-                void scoreEl.offsetWidth; 
-                scoreEl.classList.add('animate-pop');
-                setTimeout(() => { if(changeEl) changeEl.innerHTML = ''; scoreEl.classList.remove('animate-pop'); }, 1500);
+                
+                if (scoreEl) {
+                    scoreEl.classList.remove('animate-pop');
+                    void scoreEl.offsetWidth; 
+                    scoreEl.classList.add('animate-pop');
+                }
+                setTimeout(() => { 
+                    if(changeEl) changeEl.innerHTML = ''; 
+                    if(scoreEl) scoreEl.classList.remove('animate-pop'); 
+                }, 1500);
             });
         }
 
