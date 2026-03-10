@@ -237,14 +237,27 @@
             max-width: 350px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
         }
         @keyframes modalPop {
             0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+        .modal-avatar-container {
+            margin-bottom: 15px;
+            display: none; /* Hidden by default */
+        }
+        .modal-avatar-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--danger);
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
         .modal-content h3 { margin-top: 0; font-size: 18px; margin-bottom: 8px; }
         .modal-content p { color: #4b5563; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
-        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-actions { display: flex; gap: 10px; justify-content: center; }
         .modal-actions button { width: auto; padding: 10px 18px; font-size: 14px; margin: 0; }
         .modal-btn-cancel { background: #f3f4f6; color: #374151; }
         .modal-btn-cancel:hover { background: #e5e7eb; }
@@ -273,7 +286,6 @@
             max-width: 90vw;
             max-height: 55vh;
             border-radius: 16px;
-            /* Glow removed to blend with back screen */
             box-shadow: none; 
         }
         .joker-content h2 {
@@ -297,6 +309,9 @@
     <!-- CUSTOM MODAL UI -->
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal-content">
+            <div id="modal-avatar-box" class="modal-avatar-container">
+                <img id="modal-avatar-img" class="modal-avatar-img" src="" alt="Player Avatar">
+            </div>
             <h3 id="modal-title">Konfirmasi</h3>
             <p id="modal-message">Pesan dialog</p>
             <div class="modal-actions" id="modal-actions"></div>
@@ -307,7 +322,7 @@
     <div id="joker-overlay" class="joker-overlay">
         <div class="joker-content">
             <img src="https://ik.imagekit.io/bwindonesiaimg/Remi/joker.gif" alt="Joker Kobong">
-            <h2 id="joker-text">Selamat Anda Kobong/Di Gedik Yoker!</h2>
+            <h2 id="joker-text">Selamat Anda Kobong Yoker!</h2>
             <button class="joker-btn" onclick="document.getElementById('joker-overlay').style.display='none'">Tutup</button>
         </div>
     </div>
@@ -330,15 +345,25 @@
         const app = document.getElementById('app');
 
         // === MODAL SYSTEM ===
-        function showModal(title, message, type = 'alert', onConfirm = null) {
+        function showModal(title, message, type = 'alert', onConfirm = null, avatarUrl = null) {
             const overlay = document.getElementById('modal-overlay');
             const titleEl = document.getElementById('modal-title');
             const msgEl = document.getElementById('modal-message');
             const actionsEl = document.getElementById('modal-actions');
+            const avatarBox = document.getElementById('modal-avatar-box');
+            const avatarImg = document.getElementById('modal-avatar-img');
 
             titleEl.textContent = title;
             msgEl.textContent = message;
             actionsEl.innerHTML = '';
+
+            // Handle Avatar
+            if (avatarUrl) {
+                avatarImg.src = avatarUrl;
+                avatarBox.style.display = 'block';
+            } else {
+                avatarBox.style.display = 'none';
+            }
 
             if (type === 'alert') {
                 const btnOk = document.createElement('button');
@@ -544,7 +569,6 @@
                     return;
                 }
                 
-                // Cek kondisi Kobong Yoker (Input <= -200)
                 if (val <= -200) {
                     isKobongTriggered = true;
                     kobongPlayers.push(p.name);
@@ -597,10 +621,16 @@
                 return;
             }
 
-            // CEK STREAK 5 UNTUK MODAL WARNING
+            // CEK STREAK 5 UNTUK MODAL WARNING (DENGAN AVATAR)
             if (state.lowestStreak.count === 5) {
                 const streakPlayer = state.players.find(p => p.id === state.lowestStreak.playerId);
-                showModal('TERLALU MENDO', `${streakPlayer.name} sudah MENDO selama 5 kali berturut-turut! Hati-hati jangan sampai CENGOH!`, 'alert');
+                showModal(
+                    'TERLALU MENDO', 
+                    `${streakPlayer.name} sudah MENDO selama 5 kali berturut-turut! Hati-hati jangan sampai CENGOH!`, 
+                    'alert',
+                    null,
+                    streakPlayer.avatar
+                );
             }
 
             // CEK LIMIT POIN
@@ -613,9 +643,8 @@
             renderGame();
             animateChanges(inputs, resetsThisMatch);
 
-            // MUNCULKAN POPUP JOKER JIKA KOBONG
             if (isKobongTriggered) {
-                document.getElementById('joker-text').textContent = `Si Mendo ${kobongPlayers.join(' & ')} Kobong/Di Gedik Yoker!`;
+                document.getElementById('joker-text').textContent = `Selamat ${kobongPlayers.join(' & ')}, Anda Kobong Yoker!`;
                 document.getElementById('joker-overlay').style.display = 'flex';
             }
         }
