@@ -95,16 +95,32 @@
         button.danger:active { background-color: var(--danger-hover); }
         button.secondary { background-color: #64748b; margin-top: 10px; }
         button.secondary:active { background-color: #475569; }
+        
+        button.outline-dashed {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            border: 2px dashed #9ca3af;
+            box-shadow: none;
+        }
+        button.outline-dashed:active { background-color: #e5e7eb; }
 
         /* === GAME BOARD === */
         .board-header {
             display: flex;
-            background: #f9fafb;
+            background: rgba(249, 250, 251, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 8px;
             padding: 15px 0;
             margin-bottom: 15px;
             border: 1px solid var(--border);
             gap: 5px;
+            
+            position: -webkit-sticky;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
         .player-col {
             flex: 1;
@@ -323,7 +339,7 @@
         <div class="joker-content">
             <img src="https://ik.imagekit.io/bwindonesiaimg/Remi/joker.gif" alt="Joker Kobong">
             <h2 id="joker-text">Selamat Anda Kobong Yoker!</h2>
-            <button class="joker-btn" onclick="document.getElementById('joker-overlay').style.display='none'">Tutup</button>
+            <button class="joker-btn" onclick="document.getElementById('joker-overlay').style.display='none'">Tolol</button>
         </div>
     </div>
 
@@ -333,6 +349,7 @@
         // === STATE MANAGEMENT ===
         let state = {
             screen: 'setup', 
+            setupNames: ["Solebo", "Wondo", "Bowo"], // Default 3 slot dengan nama
             numPlayers: 3,
             players: [], // { id, name, total, minusTotal, avatar, prevTotals: [] }
             matchHistory: [], 
@@ -402,68 +419,111 @@
             else if (state.screen === 'result') renderResult();
         }
 
-        // === SETUP SCREEN ===
+        // === SETUP SCREEN (MODEL ADD PLAYER) ===
         function renderSetup() {
             app.innerHTML = `
                 <div class="card">
                     <h1>REMI YOKER</h1>
-                    <p class="subtitle">Atur jumlah dan nama player</p>
-                    <div class="form-group">
-                        <label>Jumlah Player</label>
-                        <select id="sel-players" onchange="updateSetupInputs()">
-                            <option value="3" ${state.numPlayers === 3 ? 'selected' : ''}>3 Player</option>
-                            <option value="4" ${state.numPlayers === 4 ? 'selected' : ''}>4 Player</option>
-                        </select>
+                    <p class="subtitle">Tambahkan nama pemain (3 - 4 orang)</p>
+                    
+                    <div id="player-inputs">
+                        ${state.setupNames.map((name, i) => `
+                            <div class="form-group" style="display: flex; gap: 8px; align-items: center;">
+                                <div style="flex: 1;">
+                                    <input type="text" id="setup-name-${i}" placeholder="Pemain ${i + 1}" value="${name}">
+                                </div>
+                                ${i >= 3 ? `<button type="button" class="danger" style="width: auto; padding: 12px 16px; margin: 0; font-size: 14px;" onclick="removeSetupPlayer(${i})">✕</button>` : ''}
+                            </div>
+                        `).join('')}
                     </div>
-                    <div id="player-inputs"></div>
+
+                    ${state.setupNames.length < 4 ? `
+                        <button type="button" class="outline-dashed" onclick="addSetupPlayer()" style="margin-bottom: 15px;">
+                            + Tambah Pemain ke-${state.setupNames.length + 1}
+                        </button>
+                    ` : ''}
+
                     <button type="button" onclick="startGame()" style="margin-top: 10px;">Mulai Game</button>
                 </div>
             `;
-            updateSetupInputs();
         }
 
-        function updateSetupInputs() {
-            const num = parseInt(document.getElementById('sel-players').value);
-            state.numPlayers = num;
-            const container = document.getElementById('player-inputs');
-            
-            const defaultNames = {
-                1: "Bowo",
-                2: "Solebo",
-                3: "Dani",
-                4: "Kaisar Wondo"
-            };
+        function getSetupNames() {
+            const inputs = document.querySelectorAll('input[id^="setup-name-"]');
+            let names = [];
+            inputs.forEach(input => names.push(input.value));
+            return names;
+        }
 
-            let html = '';
-            for (let i = 1; i <= num; i++) {
-                let pName = defaultNames[i] || `Pemain ${i}`;
-                html += `
-                    <div class="form-group">
-                        <label>Player ${i}</label>
-                        <input type="text" id="pname-${i}" placeholder="${pName}" value="${pName}">
-                    </div>
-                `;
+        function addSetupPlayer() {
+            state.setupNames = getSetupNames(); // Simpan input sebelumnya
+            if (state.setupNames.length < 4) {
+                // Jika slot ke-4 ditambahkan, beri default "Dani"
+                let defaultName = state.setupNames.length === 3 ? "Dani" : "";
+                state.setupNames.push(defaultName);
+                renderSetup();
+                // Fokus otomatis ke input yang baru dibuat
+                setTimeout(() => {
+                    const newInput = document.getElementById(`setup-name-${state.setupNames.length - 1}`);
+                    if(newInput) newInput.focus();
+                }, 50);
             }
-            container.innerHTML = html;
+        }
+
+        function removeSetupPlayer(index) {
+            state.setupNames = getSetupNames(); // Simpan input sebelumnya
+            state.setupNames.splice(index, 1);
+            renderSetup();
         }
 
         function startGame() {
+            // Ambil dan filter nama pemain, jika kosong set default "Pemain X"
+            let currentNames = getSetupNames();
+            let validNames = currentNames.map((n, i) => n.trim() !== "" ? n.trim() : `Pemain ${i+1}`);
+
+            // Dictionary Avatar (Mendeteksi berdasarkan tulisan nama)
             const customAvatars = {
-                1: "https://ik.imagekit.io/bwindonesiaimg/bw", 
-                2: "https://ik.imagekit.io/bwindonesiaimg/solebo", 
-                3: "https://ik.imagekit.io/bwindonesiaimg/dani", 
-                4: "https://ik.imagekit.io/bwindonesiaimg/wondo"  
+                // Bowo
+                "bowo": "https://ik.imagekit.io/bwindonesiaimg/bw", 
+                "wibowo": "https://ik.imagekit.io/bwindonesiaimg/bw", 
+                "adhi": "https://ik.imagekit.io/bwindonesiaimg/bw", 
+                "bw": "https://ik.imagekit.io/bwindonesiaimg/bw", 
+                "kentung": "https://ik.imagekit.io/bwindonesiaimg/bw", 
+                
+                // Solebo
+                "solebo": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                "makrup": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                "ma'ruf": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                "kebo": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                "sekrup": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                
+                // Dani
+                "dani": "https://ik.imagekit.io/bwindonesiaimg/dani", 
+                "dany": "https://ik.imagekit.io/bwindonesiaimg/dani", 
+                "danny": "https://ik.imagekit.io/bwindonesiaimg/dani", 
+                "dhani": "https://ik.imagekit.io/bwindonesiaimg/dani", 
+                
+                // Wondo
+                "wondo": "https://ik.imagekit.io/bwindonesiaimg/wondo",
+                "kaisar wondo": "https://ik.imagekit.io/bwindonesiaimg/wondo",
+                "dhimas": "https://ik.imagekit.io/bwindonesiaimg/wondo",
+                "aris": "https://ik.imagekit.io/bwindonesiaimg/wondo",
+                "ares": "https://ik.imagekit.io/bwindonesiaimg/wondo"
             };
 
             state.players = [];
+            state.numPlayers = validNames.length;
 
-            for (let i = 1; i <= state.numPlayers; i++) {
-                let name = document.getElementById(`pname-${i}`).value.trim() || `Pemain ${i}`;
+            for (let i = 0; i < state.numPlayers; i++) {
+                let name = validNames[i];
+                let nameKey = name.toLowerCase(); // Ubah jadi huruf kecil untuk pencocokan dictionary
+                
+                // Cari apakah nama cocok dengan dictionary, jika tidak pakai inisial UI-Avatar
                 let defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=100`;
-                let avatarUrl = customAvatars[i] && customAvatars[i].trim() !== "" ? customAvatars[i] : defaultAvatar;
+                let avatarUrl = customAvatars[nameKey] ? customAvatars[nameKey] : defaultAvatar;
 
                 state.players.push({
-                    id: i,
+                    id: i + 1,
                     name: name,
                     avatar: avatarUrl,
                     total: 0,
@@ -486,7 +546,6 @@
                 ? state.players.find(p => p.id === state.lowestStreak.playerId).name 
                 : '';
 
-            let currentMinTotal = Math.min(...state.players.map(p => p.total));
             let hasPlayed = state.matchHistory.length > 0;
 
             app.innerHTML = `
@@ -499,7 +558,7 @@
 
                     <div class="board-header">
                         ${state.players.map(p => {
-                            let isLowestNow = hasPlayed && (p.total === currentMinTotal);
+                            let isLowestNow = hasPlayed && (p.id === state.lowestStreak.playerId);
                             return `
                             <div class="player-col ${isLowestNow ? 'is-lowest' : ''}">
                                 <img src="${p.avatar}" alt="${p.name}" class="player-avatar" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=random&color=fff&size=100'">
@@ -514,12 +573,11 @@
 
                     <div class="history-list" id="history-container">
                         ${state.matchHistory.map((m, i) => {
-                            let minTotalAfterMatch = Math.min(...Object.values(m.totalsAfter));
                             return `
                             <div class="history-row">
                                 <div class="history-index">#${i+1}</div>
                                 ${state.players.map(p => {
-                                    let isLowestInHistory = m.totalsAfter[p.id] === minTotalAfterMatch;
+                                    let isLowestInHistory = p.id === m.mendoId;
                                     return `
                                     <div class="history-val ${isLowestInHistory ? 'is-lowest-history' : ''}">
                                         <span class="${m.inputs[p.id] > 0 ? 'text-green' : (m.inputs[p.id] < 0 ? 'text-red' : '')}">
@@ -613,7 +671,8 @@
                 oldStreak: oldStreak 
             });
 
-            updateStreak();
+            let mendoIdThisRound = updateStreak(inputs);
+            state.matchHistory[state.matchHistory.length - 1].mendoId = mendoIdThisRound;
 
             // CEK STREAK 10 UNTUK SELESAI
             if (state.lowestStreak.count >= 10) {
@@ -649,22 +708,40 @@
             }
         }
 
-        function updateStreak() {
+        function updateStreak(inputs) {
             let currentMin = Math.min(...state.players.map(p => p.total));
-            let currentLowestPlayers = state.players.filter(p => p.total === currentMin);
+            let tiedPlayers = state.players.filter(p => p.total === currentMin);
+            let lowestId = null;
 
-            if (currentLowestPlayers.length === 1) {
-                let lowestId = currentLowestPlayers[0].id;
-                if (state.lowestStreak.playerId === lowestId) {
-                    state.lowestStreak.count++;
-                } else {
-                    state.lowestStreak.playerId = lowestId;
-                    state.lowestStreak.count = 1;
-                }
+            if (tiedPlayers.length === 1) {
+                // Jika hanya 1 orang poin terendah, dia langsung dapat Mendo
+                lowestId = tiedPlayers[0].id;
             } else {
-                state.lowestStreak.playerId = null;
-                state.lowestStreak.count = 0;
+                // TIE-BREAKER 1: Cari siapa yang input minusnya paling banyak / paling jelek di match ini
+                let minInput = Math.min(...tiedPlayers.map(p => inputs[p.id]));
+                let tiedByInput = tiedPlayers.filter(p => inputs[p.id] === minInput);
+
+                if (tiedByInput.length === 1) {
+                    lowestId = tiedByInput[0].id;
+                } else {
+                    // TIE-BREAKER 2: Jika inputnya ternyata sama-sama jelek, cek siapa pemegang Mendo sebelumnya
+                    if (tiedByInput.find(p => p.id === state.lowestStreak.playerId)) {
+                        lowestId = state.lowestStreak.playerId; // Pemegang lama tetap dapat Mendo
+                    } else {
+                        lowestId = tiedByInput[0].id; // Fallback jika tidak ada (kasus sangat jarang)
+                    }
+                }
             }
+
+            // Update state hitungan Mendo Streak
+            if (state.lowestStreak.playerId === lowestId) {
+                state.lowestStreak.count++;
+            } else {
+                state.lowestStreak.playerId = lowestId;
+                state.lowestStreak.count = 1;
+            }
+
+            return lowestId; // Kembalikan ID untuk disimpan ke riwayat histori match
         }
 
         function requestDeleteLastMatch() {
@@ -724,7 +801,7 @@
 
         function renderResult() {
             let reasonText = state.endReason === 'rule2' ? "🎯 Rule 2: Bertahan di posisi MENDO 10 match!" : 
-                             state.endReason === 'rule3' ? "🏁 Rule 3: Limit ±1500 poin tercapai!" : "🛑 Game selesai manual.";
+                             state.endReason === 'rule3' ? "🏁 Rule 3: Limit ±1500" : "Game selesai manual.";
             
             let finalStandings = [...state.players].sort((a, b) => {
                 if (b.total !== a.total) return b.total - a.total;
