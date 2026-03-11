@@ -339,7 +339,7 @@
         <div class="joker-content">
             <img src="https://ik.imagekit.io/bwindonesiaimg/Remi/joker.gif" alt="Joker Kobong">
             <h2 id="joker-text">Selamat Anda Kobong Yoker!</h2>
-            <button class="joker-btn" onclick="document.getElementById('joker-overlay').style.display='none'">Tolol</button>
+            <button class="joker-btn" onclick="document.getElementById('joker-overlay').style.display='none'">Tutup</button>
         </div>
     </div>
 
@@ -495,7 +495,8 @@
                 "makrup": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
                 "ma'ruf": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
                 "kebo": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
-                "sekrup": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
+                "sekrup": "https://ik.imagekit.io/bwindonesiaimg/solebo",
+                "mahrup": "https://ik.imagekit.io/bwindonesiaimg/solebo", 
                 
                 // Dani
                 "dani": "https://ik.imagekit.io/bwindonesiaimg/dani", 
@@ -551,7 +552,7 @@
             app.innerHTML = `
                 <div class="card" style="padding: 15px;">
                     <h2 style="font-size: 18px; margin-bottom: 15px;">Score Board</h2>
-
+                    <p style="font-size: 12px; font-style: italic; text-align: center;">DI REFRESH ILANG LOO!!!</p>
                     <div class="streak-banner" id="streak-banner-ui" style="display: ${showStreak}">
                         ⚠️ ${streakPlayerName} termendo selama ${state.lowestStreak.count} match berturut-turut!
                     </div>
@@ -685,7 +686,7 @@
                 const streakPlayer = state.players.find(p => p.id === state.lowestStreak.playerId);
                 showModal(
                     'TERLALU MENDO', 
-                    `${streakPlayer.name} sudah MENDO selama 5 kali berturut-turut! Hati-hati jangan sampai CENGOH!`, 
+                    `${streakPlayer.name} sudah MENDO selama 5 kali berturut-turut! Hampir CENGOH!`, 
                     'alert',
                     null,
                     streakPlayer.avatar
@@ -801,7 +802,7 @@
 
         function renderResult() {
             let reasonText = state.endReason === 'rule2' ? "🎯 Rule 2: Bertahan di posisi MENDO 10 match!" : 
-                             state.endReason === 'rule3' ? "🏁 Rule 3: Limit ±1500" : "Game selesai manual.";
+                             state.endReason === 'rule3' ? "🏁 Rule 3: Limit ±1500 poin tercapai!" : "Game selesai manual.";
             
             let finalStandings = [...state.players].sort((a, b) => {
                 if (b.total !== a.total) return b.total - a.total;
@@ -846,6 +847,41 @@
                         </tbody>
                     </table>
                     <button type="button" onclick="location.reload()">Mulai Game Baru</button>
+
+                    ${state.matchHistory.length > 0 ? `
+                        <div style="margin-top: 30px; text-align: left; border-top: 2px dashed var(--border); padding-top: 20px;">
+                            <h3 style="font-size: 16px; margin-bottom: 15px; text-align: center; color: var(--text-muted);">Rekap Perjalanan Poin</h3>
+                            <div style="overflow-x: auto;">
+                                <table class="result-table" style="font-size: 13px; margin-bottom: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center; width: 40px; padding: 8px 4px;">#</th>
+                                            ${state.players.map(p => `<th style="text-align: center; padding: 8px 4px;">${p.name}</th>`).join('')}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${state.matchHistory.map((m, i) => `
+                                            <tr>
+                                                <td style="text-align: center; color: var(--text-muted); font-weight: bold; padding: 8px 4px;">${i + 1}</td>
+                                                ${state.players.map(p => {
+                                                    let val = m.inputs[p.id];
+                                                    let isReset = m.resets && m.resets.includes(p.id);
+                                                    let colorClass = val > 0 ? 'text-green' : (val < 0 ? 'text-red' : '');
+                                                    let displayVal = val > 0 ? '+' + val : val;
+                                                    return `
+                                                    <td style="text-align: center; padding: 8px 4px;">
+                                                        <span class="${colorClass}" style="font-weight: bold;">${displayVal}</span>
+                                                        ${isReset ? '<br><span class="text-reset">RESET</span>' : ''}
+                                                    </td>
+                                                    `;
+                                                }).join('')}
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    ` : ''}
                 </div>
             `;
         }
