@@ -4,357 +4,672 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Portfolio - BW Indonesia</title>
-    <link rel="stylesheet" href="css/style.css">
-<body class="loading">
-    <!-- Loading Screen with Line Progress Bar -->
-    <div id="loadingScreen">
-        <div class="loading-percentage" id="loadingPercentage">0%</div>
-        <div class="progress-container">
-            <div class="progress-bar-fill" id="progressBarFill"></div>
-        </div>
-        <div class="loading-text">Loading Wedding Portfolio...</div>
-    </div>
 
-    <!-- Dark Mode Toggle Button -->
-    <button class="dark-mode-toggle visible" id="darkModeToggle" data-tooltip="Toggle Dark Mode" aria-label="Toggle dark mode">
-        <svg class="icon sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <svg class="icon moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-    </button>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- MAIN CSS (WAJIB) -->
+    <link rel="stylesheet" href="./css/new-styles.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "bg-warm": "#E8E0D0",
+                        "primary-teal": "#096B5B",
+                        "accent-soft": "#C8E8DC",
+                    },
+                    fontFamily: {
+                        display: ["Fraunces", "serif"],
+                        sans: ["Inter", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-warm text-zinc-800 font-sans transition-colors duration-300">
+    <!-- LOADING tetap -->
+<div id="loadingScreen">
+    <span class="font-display text-4xl text-primary-teal" style="letter-spacing:-.04em;">AWe</span>
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+    <div id="loadingPercentage">0%</div>
+</div>
 
     <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="index.html" class="logo">Khurniawan Adhi Wibowo</a>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html">Home</a></li>
-                </ul>
-                <div class="mobile-menu" id="mobileMenu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </nav>
+    <!-- NAVBAR STYLE INDEX2 (ROUNDED) -->
+<!-- Navbar FIX -->
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4">
+    <nav class="w-full max-w-5xl flex justify-between items-center px-6 py-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg rounded-full border border-zinc-200 dark:border-zinc-700">
+        <!-- ❌ HAPUS shadow-sm -->
+        
+        <a href="#home" class="font-display text-xl text-primary-teal tracking-tighter">Adhi Wibowo</a>
+
+        <!-- Desktop nav -->
+        <ul id="navLinks" class="hidden md:flex gap-5 text-sm font-medium">
+            <li><a href="index.html" class="hover:text-primary-teal transition-colors">Home</a></li>
+        </ul>
+
+        <!-- ✅ FIX: items-center (bukan items-right) + urutannya benar -->
+        <div class="flex items-center gap-1">
+            <button id="darkModeToggle" aria-label="Toggle dark mode"
+                    class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+            </button>
+            <button id="mobileMenu" class="md:hidden p-2 rounded-full hover:bg-black/5 transition-colors" aria-label="Menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
         </div>
-    </header>
+    </nav>
+</header>
+
+<!-- Mobile dropdown — PERSIS index2.html -->
+<div id="mobileMenuDropdown"
+     class="fixed top-20 left-4 right-4 z-40 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg rounded-3xl border border-zinc-200 dark:border-zinc-700 shadow-lg hidden max-w-5xl mx-auto">
+    <ul class="flex flex-col p-3 text-sm font-medium">
+        <li><a href="index.html" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Home</a></li>
+        <li><a href="#gallery"  class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Gallery</a></li>
+        <li><a href="#contact"  class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Contact</a></li>
+    </ul>
+</div>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Wedding Portfolio</h1>
-                <p>Mengabadikan Setiap Momen Terbaik dalam Perjalanan Cinta Anda. Dari Persiapan hingga Pesta, Kami Hadirkan Cerita Visual yang Tak Terlupakan.</p>
-            </div>
-        </div>
-    </section>
+    <section class="pt-40 pb-16 text-center scroll-animate">
+    <div class="max-w-3xl mx-auto px-4">
+        <h1 class="font-display text-4xl md:text-5xl text-primary-teal mb-4">
+            Wedding Portfolio
+        </h1>
+        <p class="text-zinc-600">
+            Mengabadikan Setiap Momen Terbaik dalam Perjalanan Cinta Anda...
+        </p>
+    </div>
+</section>
 
     <!-- Filter Section -->
-    <section class="filter-section">
-        <div class="container">
-            <div class="filter-container">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="ceremony">Akad & Pemberkatan</button>
-                <button class="filter-btn" data-filter="reception">Resepsi</button>
-                <button class="filter-btn" data-filter="candid">Pose & Candid</button>
-            </div>
-        </div>
-    </section>
+    <section class="py-6">
+    <div class="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-3">
+
+        <button class="filter-btn active px-4 py-2 rounded-full bg-primary-teal text-white text-sm" data-filter="all">
+            Semua
+        </button>
+
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-filter="ceremony">
+            Akad & Pemberkatan
+        </button>
+
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-filter="reception">
+            Resepsi
+        </button>
+
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-filter="candid">
+            Pose & Candid
+        </button>
+
+    </div>
+</section>
 
     <!-- Gallery Section -->
-    <section class="gallery scroll-animate">
-        <div class="container">
-            <div class="gallery-grid" id="galleryGrid">
-                <!-- Gallery Item 1 -->
-                <div class="gallery-item" data-category="candid">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/sidebody.jpg">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Pose Cantik</h3>
-                            <p>Senyum Bahagia Mempelai Wanita</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Happy</span>
-                                <span class="tag">Pose</span>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
+<section id="gallery" class="py-12 scroll-animate">
+<div class="max-w-6xl mx-auto px-4">
 
-                <!-- Gallery Item 2 -->
-                <div class="gallery-item" data-category="reception">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose.jpg?updatedAt=1761833065788" alt="Elegant wedding reception hall decorated with luxurious floral arrangements crystal chandeliers and romantic lighting">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Pose Romantis Outdoor</h3>
-                            <p>Momen untuk Pengantin sebagai pemanis Album</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Pose</span>
-                                <span class="tag">Outdoor Pose</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-                <!-- Gallery Item 3 -->
-                <div class="gallery-item" data-category="ceremony">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/akad%20nikah.jpg?updatedAt=1761833065243" alt="Bride and groom exchanging vows during sacred wedding ceremony with emotional expressions and elegant traditional attire">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Akad Nikah Sakral</h3>
-                            <p>Momen ijab kabul yang penuh haru</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Ceremony</span>
-                                <span class="tag">Traditional</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- ITEM TEMPLATE DIPAKAI SEMUA -->
 
-                <!-- Gallery Item 4 -->
-                <div class="gallery-item" data-category="ceremony">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/tukar%20cincin.jpg?updatedAt=1761833065526" alt="Couple exchanging wedding rings during ceremony with close up detail shot showing emotional hands and elegant rings">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Pertukaran Cincin</h3>
-                            <p>Detail momen yang penuh makna</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Ceremony</span>
-                                <span class="tag">Detail</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 1 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="candid">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/sidebody.jpg" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Pose Cantik</h3>
+<p class="text-sm opacity-80">Senyum Bahagia Mempelai Wanita</p>
+</div>
+</div>
+</div>
 
-                <!-- Gallery Item 5 -->
-                <div class="gallery-item" data-category="reception">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose%202.JPG?updatedAt=1761833065168" alt="Bride and groom cutting elegant multi tiered white wedding cake decorated with fresh flowers at reception celebration">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Resepsi Pose</h3>
-                            <p>Momen manis yang tak terlupakan</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Pose</span>
-                                <span class="tag">Celebration</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 2 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="reception">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose.jpg?updatedAt=1761833065788" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Pose Romantis Outdoor</h3>
+<p class="text-sm opacity-80">Momen untuk Pengantin sebagai pemanis Album</p>
+</div>
+</div>
+</div>
 
-                <!-- Gallery Item 6 -->
-                <div class="gallery-item" data-category="ceremony">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid%203.jpg?updatedAt=1761833988040" alt="Groom wiping tears of joy from brides eyes during emotional first look moment with soft natural lighting">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Upacara Adat Jawa</h3>
-                            <p>Pasrah Tinampi</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Candid</span>
-                                <span class="tag">Adat Jawa</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 3 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="ceremony">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/akad%20nikah.jpg?updatedAt=1761833065243" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Akad Nikah Sakral</h3>
+<p class="text-sm opacity-80">Momen ijab kabul yang penuh haru</p>
+</div>
+</div>
+</div>
 
-                <!-- Gallery Item 7 -->
-                <div class="gallery-item" data-category="reception">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose%203.jpg?updatedAt=1761833065401" alt="Couple sharing first dance at wedding reception under sparkling disco ball with romantic lighting and guests watching">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>First Dance</h3>
-                            <p>Tarian pertama sebagai pasangan suami istri</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Reception</span>
-                                <span class="tag">Pose</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 4 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="ceremony">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/tukar%20cincin.jpg?updatedAt=1761833065526" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Pertukaran Cincin</h3>
+<p class="text-sm opacity-80">Detail momen yang penuh makna</p>
+</div>
+</div>
+</div>
 
-                <!-- Gallery Item 8 -->
-                <div class="gallery-item" data-category="ceremony">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/restu%20orang%20tua.jpg?updatedAt=1761833065825" alt="Family blessing ceremony with parents giving emotional prayers to newlywed couple in traditional cultural wedding attire">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Restu Orangtua</h3>
-                            <p>Doa dan restu dari kedua orangtua</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Ceremony</span>
-                                <span class="tag">Family</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 5 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="reception">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose%202.JPG?updatedAt=1761833065168" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Resepsi Pose</h3>
+<p class="text-sm opacity-80">Momen manis yang tak terlupakan</p>
+</div>
+</div>
+</div>
 
-                <!-- Gallery Item 9 -->
-                <div class="gallery-item" data-category="candid">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid%202.jpg?updatedAt=1761833987954" alt="Flower girl and ring bearer walking down wedding aisle with adorable innocent expressions holding basket and pillow">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Candid Akad</h3>
-                            <p>Haru pengantin wanita</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Candid</span>
-                                <span class="tag">Akad</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 6 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="ceremony">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid%203.jpg?updatedAt=1761833988040" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Upacara Adat Jawa</h3>
+<p class="text-sm opacity-80">Pasrah Tinampi</p>
+</div>
+</div>
+</div>
 
-                <!-- Gallery Item 10 -->
-                <div class="gallery-item" data-category="ceremony">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/afterakad.jpg" alt="Flower girl and ring bearer walking down wedding aisle with adorable innocent expressions holding basket and pillow">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>After Akad</h3>
-                            <p>Haru pengantin wanita</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Happy</span>
-                                <span class="tag">Akad</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 7 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="reception">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/pose%203.jpg?updatedAt=1761833065401" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>First Dance</h3>
+<p class="text-sm opacity-80">Tarian pertama sebagai pasangan suami istri</p>
+</div>
+</div>
+</div>
 
-                    <!-- Gallery Item 11 -->
-                     <div class="gallery-item" data-category="reception">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/cipikacipiki.jpg" alt="Bride and groom sharing joyful laugh together during candid moment with natural expressions and soft lighting">
-                     </div>
-                     <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Ciuman Bahagia</h3>
-                            <p>Tawa bahagia mempelai</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Kiss</span>
-                                <span class="tag">Happy</span>
-                            </div>
-                        </div>
-                     </div>
-                </div>
+<!-- 8 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="ceremony">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/restu%20orang%20tua.jpg?updatedAt=1761833065825" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Restu Orangtua</h3>
+<p class="text-sm opacity-80">Doa dan restu dari kedua orangtua</p>
+</div>
+</div>
+</div>
 
-                    <!-- Gallery Item 12 -->
-                     <div class="gallery-item" data-category="reception">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/marriagebooks.jpg">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Menunjukkan Buku Nikah</h3>
-                            <p>Momen hangat</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Marriage Books</span>
-                                <span class="tag">Together</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 9 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="candid">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid%202.jpg?updatedAt=1761833987954" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Candid Akad</h3>
+<p class="text-sm opacity-80">Haru pengantin wanita</p>
+</div>
+</div>
+</div>
 
-                    <!-- Gallery Item 13 -->
-                     <div class="gallery-item" data-category="candid">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/mosque.jpg">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Pose Mempelai Wanita</h3>
-                            <p>Mempelai Wanita sedang berpose</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Beauty Pose</span>
-                                <span class="tag">Portrait</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 10 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="ceremony">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/afterakad.jpg" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>After Akad</h3>
+<p class="text-sm opacity-80">Haru pengantin wanita</p>
+</div>
+</div>
+</div>
 
-                    <!-- Gallery Item 14 -->
-                     <div class="gallery-item" data-category="candid">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid.JPG?updatedAt=1761833988385" alt="Natural candid moment of bride laughing joyfully while surrounded by bridesmaids in matching pastel colored dresses">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Candid Saat Make Up</h3>
-                            <p>Kecantikan yang terpancar alami</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Candid</span>
-                                <span class="tag">Emotion</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 11 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="reception">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/cipikacipiki.jpg" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Ciuman Bahagia</h3>
+<p class="text-sm opacity-80">Tawa bahagia mempelai</p>
+</div>
+</div>
+</div>
 
-                    <!-- Gallery Item 15 -->
-                     <div class="gallery-item" data-category="candid">
-                    <div class="gallery-image">
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/sea.season.jpg">
-                    </div>
-                    <div class="gallery-overlay">
-                        <div class="gallery-info">
-                            <h3>Momen di Pantai</h3>
-                            <p>Momen bahagia saat di Panatai</p>
-                            <div class="gallery-tags">
-                                <span class="tag">Beach</span>
-                                <span class="tag">Couple</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- 12 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="reception">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/marriagebooks.jpg" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Menunjukkan Buku Nikah</h3>
+<p class="text-sm opacity-80">Momen hangat</p>
+</div>
+</div>
+</div>
 
-    <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <button class="lightbox-close" id="lightboxClose">×</button>
-            <img src="" alt="Wedding photo in full screen view with high resolution detail" id="lightboxImage">
-            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
-            <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
-            <div class="lightbox-counter" id="lightboxCounter">1 / 12</div>
-        </div>
+<!-- 13 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="candid">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/mosque.jpg" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Pose Mempelai Wanita</h3>
+<p class="text-sm opacity-80">Mempelai Wanita sedang berpose</p>
+</div>
+</div>
+</div>
+
+<!-- 14 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="candid">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/candid.JPG?updatedAt=1761833988385" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Candid Saat Make Up</h3>
+<p class="text-sm opacity-80">Kecantikan yang terpancar alami</p>
+</div>
+</div>
+</div>
+
+<!-- 15 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="candid">
+<img src="https://ik.imagekit.io/bwindonesiaimg/wedding%20project/sea.season.jpg" class="w-full h-72 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Momen di Pantai</h3>
+<p class="text-sm opacity-80">Momen bahagia saat di Pantai</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-[9999]">
+
+  <div class="relative max-w-5xl w-full px-4">
+
+    <!-- Close -->
+    <button id="lightboxClose"
+      class="absolute -top-10 right-4 text-white text-3xl hover:opacity-70 transition">
+      ×
+    </button>
+
+    <!-- Image -->
+    <img id="lightboxImage"
+      src=""
+      class="w-full max-h-[80vh] object-contain rounded-lg shadow-xl">
+
+    <!-- Prev -->
+    <button id="lightboxPrev"
+      class="absolute left-2 top-1/2 -translate-y-1/2 text-white text-4xl px-3 py-1 hover:bg-white/10 rounded transition">
+      ‹
+    </button>
+
+    <!-- Next -->
+    <button id="lightboxNext"
+      class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-4xl px-3 py-1 hover:bg-white/10 rounded transition">
+      ›
+    </button>
+
+    <!-- Counter -->
+    <div id="lightboxCounter"
+      class="text-white text-sm text-center mt-3 opacity-80">
+      1 / 12
     </div>
 
+  </div>
+</div>
+
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="https://www.youtube.com/@bwmatx" title="Youtube" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="Youtube logo in red and white representing video sharing platform" style="width: 24px; height: 24px; object-fit: contain;">
+<footer id="contact" class="border-t border-black/5 dark:border-white/5">
+
+    <!-- Brand -->
+    <div class="text-center pt-12 pb-8 px-8">
+        <p class="font-display text-2xl text-primary-teal mb-1">Adhi Wibowo</p>
+        <p class="text-zinc-400 text-xs tracking-widest uppercase">Digital Creative Designer</p>
+    </div>
+
+    <!-- Grid 2 kolom: maps kiri | kontak+sosial kanan -->
+    <div class="max-w-5xl mx-auto px-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+        <!-- KIRI: Google Maps -->
+        <div class="flex flex-col items-start gap-3">
+            <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Lokasi</span>
+            <div class="w-full rounded-2xl overflow-hidden shadow-md border border-black/5 dark:border-white/5" style="position:relative;padding-bottom:66.67%;height:0;">
+                <iframe
+                    src="https://maps.google.com/maps?width=600&height=400&hl=en&q=Alun-Alun%20Lama%20Ungaran&t=&z=18&ie=UTF8&iwloc=B&output=embed"
+                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    loading="lazy" title="Lokasi BW Indonesia">
+                </iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/KxN98r9bRfMaFP7R9" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-teal hover:underline">
+                <span class="material-symbols-outlined" style="font-size:15px;">location_on</span>
+                Buka di Google Maps
+            </a>
+        </div>
+
+        <!-- KANAN: Kontak + Sosial Media -->
+        <div class="flex flex-col items-center md:items-end gap-8">
+
+            <!-- Kontak -->
+            <div class="flex flex-col items-center md:items-end gap-3 w-full">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Kontak</span>
+                <a href="mailto:kwibowo437@yahoo.com"
+                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-primary-teal transition-colors">
+                    <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
+                    kwibowo437@yahoo.com
                 </a>
-                <a href="https://www.tiktok.com/@bw_matx" title="Tiktok" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Tiktok_icon.svg/2048px-Tiktok_icon.svg.png" alt="TikTok logo in black and cyan colors representing short form video platform" style="width: 24px; height: 24px; object-fit: contain;">
-                </a>
-                <a href="https://www.instagram.com/bw_matx/" title="Instagram" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1200px-Instagram_icon.png" alt="Instagram logo with colorful gradient representing photo sharing social media" style="width: 24px; height: 24px; object-fit: contain;">
+                <a href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
+                   target="_blank" rel="noopener noreferrer"
+                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-green-600 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    0895610521818
                 </a>
             </div>
-            <p>© 2025 Wedding Portfolio. Credit by Awan</p>
-        </div>
-    </footer>
 
-    <script src="js/wedding.js"></script>
+            <!-- Sosial Media -->
+            <div class="flex flex-col items-center md:items-end gap-3 w-full">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Sosial Media</span>
+                <div class="flex gap-5 text-2xl">
+                    <a href="https://www.youtube.com/@bwmatx" target="_blank" rel="noopener noreferrer"
+                       title="Youtube" class="opacity-60 hover:opacity-100 hover:text-red-600 transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@bw_matx" target="_blank" rel="noopener noreferrer"
+                       title="TikTok" class="opacity-60 hover:opacity-100 hover:text-zinc-800 dark:hover:text-white transition-all">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.instagram.com/bw_matx/" target="_blank" rel="noopener noreferrer"
+                       title="Instagram" class="opacity-60 hover:opacity-100 hover:text-pink-600 transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-black/5 dark:border-white/5 py-6 text-center">
+        <p class="text-zinc-400 text-xs">© 2025 my Portfolio. Credit by Awan</p>
+    </div>
+
+</footer>
+
+<script>
+// Override navbar hide dari new-script.js
+document.querySelector('header nav').style.transform = 'none';
+window.addEventListener('scroll', () => {
+    document.querySelector('header nav').style.transform = 'none';
+});
+
+// Loading Screen with Line Progress Bar
+let progressValue = 0;
+const progressBarFill = document.getElementById('progressBarFill');
+const loadingPercentage = document.getElementById('loadingPercentage');
+const loadingScreen = document.getElementById('loadingScreen');
+const body = document.body;
+
+let isStuckAt69 = false;
+
+const loadingInterval = setInterval(function() {
+    if (progressValue >= 69 && progressValue < 70 && !isStuckAt69) {
+        progressValue = 69;
+        isStuckAt69 = true;
+        setTimeout(() => isStuckAt69 = false, 1200);
+    } else if (!isStuckAt69) {
+        progressValue += Math.random() * 15;
+    }
+    
+    if (progressValue >= 100 && !isStuckAt69) {
+        progressValue = 100;
+        clearInterval(loadingInterval);
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            body.classList.remove('loading');
+            setTimeout(() => loadingScreen.style.display = 'none', 1000);
+        }, 300);
+    }
+    
+    progressBarFill.style.width = progressValue + '%';
+    loadingPercentage.textContent = Math.floor(progressValue) + '%';
+}, 100);
+
+// Dark Mode Toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const isDarkMode = localStorage.getItem('darkMode') === 'true';
+if (isDarkMode) {
+    document.documentElement.classList.add('dark');
+    if (themeIcon) themeIcon.textContent = 'light_mode';
+}
+
+darkModeToggle?.addEventListener('click', function() {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('darkMode', isDark);
+    if (themeIcon) themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    this.classList.add('ripple');
+    setTimeout(() => this.classList.remove('ripple'), 600);
+});
+
+// ── Filter Functionality — animasi fade-out → random-enter → fade-in ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const galleryItems = document.querySelectorAll('.gallery-item');
+
+// Pastikan semua item punya transition CSS yang konsisten
+galleryItems.forEach(item => {
+    item.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+});
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.add('ripple');
+        setTimeout(() => this.classList.remove('ripple'), 600);
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const filterValue = this.getAttribute('data-filter');
+
+        // FASE 1: Fade-out semua item yang sedang tampil
+        galleryItems.forEach(item => {
+            if (item.style.display !== 'none') {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.92) translateY(8px)';
+            }
+        });
+
+        // FASE 2: Setelah fade-out selesai (~350ms), sembunyikan yg tidak cocok
+        //         lalu tampilkan yg cocok dari posisi random kecil
+        setTimeout(() => {
+            galleryItems.forEach((item, i) => {
+                const match = filterValue === 'all' ||
+                              item.getAttribute('data-category') === filterValue;
+
+                if (!match) {
+                    // Langsung sembunyikan
+                    item.style.display = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.92) translateY(8px)';
+                } else {
+                    // Tampilkan dulu di posisi random offset kecil
+                    const randX = (Math.random() - 0.5) * 24; // -12px .. +12px
+                    const randY = 14 + Math.random() * 20;    // 14px .. 34px ke bawah
+                    const delay = i * 45;                      // stagger per item
+
+                    item.style.display = 'block';
+                    item.style.transition = 'none'; // reset agar set posisi instan
+                    item.style.opacity = '0';
+                    item.style.transform =
+                        `scale(0.88) translate(${randX}px, ${randY}px)`;
+
+                    // FASE 3: fade-in ke posisi normal dengan stagger
+                    setTimeout(() => {
+                        item.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.22,0.61,0.36,1)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1) translate(0, 0)';
+                    }, delay + 30);
+                }
+            });
+        }, 360);
+    });
+});
+
+// Lightbox Functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+const lightboxCounter = document.getElementById('lightboxCounter');
+
+let currentImageIndex = 0;
+let visibleImages = [];
+
+function updateVisibleImages() {
+    visibleImages = Array.from(galleryItems).filter(item => 
+        window.getComputedStyle(item).display !== 'none'
+    );
+}
+
+function openLightbox(index) {
+    updateVisibleImages();
+    currentImageIndex = index;
+    const imgSrc = visibleImages[index].querySelector('img').src;
+    const imgAlt = visibleImages[index].querySelector('img').alt;
+    lightboxImage.src = imgSrc;
+    lightboxImage.alt = imgAlt;
+    lightboxCounter.textContent = `${index + 1} / ${visibleImages.length}`;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function showNextImage() {
+    currentImageIndex = (currentImageIndex + 1) % visibleImages.length;
+    const imgSrc = visibleImages[currentImageIndex].querySelector('img').src;
+    const imgAlt = visibleImages[currentImageIndex].querySelector('img').alt;
+    lightboxImage.src = imgSrc;
+    lightboxImage.alt = imgAlt;
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${visibleImages.length}`;
+}
+
+function showPrevImage() {
+    currentImageIndex = (currentImageIndex - 1 + visibleImages.length) % visibleImages.length;
+    const imgSrc = visibleImages[currentImageIndex].querySelector('img').src;
+    const imgAlt = visibleImages[currentImageIndex].querySelector('img').alt;
+    lightboxImage.src = imgSrc;
+    lightboxImage.alt = imgAlt;
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${visibleImages.length}`;
+}
+
+galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+        updateVisibleImages();
+        const visibleIndex = visibleImages.indexOf(item);
+        openLightbox(visibleIndex);
+    });
+});
+
+lightboxClose?.addEventListener('click', closeLightbox);
+lightboxNext?.addEventListener('click', showNextImage);
+lightboxPrev?.addEventListener('click', showPrevImage);
+
+lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowRight') showNextImage();
+    else if (e.key === 'ArrowLeft') showPrevImage();
+});
+
+// Scroll Animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+}, observerOptions);
+
+document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+// Navbar Scroll Effect - SIMPEL & CLEAN
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar?.classList.add('scrolled');
+            } else {
+                navbar?.classList.remove('scrolled');
+            }
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+// Mobile Menu Toggle - WORKING 100%
+const mobileMenuBtn = document.getElementById('mobileMenu');
+const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+
+mobileMenuBtn?.addEventListener('click', function() {
+    mobileMenuDropdown?.classList.toggle('hidden');
+    this.classList.toggle('active');
+    
+    // Ripple effect
+    this.classList.add('ripple');
+    setTimeout(() => this.classList.remove('ripple'), 300);
+});
+
+// Close dropdown saat klik link
+document.querySelectorAll('#mobileMenuDropdown a').forEach(link => {
+    link.addEventListener('click', function() {
+        mobileMenuDropdown?.classList.add('hidden');
+        mobileMenuBtn?.classList.remove('active');
+    });
+});
+
+// Close dropdown saat klik outside
+document.addEventListener('click', function(event) {
+    const isClickInsideDropdown = mobileMenuDropdown?.contains(event.target);
+    const isClickOnMenuBtn = mobileMenuBtn?.contains(event.target);
+    
+    if (!isClickInsideDropdown && !isClickOnMenuBtn && !mobileMenuDropdown?.classList.contains('hidden')) {
+        mobileMenuDropdown?.classList.add('hidden');
+        mobileMenuBtn?.classList.remove('active');
+    }
+});
+</script>
 </body>
 </html>
