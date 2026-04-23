@@ -358,11 +358,13 @@ const loadingScreen = document.getElementById('loadingScreen');
 const body = document.body;
 
 let isStuckAt69 = false;
+let hasPaused = false;
 
 const loadingInterval = setInterval(function() {
-    if (progressValue >= 69 && progressValue < 70 && !isStuckAt69) {
+    if (progressValue >= 69 && progressValue < 70 && !hasPaused) {
         progressValue = 69;
         isStuckAt69 = true;
+        hasPaused = true;
         setTimeout(() => isStuckAt69 = false, 1200);
     } else if (!isStuckAt69) {
         progressValue += Math.random() * 15;
