@@ -1,0 +1,527 @@
+/* ══════════════════════════════════════════════════════
+   SMOOTH SCROLL — index2
+   scroll-behavior: smooth untuk native anchor + custom easing
+══════════════════════════════════════════════════════ */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ── Scroll offset untuk section (kompensasi navbar fixed) ── */
+section[id] {
+    scroll-margin-top: 90px;
+}
+
+/* ── Navbar Active Link Indicator ── */
+header nav a.nav-active {
+    color: #096B5B !important;
+    background: rgba(9, 107, 91, 0.10) !important;
+    border-radius: 8px !important;
+    padding: 0.25rem 0.75rem !important;
+    font-weight: 700 !important;
+}
+
+/* Underline dot aktif di bawah link */
+header nav a.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    background: #096B5B;
+    border-radius: 50%;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.dark header nav a.nav-active {
+    color: #5eead4 !important;
+    background: rgba(9, 107, 91, 0.18) !important;
+}
+
+/* Mobile dropdown active link */
+#mobileMenuDropdown a.nav-active {
+    color: #096B5B !important;
+    background: rgba(9, 107, 91, 0.10) !important;
+    font-weight: 700;
+}
+
+.dark #mobileMenuDropdown a.nav-active {
+    color: #5eead4 !important;
+    background: rgba(9, 107, 91, 0.18) !important;
+}
+
+/* ── Smooth scroll progress bar di atas viewport ── */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #096B5B, #14b8a6);
+    z-index: 9999;
+    border-radius: 0 2px 2px 0;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+/* ── Material Symbols: paksa render sebagai icon ── */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            font-feature-settings: 'liga';
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            vertical-align: middle;
+        }
+
+        /* ── Loading Screen ── */
+        #loadingScreen {
+            position: fixed; inset: 0;
+            background: #E8E0D0;
+            z-index: 9999;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        #loadingScreen.fade-out { opacity: 0; pointer-events: none; }
+        .progress-bar-wrap { width: 180px; height: 2px; background: rgba(9,107,91,0.15); border-radius: 10px; margin-top: 20px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0%; background: #096B5B; border-radius: 10px; transition: width 0.1s linear; }
+        #loadingPercentage { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .15em; color: rgba(9,107,91,.55); text-transform: uppercase; margin-top: 14px; }
+
+        /* ── Popup Modal ── */
+        #popupOverlay {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0; pointer-events: none;
+            transition: opacity .35s ease;
+        }
+        #popupOverlay.active { opacity: 1; pointer-events: all; }
+        .popup-container {
+            background: #fff;
+            border-radius: 2.5rem;
+            overflow: hidden;
+            max-width: 860px; width: 100%;
+            display: flex; flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0,0,0,.25);
+            position: relative;
+        }
+        @media (min-width: 768px) { .popup-container { flex-direction: row; } }
+        .popup-img-col { width: 100%; height: 200px; flex-shrink: 0; }
+        @media (min-width: 768px) { .popup-img-col { width: 45%; height: auto; } }
+        .popup-img-col img { width: 100%; height: 100%; object-fit: cover; }
+        .popup-text-col { padding: 2rem 2.2rem; display: flex; flex-direction: column; justify-content: center; }
+        @media (min-width: 768px) { .popup-text-col { padding: 3rem 3.2rem; } }
+        .popup-close-btn {
+            position: absolute; top: 14px; right: 14px; z-index: 10;
+            background: rgba(0,0,0,.1); border: none; cursor: pointer;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s;
+        }
+        @media (max-width: 768px) {
+        .popup-img-col {
+            display: none !important;
+        }
+
+        .popup-container {
+            flex-direction: column;
+        }
+
+        .popup-text-col {
+            width: 100%;
+            padding: 1.5rem;
+        }
+        }
+        
+        .popup-close-btn:hover { background: rgba(0,0,0,.2); }
+        .popup-close-btn .material-symbols-outlined { font-size: 20px; }
+        .dark #popupOverlay .popup-container { background: #1c2a24; }
+
+        /* ── Scroll Reveal Animation ── */
+        .scroll-animate { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+        .scroll-animate.active { opacity: 1; transform: translateY(0); }
+
+        /* ── Testimonial Carousel ── */
+        .testi-track { display: flex; transition: transform .65s cubic-bezier(.25,.46,.45,.94); }
+        .testi-slide { min-width: 100%; }
+        .testi-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(9,107,91,.25); transition: all .3s; cursor: pointer; }
+        .testi-dot.active { background: #096B5B; width: 22px; border-radius: 4px; }
+
+        /* ── Language Skills Animation ── */
+        .language-item {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .language-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Dark Mode ── */
+        .dark body { background-color: #1a2e26; }
+
+        /* Navbar links (desktop + mobile dropdown) -> white in dark mode */
+        .dark header a,
+        .dark header nav a,
+        .dark #mobileMenuDropdown a {
+        color: #ffffff !important;
+        }
+        /* About: 4 skill cards text + material icons -> white in dark mode */
+        /* Targets immediate children of #about .grid (structure used in your file) */
+        .dark #about .grid > div,
+        .dark #about .grid > div .font-bold,
+        .dark #about .grid > div .material-symbols-outlined {
+        color: #ffffff !important;
+        }
+        /* If skill card icons are SVG IMG instead of material-symbols, use this fallback to increase contrast */
+        .dark #about .grid > div img,
+        .dark #about .grid > div svg {
+        filter: brightness(200%) contrast(120%) !important;
+        }
+
+                /* ===== Tools / Software section styles (add into existing <style>) ===== */
+        #tools { --card-bg: rgba(255,255,255,0.6); }
+
+.linear-underline {
+  width: 72px;
+  height: 4px;
+  background: #096B5B; /* primary-teal */
+  border-radius: 999px;
+  margin: 8px auto 0;
+  box-shadow: 0 4px 18px rgba(9,107,91,0.06);
+}
+
+/* Grid: 2 mobile, 3 tablet, 4 desktop */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: center;
+  justify-items: center;
+  margin-top: 18px;
+  max-width: 48rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Breakpoints */
+@media (min-width: 640px) { /* sm */
+  .tools-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+}
+@media (min-width: 1024px) { /* lg */
+  .tools-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+}
+
+/* Individual tool card */
+.tool-item {
+  width: 100%;
+  max-width: 156px;
+  background: var(--card-bg);
+  border-radius: 1.25rem; /* rounded-2xl */
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(9,107,91,0.08); /* subtle teal border */
+  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+  transition: transform .22s ease, box-shadow .22s ease;
+  text-align: center;
+}
+
+/* Hover effect */
+.tool-item:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 36px rgba(9,107,91,0.08);
+}
+
+/* Icon container */
+.tool-icon {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Ensure SVG fits and gets a teal tint via filter (works reliably for monochrome SVGs from simple-icons) */
+.tool-icon img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  transition: filter .18s ease, transform .18s ease;
+}
+
+/* Slight pop on icon hover */
+.tool-item:hover .tool-icon img {
+  transform: scale(1.06);
+  filter: invert(29%) black(24%) saturate(100%) hue-rotate(136deg) brightness(98%) contrast(95%);
+}
+
+/* Tool name */
+.tool-name {
+  font-family: Inter, sans-serif;
+  color: #0f1724; /* text-zinc-800 */
+  font-weight: 600;
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.05;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* Dark mode tweaks */
+.dark .tool-item { background: rgba(28,38,36,0.65); border: 1px solid rgba(255,255,255,0.04); }
+.dark .tool-name { color: #e6efe8; }
+
+#particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(9,107,91,0.5);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(9,107,91,0.4);
+  transition: transform 0.2s ease; /* biar smooth saat dorong */
+}
+
+/* konten tetap di atas */
+#home > *:not(#particles) {
+  position: relative;
+  z-index: 1;
+}
+    
+#lightbox {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Filter Button Styles - TAMBAHKAN INI */
+.filter-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn:not(.active) {
+    background: #ffffff;
+    color: #6b7280; /* gray-500 */
+    border: 2px solid #d1d5db; /* gray-300 */
+}
+
+.filter-btn.active {
+    background: #096B5B !important; /* primary-teal */
+    color: white !important;
+    border-color: #096B5B !important;
+    box-shadow: 0 8px 25px rgba(9, 107, 91, 0.3);
+    transform: translateY(-2px);
+}
+
+.filter-btn:hover:not(.active) {
+    background: #f8fafc !important; /* slate-50 */
+    color: #096B5B !important;
+    border-color: #096B5B !important;
+    transform: translateY(-1px);
+}
+
+.filter-btn:active {
+    transform: translateY(0) !important;
+}
+
+/* Ripple effect saat klik */
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.filter-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.dark .filter-btn:not(.active) {
+    background: #1f2937; /* gray-800 */
+    color: #d1d5db; /* gray-300 */
+    border-color: #4b5563; /* gray-600 */
+}
+
+.dark .filter-btn:hover:not(.active) {
+    background: #374151; /* gray-700 */
+    color: #10b981; /* emerald-400 */
+    border-color: #10b981;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* NAVBAR CLEAN & STAY - Kompatibel index2.html + wedding.html */
+/* ═══════════════════════════════════════════════════ */
+
+/* Navbar Base - STAY VISIBLE, NO HIDE */
+header nav {
+    position: center !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    
+    /* Clean glassmorphism */
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    
+    /* Clean border only */
+    border: 1px solid rgba(229, 231, 235, 0.8) !important;
+    border-top: none !important;
+    
+    /* ❌ NO SHADOW - SUPER CLEAN */
+    box-shadow: none !important;
+    
+    /* Smooth transition */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Navbar scrolled state - subtle enhancement */
+header nav.scrolled {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(229, 231, 235, 1) !important;
+}
+
+/* Dark Mode Navbar */
+.dark header nav {
+    background: rgba(31, 41, 55, 0.95) !important;
+    border-color: rgba(75, 85, 79, 0.8) !important;
+}
+
+.dark header nav.scrolled {
+    background: rgba(31, 41, 55, 0.98) !important;
+    border-color: rgba(75, 85, 79, 1) !important;
+}
+
+/* Navbar Links - Enhanced hover */
+header nav a {
+    transition: all 0.2s ease !important;
+    position: relative;
+}
+
+header nav a:hover {
+    color: #096B5B !important;
+    background: rgba(9, 107, 91, 0.08) !important;
+    border-radius: 8px !important;
+    padding: 0.25rem 0.75rem !important;
+}
+
+/* Mobile Menu Button */
+header #mobileMenu,
+header #darkModeToggle {
+    transition: all 0.2s ease !important;
+}
+
+header #mobileMenu:hover,
+header #darkModeToggle:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-radius: 50% !important;
+}
+
+/* Dark mode hover states */
+.dark header nav a:hover {
+    background: rgba(9, 107, 91, 0.15) !important;
+    color: #14b8a6 !important;
+}
+
+.dark header #mobileMenu:hover,
+.dark header #darkModeToggle:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Mobile Dropdown - Clean */
+#mobileMenuDropdown {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(229, 231, 235, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.dark #mobileMenuDropdown {
+    background: rgba(31, 41, 55, 0.95) !important;
+    border-color: rgba(75, 85, 79, 0.8) !important;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* HAPUS SEMUA TRANSFORM HIDE NAVBAR */
+/* ═══════════════════════════════════════════════════ */
+header nav,
+header {
+    transform: none !important;
+    will-change: auto !important;
+}
+
+/* Pastikan navbar TIDAK pernah hide */
+header nav * {
+    animation: none !important;
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+    header nav {
+        padding: 0.75rem 1rem !important;
+        margin: 0 1rem !important;
+    }
+}
+
+/* Mobile Dropdown Animation */
+#mobileMenuDropdown {
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#mobileMenuDropdown:not(.hidden) {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Active menu button */
+#mobileMenu.active {
+    background: rgba(9, 107, 91, 0.1) !important;
+}
