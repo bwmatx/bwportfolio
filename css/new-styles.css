@@ -134,18 +134,38 @@ header nav a.nav-active::after {
             transition: background .2s;
         }
         @media (max-width: 768px) {
-        .popup-img-col {
-            display: none !important;
-        }
-
-        .popup-container {
-            flex-direction: column;
-        }
-
-        .popup-text-col {
-            width: 100%;
-            padding: 1.5rem;
-        }
+            .popup-container {
+                flex-direction: column;
+                max-width: 88%;
+                border-radius: 1.5rem;
+            }
+            .popup-img-col {
+                display: block !important;
+                width: 140px !important;
+                height: 140px !important;
+                margin: 2rem auto 0 !important;
+                border-radius: 50% !important;
+                overflow: hidden !important;
+            }
+            .popup-text-col {
+                width: 100%;
+                padding: 1.5rem !important;
+                text-align: center;
+                align-items: center;
+            }
+            .popup-text-col h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            .popup-text-col .space-y-3 {
+                font-size: 0.75rem !important;
+                line-height: 1.5 !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .popup-text-col a {
+                align-self: center !important;
+                padding: 0.6rem 1.2rem !important;
+            }
         }
         
         .popup-close-btn:hover { background: rgba(0,0,0,.2); }
