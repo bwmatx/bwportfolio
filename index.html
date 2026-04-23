@@ -1,673 +1,1207 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BW Indonesia Digital Creative Designer</title>
 
     <!-- Material Symbols — icon system dari index2 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Font Awesome via cdnjs (untuk footer social icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="stylesheet" href="./css/new-styles.css">
+    <link rel="stylesheet" href="./css/new-styles.css" />
 
     <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "bg-warm":      "#E8E0D0",
-                        "primary-teal": "#096B5B",
-                        "accent-soft":  "#C8E8DC",
-                        "card-1":       "#C97FD6",
-                        "card-2":       "#7ECFC4",
-                        "card-3":       "#D8E8A0",
-                        "card-4":       "#F4C28E",
-                        "card-5":       "#A0C4FF",
-                        "card-6":       "#FFD6A5",
-                    },
-                    fontFamily: {
-                        display: ["Fraunces", "serif"],
-                        sans:    ["Inter", "sans-serif"],
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "bg-warm": "#E8E0D0",
+              "primary-teal": "#096B5B",
+              "accent-soft": "#C8E8DC",
+              "card-1": "#C97FD6",
+              "card-2": "#7ECFC4",
+              "card-3": "#D8E8A0",
+              "card-4": "#F4C28E",
+              "card-5": "#A0C4FF",
+              "card-6": "#FFD6A5",
+            },
+            fontFamily: {
+              display: ["Fraunces", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
-</head>
+  </head>
 
-<body class="bg-bg-warm text-zinc-800 font-sans transition-colors duration-300">
+  <body
+    class="bg-bg-warm text-zinc-800 font-sans transition-colors duration-300"
+  >
+    <!-- ── Scroll Progress Bar ── -->
+    <div id="scroll-progress"></div>
 
-<!-- ── Scroll Progress Bar ── -->
-<div id="scroll-progress"></div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- LOADING SCREEN — index2                            -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div id="loadingScreen">
-    <span class="font-display text-4xl text-primary-teal" style="letter-spacing:-.04em;">AWe</span>
-    <div class="progress-bar-wrap">
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- LOADING SCREEN — index2                            -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div id="loadingScreen">
+      <span
+        class="font-display text-4xl text-primary-teal"
+        style="letter-spacing: -0.04em"
+        >AWe</span
+      >
+      <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+      <div id="loadingPercentage">0%</div>
     </div>
-    <div id="loadingPercentage">0%</div>
-</div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- POPUP MODAL — index2                               -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div id="popupOverlay">
-    <div class="popup-container">
-        <button class="popup-close-btn" id="popupClose" aria-label="Close popup">
-            <span class="material-symbols-outlined">close</span>
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- POPUP MODAL — index2                               -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div id="popupOverlay">
+      <div class="popup-container">
+        <button
+          class="popup-close-btn"
+          id="popupClose"
+          aria-label="Close popup"
+        >
+          <span class="material-symbols-outlined">close</span>
         </button>
         <div class="popup-img-col">
-            <img src="https://ik.imagekit.io/bwindonesiaimg/Pop%20Up/pop%20up.jpg?updatedAt=1761799146530"
-                 alt="Professional portrait of creative designer showcasing modern design aesthetic and creative workspace">
+          <img
+            src="https://ik.imagekit.io/bwindonesiaimg/Pop%20Up/pop%20up.jpg?updatedAt=1761799146530"
+            alt="Professional portrait of creative designer showcasing modern design aesthetic and creative workspace"
+          />
         </div>
         <div class="popup-text-col">
-            <h2 class="font-display text-3xl text-primary-teal mb-4 leading-tight">Welcome to my Portfolio!</h2>
-            <div class="space-y-3 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-8">
-                <p>Halo! Saya <strong>Khurniawan Adhi Wibowo</strong>, seorang Motion Graphic &amp; Creative Designer dengan pengalaman lebih dari 5 tahun.</p>
-                <p>Saya fokus menciptakan desain yang tidak hanya indah secara visual, tetapi juga memberikan pengalaman pengguna yang luar biasa. Spesialisasi saya meliputi Fotography, Videography, Motion Graphics dan UI/UX Design.</p>
-                <p>Mari kita wujudkan ide kreatif Anda menjadi karya visual yang nyata!</p>
-            </div>
-            <a href="#portfolio" id="popupCta"
-               class="inline-flex items-center gap-2 bg-primary-teal text-white px-7 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity self-start">
-                Lihat Portfolio Saya
-                <span class="material-symbols-outlined" style="font-size:17px;">arrow_forward</span>
-            </a>
+          <h2
+            class="font-display text-3xl text-primary-teal mb-4 leading-tight"
+          >
+            Welcome to my Portfolio!
+          </h2>
+          <div
+            class="space-y-3 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-8"
+          >
+            <p>
+              Halo! Saya <strong>Khurniawan Adhi Wibowo</strong>, seorang Motion
+              Graphic &amp; Creative Designer dengan pengalaman lebih dari 5
+              tahun.
+            </p>
+            <p>
+              Saya fokus menciptakan desain yang tidak hanya indah secara
+              visual, tetapi juga memberikan pengalaman pengguna yang luar
+              biasa. Spesialisasi saya meliputi Fotography, Videography, Motion
+              Graphics dan UI/UX Design.
+            </p>
+            <p>
+              Mari kita wujudkan ide kreatif Anda menjadi karya visual yang
+              nyata!
+            </p>
+          </div>
+          <a
+            href="#portfolio"
+            id="popupCta"
+            class="inline-flex items-center gap-2 bg-primary-teal text-white px-7 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity self-start"
+          >
+            Lihat Portfolio Saya
+            <span class="material-symbols-outlined" style="font-size: 17px"
+              >arrow_forward</span
+            >
+          </a>
         </div>
+      </div>
     </div>
-</div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- NAVBAR — index2 (Blog, SWF Uas, Alima hidden)      -->
-<!-- Header hide on scroll: DIHAPUS sesuai instruksi    -->
-<!-- ═══════════════════════════════════════════════════ -->
-<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4">
-    <nav class="w-full max-w-5xl flex justify-between items-center px-6 py-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg rounded-full border border-zinc-200 dark:border-zinc-700 shadow-sm">
-        <a href="#home" class="font-display text-xl text-primary-teal tracking-tighter">Adhi Wibowo</a>
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- NAVBAR — index2 (Blog, SWF Uas, Alima hidden)      -->
+    <!-- Header hide on scroll: DIHAPUS sesuai instruksi    -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <header
+      class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4"
+    >
+      <nav
+        class="w-full max-w-5xl flex justify-between items-center px-6 py-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg rounded-full border border-zinc-200 dark:border-zinc-700 shadow-sm"
+      >
+        <a
+          href="#home"
+          class="font-display text-xl text-primary-teal tracking-tighter"
+          >Adhi Wibowo</a
+        >
 
         <!-- Desktop nav -->
         <ul id="navLinks" class="hidden md:flex gap-5 text-sm font-medium">
-            <li><a href="#home"    class="hover:text-primary-teal transition-colors">Home</a></li>
-            <li><a href="#about"   class="hover:text-primary-teal transition-colors">About</a></li>
-            <li><a href="https://adhiwibowostory.blogspot.com/" target="_blank" rel="noopener noreferrer" class="hover:text-primary-teal transition-colors">Blog</a></li>
-            <li><a href="#portfolio" class="hover:text-primary-teal transition-colors">Portfolio</a></li>
-            <li><a href="remi.html" class="hover:text-primary-teal transition-colors" data-page="home">Remi</a></li>
-            <li><a href="#contact"  class="hover:text-primary-teal transition-colors">Contact</a></li>
-            <li style="display:none;"><a href="alima.html" target="_blank" rel="noopener noreferrer">Alima</a></li>
+          <li>
+            <a href="#home" class="hover:text-primary-teal transition-colors"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a href="#about" class="hover:text-primary-teal transition-colors"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://adhiwibowostory.blogspot.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-primary-teal transition-colors"
+              >Blog</a
+            >
+          </li>
+          <li>
+            <a
+              href="#portfolio"
+              class="hover:text-primary-teal transition-colors"
+              >Portfolio</a
+            >
+          </li>
+          <li>
+            <a
+              href="remi.html"
+              class="hover:text-primary-teal transition-colors"
+              data-page="home"
+              >Remi</a
+            >
+          </li>
+          <li>
+            <a href="#contact" class="hover:text-primary-teal transition-colors"
+              >Contact</a
+            >
+          </li>
+          <li style="display: none">
+            <a href="alima.html" target="_blank" rel="noopener noreferrer"
+              >Alima</a
+            >
+          </li>
         </ul>
 
         <div class="flex items-center gap-1">
-            <!-- Dark mode toggle — index2 (Material Symbols + localStorage) -->
-            <button id="darkModeToggle" aria-label="Toggle dark mode"
-                    class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
-            </button>
-            <!-- Mobile hamburger -->
-            <button id="mobileMenu" class="md:hidden p-2 rounded-full hover:bg-black/5 transition-colors" aria-label="Menu">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
+          <!-- Dark mode toggle — index2 (Material Symbols + localStorage) -->
+          <button
+            id="darkModeToggle"
+            aria-label="Toggle dark mode"
+            class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          >
+            <span class="material-symbols-outlined" id="themeIcon"
+              >dark_mode</span
+            >
+          </button>
+          <!-- Mobile hamburger -->
+          <button
+            id="mobileMenu"
+            class="md:hidden p-2 rounded-full hover:bg-black/5 transition-colors"
+            aria-label="Menu"
+          >
+            <span class="material-symbols-outlined">menu</span>
+          </button>
         </div>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-<!-- Mobile dropdown — index2 (dropdown card, bukan fullscreen overlay) -->
-<div id="mobileMenuDropdown"
-     class="fixed top-20 left-4 right-4 z-40 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg rounded-3xl border border-zinc-200 dark:border-zinc-700 shadow-lg hidden max-w-5xl mx-auto">
-    <ul class="flex flex-col p-3 text-sm font-medium">
-        <li><a href="#home"    class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Home</a></li>
-        <li><a href="#about"   class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">About</a></li>
-        <li><a href="https://adhiwibowostory.blogspot.com/" target="_blank" rel="noopener noreferrer" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Blog</a></li>
-        <li><a href="#portfolio" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Portfolio</a></li>
-        <li><a href="remi.html" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Remi</a></li>
-        <li><a href="#contact"  class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Contact</a></li>
-    </ul>
-</div>
+    <!-- Mobile dropdown — index2 (dropdown card, bukan fullscreen overlay) -->
+    <div
+      id="mobileMenuDropdown"
+      class="fixed top-20 left-4 right-4 z-40 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg rounded-3xl border border-zinc-200 dark:border-zinc-700 shadow-lg hidden max-w-5xl mx-auto"
+    >
+      <ul class="flex flex-col p-3 text-sm font-medium">
+        <li>
+          <a
+            href="#home"
+            class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            href="#about"
+            class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors"
+            >About</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://adhiwibowostory.blogspot.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors"
+            >Blog</a
+          >
+        </li>
+        <li>
+          <a
+            href="#portfolio"
+            class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors"
+            >Portfolio</a
+          >
+        </li>
+        <li>
+          <a
+            href="remi.html"
+            class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors"
+            >Remi</a
+          >
+        </li>
+        <li>
+          <a
+            href="#contact"
+            class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors"
+            >Contact</a
+          >
+        </li>
+      </ul>
+    </div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- MAIN CONTENT                                                   -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<main class="max-w-5xl mx-auto px-5 md:px-8">
-
-    <!-- ══════════════════ HERO — index2 ══════════════════ -->
-    <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center pt-28 pb-20 scroll-animate">
-        <h1 class="font-display text-5xl sm:text-7xl md:text-9xl text-primary-teal leading-none tracking-tighter mb-8">Hi, I'm AWe</h1>
-        <p class="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed px-2">
-            I am a passionate Digital Creative Designer focused on crafting engaging and visually impactful digital experiences.
-            I specialize in combining design, motion, and interactivity to create intuitive user interfaces.
-            With a keen eye for detail and a user-centered approach, I aim to bring your concepts to life.
-            <br><br>
-            Let's collaborate to create designs that captivate and engage users!
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- MAIN CONTENT                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <main class="max-w-5xl mx-auto px-5 md:px-8">
+      <!-- ══════════════════ HERO — index2 ══════════════════ -->
+      <section
+        id="home"
+        class="min-h-screen flex flex-col items-center justify-center text-center pt-28 pb-20 scroll-animate"
+      >
+        <h1
+          class="font-display text-5xl sm:text-7xl md:text-9xl text-primary-teal leading-none tracking-tighter mb-8"
+        >
+          Hi, I'm AWe
+        </h1>
+        <p
+          class="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed px-2"
+        >
+          I am a passionate Digital Creative Designer focused on crafting
+          engaging and visually impactful digital experiences. I specialize in
+          combining design, motion, and interactivity to create intuitive user
+          interfaces. With a keen eye for detail and a user-centered approach, I
+          aim to bring your concepts to life.
+          <br /><br />
+          Let's collaborate to create designs that captivate and engage users!
         </p>
-        <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-center w-full px-4 sm:px-0 sm:w-auto">
-            <a href="#portfolio"
-               class="inline-flex items-center justify-center gap-2 bg-primary-teal text-white px-7 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">
-                Lihat Portfolio
-                <span class="material-symbols-outlined" style="font-size:18px;">grid_view</span>
-            </a>
-            <a href="#contact"
-               class="inline-flex items-center justify-center gap-2 border-2 border-primary-teal text-primary-teal px-7 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-primary-teal hover:text-white transition-all">
-                Hubungi Saya
-                <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
-            </a>
+        <div
+          class="flex flex-col sm:flex-row flex-wrap gap-3 justify-center w-full px-4 sm:px-0 sm:w-auto"
+        >
+          <a
+            href="#portfolio"
+            class="inline-flex items-center justify-center gap-2 bg-primary-teal text-white px-7 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
+          >
+            Lihat Portfolio
+            <span class="material-symbols-outlined" style="font-size: 18px"
+              >grid_view</span
+            >
+          </a>
+          <a
+            href="#contact"
+            class="inline-flex items-center justify-center gap-2 border-2 border-primary-teal text-primary-teal px-7 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-primary-teal hover:text-white transition-all"
+          >
+            Hubungi Saya
+            <span class="material-symbols-outlined" style="font-size: 18px"
+              >mail</span
+            >
+          </a>
         </div>
         <div id="particles"></div>
-    </section>
+      </section>
 
-    <!-- ══════════════════ ABOUT — index2 (foto kanan desktop) ══════════════════ -->
-    <section id="about" class="py-20 scroll-animate">
-        <div class="bg-accent-soft/30 dark:bg-white/5 rounded-3xl sm:rounded-[3rem] p-6 sm:p-8 md:p-14 border border-primary-teal/10">
-            <div class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-14">
-
-                <!-- Foto kanan desktop, atas mobile -->
-                <div class="w-full md:w-2/5 flex justify-center flex-shrink-0">
-                    <div class="relative w-52 sm:w-64 md:w-full max-w-xs">
-                        <div class="absolute -inset-4 bg-primary-teal/10 rounded-full blur-3xl -z-10"></div>
-                        <img src="https://ik.imagekit.io/bwindonesiaimg/me?updatedAt=1762951150662"
-                             alt="Khurniawan Adhi Wibowo — Digital Creative Designer"
-                             class="w-full rounded-2xl sm:rounded-[2rem] object-cover shadow-2xl aspect-[3/4]">
-                    </div>
-                </div>
-
-                <!-- Teks -->
-                <div class="w-full md:w-3/5 text-center md:text-left">
-                    <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal mb-2">About Me</h2>
-                    <p class="text-base font-display italic text-zinc-500 mb-5">Digital Creative Designer</p>
-                    <div class="space-y-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6">
-                        <p>Saya adalah seorang designer dan editor dengan pengalaman lebih dari 5 tahun dalam menciptakan solusi digital yang inovatif. Keahlian saya meliputi Fotographer, Videographer, Motion Graphics dan UI/UX Design.</p>
-                        <p>Saya percaya bahwa desain yang baik adalah perpaduan sempurna antara estetika dan fungsionalitas. Setiap proyek adalah kesempatan untuk menciptakan sesuatu yang bermakna dan berdampak.</p>
-                    </div>
-
-                    <!-- 4 Skill Cards — 2 kolom, teks tidak overflow -->
-                    <div class="grid grid-cols-2 gap-2 sm:gap-3 mb-6">
-                        <div class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0">
-                            <span class="material-symbols-outlined text-primary-teal flex-shrink-0" style="font-size:20px;">movie</span>
-                            <span class="font-bold text-xs uppercase tracking-wide leading-tight">Motion Graphic</span>
-                        </div>
-                        <div class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0">
-                            <span class="material-symbols-outlined text-primary-teal flex-shrink-0" style="font-size:20px;">photo_camera</span>
-                            <span class="font-bold text-xs uppercase tracking-wide leading-tight">Photography</span>
-                        </div>
-                        <div class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0">
-                            <span class="material-symbols-outlined text-primary-teal flex-shrink-0" style="font-size:20px;">brush</span>
-                            <span class="font-bold text-xs uppercase tracking-wide leading-tight">Graphic Design</span>
-                        </div>
-                        <div class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0">
-                            <span class="material-symbols-outlined text-primary-teal flex-shrink-0" style="font-size:20px;">videocam</span>
-                            <span class="font-bold text-xs uppercase tracking-wide leading-tight">Videography</span>
-                        </div>
-                    </div>
-
-                    <!-- Download CV — center di mobile, left di desktop -->
-                    <div class="flex justify-center md:justify-start">
-                        <a href="https://drive.google.com/file/d/1Kfi4Ve-uQkGVU1oqxOlClsSIYJcFYuhW/view?usp=sharing"
-                           target="_blank" rel="noopener noreferrer"
-                           class="inline-flex items-center gap-2 bg-zinc-800 dark:bg-zinc-700 text-white px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-black dark:hover:bg-zinc-600 transition-colors">
-                            DOWNLOAD CV
-                            <span class="material-symbols-outlined" style="font-size:18px;">download</span>
-                        </a>
-                    </div>
-                </div>
+      <!-- ══════════════════ ABOUT — index2 (foto kanan desktop) ══════════════════ -->
+      <section id="about" class="py-20 scroll-animate">
+        <div
+          class="bg-accent-soft/30 dark:bg-white/5 rounded-3xl sm:rounded-[3rem] pt-6 sm:pt-8 md:pt-14 px-6 sm:px-8 md:px-14 border border-primary-teal/10 overflow-hidden relative"
+        >
+          <div
+            class="flex flex-col-reverse md:flex-row-reverse items-center gap-8 md:gap-14"
+          >
+            <!-- Foto kanan desktop, bawah mobile -->
+            <div
+              class="flex justify-center flex-shrink-0 self-center md:absolute md:right-0 md:bottom-0 md:z-0"
+            >
+              <div class="relative w-72 sm:w-80 md:w-[650px]">
+                <div
+                  class="absolute -inset-4 bg-primary-teal/10 rounded-full blur-3xl -z-10"
+                ></div>
+                <img
+                  src="https://ik.imagekit.io/bwindonesiaimg/About/about.png"
+                  alt="Khurniawan Adhi Wibowo — Digital Creative Designer"
+                  class="w-full h-auto object-contain drop-shadow-2xl"
+                />
+              </div>
             </div>
+
+            <!-- Teks -->
+            <div
+              class="w-full md:w-1/2 md:mr-auto text-center md:text-left pb-0 md:pb-14 self-center relative z-10"
+            >
+              <h2
+                class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal mb-2"
+              >
+                About Me
+              </h2>
+              <p class="text-base font-display italic text-zinc-500 mb-5">
+                Digital Creative Designer
+              </p>
+              <div
+                class="space-y-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6"
+              >
+                <p>
+                  Saya adalah seorang designer dan editor dengan pengalaman
+                  lebih dari 5 tahun dalam menciptakan solusi digital yang
+                  inovatif. Keahlian saya meliputi Fotographer, Videographer,
+                  Motion Graphics dan UI/UX Design.
+                </p>
+                <p>
+                  Saya percaya bahwa desain yang baik adalah perpaduan sempurna
+                  antara estetika dan fungsionalitas. Setiap proyek adalah
+                  kesempatan untuk menciptakan sesuatu yang bermakna dan
+                  berdampak.
+                </p>
+              </div>
+
+              <!-- 4 Skill Cards — 2 kolom, teks tidak overflow -->
+              <div class="grid grid-cols-2 gap-2 sm:gap-3 mb-6">
+                <div
+                  class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary-teal flex-shrink-0"
+                    style="font-size: 20px"
+                    >movie</span
+                  >
+                  <span
+                    class="font-bold text-xs uppercase tracking-wide leading-tight"
+                    >Motion Graphic</span
+                  >
+                </div>
+                <div
+                  class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary-teal flex-shrink-0"
+                    style="font-size: 20px"
+                    >photo_camera</span
+                  >
+                  <span
+                    class="font-bold text-xs uppercase tracking-wide leading-tight"
+                    >Photography</span
+                  >
+                </div>
+                <div
+                  class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary-teal flex-shrink-0"
+                    style="font-size: 20px"
+                    >brush</span
+                  >
+                  <span
+                    class="font-bold text-xs uppercase tracking-wide leading-tight"
+                    >Graphic Design</span
+                  >
+                </div>
+                <div
+                  class="bg-white/60 dark:bg-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 min-w-0"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary-teal flex-shrink-0"
+                    style="font-size: 20px"
+                    >videocam</span
+                  >
+                  <span
+                    class="font-bold text-xs uppercase tracking-wide leading-tight"
+                    >Videography</span
+                  >
+                </div>
+              </div>
+
+              <!-- Download CV — center di mobile, left di desktop -->
+              <div class="flex justify-center md:justify-start">
+                <a
+                  href="https://drive.google.com/file/d/1Kfi4Ve-uQkGVU1oqxOlClsSIYJcFYuhW/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 bg-zinc-800 dark:bg-zinc-700 text-white px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-black dark:hover:bg-zinc-600 transition-colors"
+                >
+                  DOWNLOAD CV
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-size: 18px"
+                    >download</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- ══════════════════ LANGUAGE SKILLS ══════════════════     -->
-    <!-- Teks saja — sesuai instruksi (flag images dihapus)        -->
-    <!-- Style card & IntersectionObserver tetap dari index2       -->
-    <section id="language-skills" class="py-16 scroll-animate">
-        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10">Language Skills</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-2">
-
-            <div class="language-item bg-accent-soft/30 dark:bg-white/5 rounded-2xl sm:rounded-[2rem] p-5 sm:p-7 border border-primary-teal/10 flex items-center gap-4">
-                <div class="min-w-0">
-                    <div class="font-bold text-sm sm:text-base text-zinc-800 dark:text-zinc-100 truncate">Indonesian</div>
-                    <div class="text-xs font-medium text-primary-teal uppercase tracking-wide mt-0.5">Native Language</div>
-                </div>
+      <!-- ══════════════════ LANGUAGE SKILLS ══════════════════     -->
+      <!-- Teks saja — sesuai instruksi (flag images dihapus)        -->
+      <!-- Style card & IntersectionObserver tetap dari index2       -->
+      <section id="language-skills" class="py-16 scroll-animate">
+        <h2
+          class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10"
+        >
+          Language Skills
+        </h2>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-2"
+        >
+          <div
+            class="language-item bg-accent-soft/30 dark:bg-white/5 rounded-2xl sm:rounded-[2rem] p-5 sm:p-7 border border-primary-teal/10 flex items-center gap-4"
+          >
+            <div class="min-w-0">
+              <div
+                class="font-bold text-sm sm:text-base text-zinc-800 dark:text-zinc-100 truncate"
+              >
+                Indonesian
+              </div>
+              <div
+                class="text-xs font-medium text-primary-teal uppercase tracking-wide mt-0.5"
+              >
+                Native Language
+              </div>
             </div>
+          </div>
 
-            <div class="language-item bg-accent-soft/30 dark:bg-white/5 rounded-2xl sm:rounded-[2rem] p-5 sm:p-7 border border-primary-teal/10 flex items-center gap-4">
-                <div class="min-w-0">
-                    <div class="font-bold text-sm sm:text-base text-zinc-800 dark:text-zinc-100 truncate">English</div>
-                    <div class="text-xs font-medium text-primary-teal uppercase tracking-wide mt-0.5">Professional Working</div>
-                </div>
+          <div
+            class="language-item bg-accent-soft/30 dark:bg-white/5 rounded-2xl sm:rounded-[2rem] p-5 sm:p-7 border border-primary-teal/10 flex items-center gap-4"
+          >
+            <div class="min-w-0">
+              <div
+                class="font-bold text-sm sm:text-base text-zinc-800 dark:text-zinc-100 truncate"
+              >
+                English
+              </div>
+              <div
+                class="text-xs font-medium text-primary-teal uppercase tracking-wide mt-0.5"
+              >
+                Professional Working
+              </div>
             </div>
-
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- ══════════════════ TOOLS / SOFTWARE ══════════════════ -->
-    <section id="tools" class="py-12">
-        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-3">Software</h2>
+      <!-- ══════════════════ TOOLS / SOFTWARE ══════════════════ -->
+      <section id="tools" class="py-12">
+        <h2
+          class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-3"
+        >
+          Software
+        </h2>
         <div class="linear-underline" aria-hidden="true"></div>
 
         <div class="tools-grid max-w-4xl mx-auto px-2">
-
-            <!-- Adobe Photoshop -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg">
-                </div>
-                <div class="tool-name">Adobe Photoshop</div>
+          <!-- Adobe Photoshop -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg"
+              />
             </div>
+            <div class="tool-name">Adobe Photoshop</div>
+          </div>
 
-            <!-- After Effects -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg"
-                         alt="After Effects logo">
-                </div>
-                <div class="tool-name">After Effects</div>
+          <!-- After Effects -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg"
+                alt="After Effects logo"
+              />
             </div>
+            <div class="tool-name">After Effects</div>
+          </div>
 
-            <!-- CapCut -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Capcut-icon.svg">
-                </div>
-                <div class="tool-name">CapCut</div>
+          <!-- CapCut -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Capcut-icon.svg"
+              />
             </div>
+            <div class="tool-name">CapCut</div>
+          </div>
 
-            <!-- CorelDRAW -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="img/logo/icons8-coreldraw.svg"
-                         alt="CorelDRAW logo">
-                </div>
-                <div class="tool-name">CorelDRAW</div>
+          <!-- CorelDRAW -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img src="img/logo/icons8-coreldraw.svg" alt="CorelDRAW logo" />
             </div>
+            <div class="tool-name">CorelDRAW</div>
+          </div>
 
-            <!-- Figma -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg"
-                         alt="Figma logo">
-                </div>
-                <div class="tool-name">Figma</div>
+          <!-- Figma -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg"
+                alt="Figma logo"
+              />
             </div>
+            <div class="tool-name">Figma</div>
+          </div>
 
-            <!-- Illustrator -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg"
-                         alt="Adobe Illustrator logo">
-                </div>
-                <div class="tool-name">Illustrator</div>
+          <!-- Illustrator -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg"
+                alt="Adobe Illustrator logo"
+              />
             </div>
+            <div class="tool-name">Illustrator</div>
+          </div>
 
-            <!-- Premiere Pro -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg"
-                         alt="Premiere Pro logo">
-                </div>
-                <div class="tool-name">Premiere Pro</div>
+          <!-- Premiere Pro -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg"
+                alt="Premiere Pro logo"
+              />
             </div>
+            <div class="tool-name">Premiere Pro</div>
+          </div>
 
-            <!-- VS Code -->
-            <div class="tool-item">
-                <div class="tool-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg"
-                         alt="VS Code logo">
-                </div>
-                <div class="tool-name">VS Code</div>
+          <!-- VS Code -->
+          <div class="tool-item">
+            <div class="tool-icon">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg"
+                alt="VS Code logo"
+              />
             </div>
-
+            <div class="tool-name">VS Code</div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <!-- PORTFOLIO — index2 (6 cards lengkap dengan deskripsi + dual tag)  -->
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <section id="portfolio" class="py-20 scroll-animate">
-        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10">Portfolio Saya</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
+      <!-- ══════════════════════════════════════════════════════════════════ -->
+      <!-- PORTFOLIO — index2 (6 cards lengkap dengan deskripsi + dual tag)  -->
+      <!-- ══════════════════════════════════════════════════════════════════ -->
+      <section id="portfolio" class="py-20 scroll-animate">
+        <h2
+          class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10"
+        >
+          Portfolio Saya
+        </h2>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7"
+        >
+          <!-- Card 1: Wedding -->
+          <article
+            class="group relative bg-card-2 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <img
+              src="https://ik.imagekit.io/bwindonesiaimg/wedding.jpg?updatedAt=1761710383526"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              alt="Wedding Project"
+            />
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Wedding Project</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Wedding Momment
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Mengabadikan Setiap Momen Terbaik
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Photo</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Video</span
+                >
+              </div>
+              <a
+                href="wedding.html"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >arrow_outward</span
+                >
+              </a>
+            </div>
+          </article>
 
-            <!-- Card 1: Wedding -->
-            <article class="group relative bg-card-2 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden" style="min-height:320px;">
-                <img src="https://ik.imagekit.io/bwindonesiaimg/wedding.jpg?updatedAt=1761710383526"
-                     class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-                     alt="Wedding Project">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block">Wedding Project</span>
-                    <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">Wedding Momment</h3>
-                    <p class="text-xs mt-1.5 opacity-70 leading-relaxed">Mengabadikan Setiap Momen Terbaik</p>
-                </div>
-                <div class="relative z-10 flex justify-between items-end mt-6">
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Photo</span>
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Video</span>
-                    </div>
-                    <a href="wedding.html"
-                       class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2">
-                        <span class="material-symbols-outlined" style="font-size:18px;">arrow_outward</span>
-                    </a>
-                </div>
-            </article>
+          <!-- Card 2: Graduation -->
+          <article
+            class="group relative bg-card-4 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <img
+              src="https://ik.imagekit.io/bwindonesiaimg/Graduation%20Photoshoot.jpg?updatedAt=1761711445714"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              alt="Graduation"
+            />
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Graduation</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Academic Stories
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Mengabadikan momen penting setelah Studi
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Wisuda</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Photoshoot</span
+                >
+              </div>
+              <a
+                href="graduation.html"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >arrow_outward</span
+                >
+              </a>
+            </div>
+          </article>
 
-            <!-- Card 2: Graduation -->
-            <article class="group relative bg-card-4 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden" style="min-height:320px;">
-                <img src="https://ik.imagekit.io/bwindonesiaimg/Graduation%20Photoshoot.jpg?updatedAt=1761711445714"
-                     class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-                     alt="Graduation">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block">Graduation</span>
-                    <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">Academic Stories</h3>
-                    <p class="text-xs mt-1.5 opacity-70 leading-relaxed">Mengabadikan momen penting setelah Studi</p>
-                </div>
-                <div class="relative z-10 flex justify-between items-end mt-6">
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Wisuda</span>
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Photoshoot</span>
-                    </div>
-                    <a href="graduation.html"
-                       class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2">
-                        <span class="material-symbols-outlined" style="font-size:18px;">arrow_outward</span>
-                    </a>
-                </div>
-            </article>
+          <!-- Card 3: Video Project -->
+          <article
+            class="group relative bg-card-1 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <img
+              src="https://ik.imagekit.io/bwindonesiaimg/Banner%20Video%20New.jpg?updatedAt=1762948787213"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              alt="Video Project"
+            />
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Cinematic</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Video Project
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Dokumentasi Visual Bergerak dengan engagement tinggi
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Video</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Clip</span
+                >
+              </div>
+              <a
+                href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >play_circle</span
+                >
+              </a>
+            </div>
+          </article>
 
-            <!-- Card 3: Video Project -->
-            <article class="group relative bg-card-1 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden" style="min-height:320px;">
-                <img src="https://ik.imagekit.io/bwindonesiaimg/Banner%20Video%20New.jpg?updatedAt=1762948787213"
-                     class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-                     alt="Video Project">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block">Cinematic</span>
-                    <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">Video Project</h3>
-                    <p class="text-xs mt-1.5 opacity-70 leading-relaxed">Dokumentasi Visual Bergerak dengan engagement tinggi</p>
-                </div>
-                <div class="relative z-10 flex justify-between items-end mt-6">
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Video</span>
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Clip</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
-                       target="_blank" rel="noopener noreferrer"
-                       class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2">
-                        <span class="material-symbols-outlined" style="font-size:18px;">play_circle</span>
-                    </a>
-                </div>
-            </article>
+          <!-- Card 4: Graphic Design -->
+          <article
+            class="group relative bg-card-3 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <img
+              src="https://ik.imagekit.io/bwindonesiaimg/graphic%20Design.jpg?updatedAt=1761710502030"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              alt="Graphic Design"
+            />
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Graphic Design</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Graphic Design
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Pembuatan IG Post atau Flyer untuk Promosi yang terkesan Modern
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >IG Post</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Banner</span
+                >
+              </div>
+              <a
+                href="#graphic-design"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >arrow_outward</span
+                >
+              </a>
+            </div>
+          </article>
 
-            <!-- Card 4: Graphic Design -->
-            <article class="group relative bg-card-3 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden" style="min-height:320px;">
-                <img src="https://ik.imagekit.io/bwindonesiaimg/graphic%20Design.jpg?updatedAt=1761710502030"
-                     class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-                     alt="Graphic Design">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block">Graphic Design</span>
-                    <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">Graphic Design</h3>
-                    <p class="text-xs mt-1.5 opacity-70 leading-relaxed">Pembuatan IG Post atau Flyer untuk Promosi yang terkesan Modern</p>
-                </div>
-                <div class="relative z-10 flex justify-between items-end mt-6">
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">IG Post</span>
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Banner</span>
-                    </div>
-                    <a href="#graphic-design"
-                       class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2">
-                        <span class="material-symbols-outlined" style="font-size:18px;">arrow_outward</span>
-                    </a>
-                </div>
-            </article>
+          <!-- Card 5: Design Packaging -->
+          <article
+            class="group relative bg-card-5 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <img
+              src="https://ik.imagekit.io/bwindonesiaimg/package.jpg?updatedAt=1761711837825"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              alt="Design Packaging"
+            />
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Design Packaging</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Design Packaging
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Meningkatkan Kualitas Produk Anda
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Product</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Package</span
+                >
+              </div>
+              <a
+                href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >play_circle</span
+                >
+              </a>
+            </div>
+          </article>
 
-            <!-- Card 5: Design Packaging -->
-            <article class="group relative bg-card-5 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden" style="min-height:320px;">
-                <img src="https://ik.imagekit.io/bwindonesiaimg/package.jpg?updatedAt=1761711837825"
-                     class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-                     alt="Design Packaging">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block">Design Packaging</span>
-                    <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">Design Packaging</h3>
-                    <p class="text-xs mt-1.5 opacity-70 leading-relaxed">Meningkatkan Kualitas Produk Anda</p>
-                </div>
-                <div class="relative z-10 flex justify-between items-end mt-6">
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Product</span>
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Package</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
-                       target="_blank" rel="noopener noreferrer"
-                       class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2">
-                        <span class="material-symbols-outlined" style="font-size:18px;">play_circle</span>
-                    </a>
-                </div>
-            </article>
-
-            <!-- Card 6: Motion Graphic -->
-            <article class="group relative bg-card-6 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden" style="min-height:320px;">
-                <img src="https://ik.imagekit.io/bwindonesiaimg/mg.jpg?updatedAt=1761712966941"
-                     class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-                     alt="Motion Graphic">
-                <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block">Motion Graphic</span>
-                    <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">Motion Graphic Project</h3>
-                    <p class="text-xs mt-1.5 opacity-70 leading-relaxed">Gerakkan ide, hidupkan cerita dengan motion graphic</p>
-                </div>
-                <div class="relative z-10 flex justify-between items-end mt-6">
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Motion</span>
-                        <span class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full">Video Graphic</span>
-                    </div>
-                    <a href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
-                       target="_blank" rel="noopener noreferrer"
-                       class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2">
-                        <span class="material-symbols-outlined" style="font-size:18px;">play_circle</span>
-                    </a>
-                </div>
-            </article>
-
+          <!-- Card 6: Motion Graphic -->
+          <article
+            class="group relative bg-card-6 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <img
+              src="https://ik.imagekit.io/bwindonesiaimg/mg.jpg?updatedAt=1761712966941"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              alt="Motion Graphic"
+            />
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Motion Graphic</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Motion Graphic Project
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Gerakkan ide, hidupkan cerita dengan motion graphic
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Motion</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Video Graphic</span
+                >
+              </div>
+              <a
+                href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >play_circle</span
+                >
+              </a>
+            </div>
+          </article>
         </div>
-    </section>
+      </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <!-- TESTIMONIAL — index2 (carousel + dots + auto-slide + pause hover) -->
-    <!-- Layout horizontal (foto kiri, teks kanan) — index2               -->
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <section id="reviews" class="py-20 scroll-animate">
-        <div class="bg-white/30 dark:bg-white/5 rounded-3xl sm:rounded-[3rem] px-5 sm:px-8 md:px-16 py-10 sm:py-16 border border-primary-teal/10">
-            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10">Testimonial</h2>
+      <!-- ══════════════════════════════════════════════════════════════════ -->
+      <!-- TESTIMONIAL — index2 (carousel + dots + auto-slide + pause hover) -->
+      <!-- Layout horizontal (foto kiri, teks kanan) — index2               -->
+      <!-- ══════════════════════════════════════════════════════════════════ -->
+      <section id="reviews" class="py-20 scroll-animate">
+        <div
+          class="bg-white/30 dark:bg-white/5 rounded-3xl sm:rounded-[3rem] px-5 sm:px-8 md:px-16 py-10 sm:py-16 border border-primary-teal/10"
+        >
+          <h2
+            class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10"
+          >
+            Testimonial
+          </h2>
 
-            <div class="carousel-container relative overflow-hidden">
-                <div class="overflow-hidden rounded-2xl">
-                    <div class="carousel-track testi-track flex transition-transform duration-700 ease-in-out" id="carouselTrack">
-
-                        <!-- Slide 1: Fajar -->
-                        <div class="testi-slide min-w-full">
-                            <div class="flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-3xl mx-auto text-center md:text-left">
-                                <div class="flex-shrink-0">
-                                    <img src="https://ik.imagekit.io/bwindonesiaimg/Testimoni/fajar.jpg?updatedAt=1761749384840"
-                                         alt="Fajar Arianto"
-                                         class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary-teal/20 shadow-lg mx-auto md:mx-0">
-                                </div>
-                                <div class="min-w-0">
-                                    <p class="text-sm sm:text-base md:text-lg font-display italic text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed">
-                                        "Ahli dalam analisis, pengembangan sistem, dan kreativitas yang tak tertandingi menghasilkan solusi inovatif yang sangat menginspirasi. Anda selalu menghadirkan ide-ide segar dan bermanfaat."
-                                    </p>
-                                    <div class="font-bold text-primary-teal text-xs sm:text-sm uppercase tracking-wide">Fajar Arianto, S.Sn</div>
-                                    <div class="text-xs text-zinc-500 mt-1">Seniman/Dalang</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 2: Renggi -->
-                        <div class="testi-slide min-w-full">
-                            <div class="flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-3xl mx-auto text-center md:text-left">
-                                <div class="flex-shrink-0">
-                                    <img src="https://ik.imagekit.io/bwindonesiaimg/Testimoni/renggi.jpg?updatedAt=1761836259426"
-                                         alt="Renggi Andika Putra"
-                                         class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary-teal/20 shadow-lg mx-auto md:mx-0">
-                                </div>
-                                <div class="min-w-0">
-                                    <p class="text-sm sm:text-base md:text-lg font-display italic text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed">
-                                        "Selama 4 tahun bekerja bersama, menunjukkan dedikasi luar biasa, kreativitas tinggi, dan kemampuan teknis yang memukau dalam setiap foto dan video wedding yang dikerjakan!"
-                                    </p>
-                                    <div class="font-bold text-primary-teal text-xs sm:text-sm uppercase tracking-wide">Renggi Andika Putra, S.Pd</div>
-                                    <div class="text-xs text-zinc-500 mt-1">CEO Alima Photo</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 3: Asih -->
-                        <div class="testi-slide min-w-full">
-                            <div class="flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-3xl mx-auto text-center md:text-left">
-                                <div class="flex-shrink-0">
-                                    <img src="https://ik.imagekit.io/bwindonesiaimg/Testimoni/rini_Ma7gmUNm3?updatedAt=1761749940330"
-                                         alt="Asih Dwi Arini"
-                                         class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary-teal/20 shadow-lg mx-auto md:mx-0">
-                                </div>
-                                <div class="min-w-0">
-                                    <p class="text-sm sm:text-base md:text-lg font-display italic text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed">
-                                        "Selama bekerja bersama, Anda selalu menghadirkan desain media pembelajaran yang kreatif, efektif, professional dan sangat membantu dalam mempermudah pemahaman siswa."
-                                    </p>
-                                    <div class="font-bold text-primary-teal text-xs sm:text-sm uppercase tracking-wide">Asih Dwi Arini, S.Pd, Gr</div>
-                                    <div class="text-xs text-zinc-500 mt-1">Guru</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div><!-- /carouselTrack -->
-                </div>
-
-                <!-- Carousel Controls -->
-                <div class="carousel-controls flex justify-center items-center gap-4 mt-8">
-                    <button id="prevBtn"
-                            class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-primary-teal/20 flex items-center justify-center text-primary-teal hover:bg-primary-teal hover:text-white hover:border-primary-teal transition-all flex-shrink-0"
-                            aria-label="Previous">
-                        <span class="material-symbols-outlined" style="font-size:20px;">chevron_left</span>
-                    </button>
-                    <div id="indicators" class="flex gap-2 items-center">
-                        <span class="indicator testi-dot active" data-slide="0"></span>
-                        <span class="indicator testi-dot" data-slide="1"></span>
-                        <span class="indicator testi-dot" data-slide="2"></span>
+          <div class="carousel-container relative overflow-hidden">
+            <div class="overflow-hidden rounded-2xl">
+              <div
+                class="carousel-track testi-track flex transition-transform duration-700 ease-in-out"
+                id="carouselTrack"
+              >
+                <!-- Slide 1: Fajar -->
+                <div class="testi-slide min-w-full">
+                  <div
+                    class="flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-3xl mx-auto text-center md:text-left"
+                  >
+                    <div class="flex-shrink-0">
+                      <img
+                        src="https://ik.imagekit.io/bwindonesiaimg/Testimoni/fajar.jpg?updatedAt=1761749384840"
+                        alt="Fajar Arianto"
+                        class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary-teal/20 shadow-lg mx-auto md:mx-0"
+                      />
                     </div>
-                    <button id="nextBtn"
-                            class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-primary-teal/20 flex items-center justify-center text-primary-teal hover:bg-primary-teal hover:text-white hover:border-primary-teal transition-all flex-shrink-0"
-                            aria-label="Next">
-                        <span class="material-symbols-outlined" style="font-size:20px;">chevron_right</span>
-                    </button>
+                    <div class="min-w-0">
+                      <p
+                        class="text-sm sm:text-base md:text-lg font-display italic text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed"
+                      >
+                        "Ahli dalam analisis, pengembangan sistem, dan
+                        kreativitas yang tak tertandingi menghasilkan solusi
+                        inovatif yang sangat menginspirasi. Anda selalu
+                        menghadirkan ide-ide segar dan bermanfaat."
+                      </p>
+                      <div
+                        class="font-bold text-primary-teal text-xs sm:text-sm uppercase tracking-wide"
+                      >
+                        Fajar Arianto, S.Sn
+                      </div>
+                      <div class="text-xs text-zinc-500 mt-1">
+                        Seniman/Dalang
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div><!-- /carousel-container -->
+
+                <!-- Slide 2: Renggi -->
+                <div class="testi-slide min-w-full">
+                  <div
+                    class="flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-3xl mx-auto text-center md:text-left"
+                  >
+                    <div class="flex-shrink-0">
+                      <img
+                        src="https://ik.imagekit.io/bwindonesiaimg/Testimoni/renggi.jpg?updatedAt=1761836259426"
+                        alt="Renggi Andika Putra"
+                        class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary-teal/20 shadow-lg mx-auto md:mx-0"
+                      />
+                    </div>
+                    <div class="min-w-0">
+                      <p
+                        class="text-sm sm:text-base md:text-lg font-display italic text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed"
+                      >
+                        "Selama 4 tahun bekerja bersama, menunjukkan dedikasi
+                        luar biasa, kreativitas tinggi, dan kemampuan teknis
+                        yang memukau dalam setiap foto dan video wedding yang
+                        dikerjakan!"
+                      </p>
+                      <div
+                        class="font-bold text-primary-teal text-xs sm:text-sm uppercase tracking-wide"
+                      >
+                        Renggi Andika Putra, S.Pd
+                      </div>
+                      <div class="text-xs text-zinc-500 mt-1">
+                        CEO Alima Photo
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3: Asih -->
+                <div class="testi-slide min-w-full">
+                  <div
+                    class="flex flex-col items-center gap-6 md:flex-row md:gap-12 max-w-3xl mx-auto text-center md:text-left"
+                  >
+                    <div class="flex-shrink-0">
+                      <img
+                        src="https://ik.imagekit.io/bwindonesiaimg/Testimoni/rini_Ma7gmUNm3?updatedAt=1761749940330"
+                        alt="Asih Dwi Arini"
+                        class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary-teal/20 shadow-lg mx-auto md:mx-0"
+                      />
+                    </div>
+                    <div class="min-w-0">
+                      <p
+                        class="text-sm sm:text-base md:text-lg font-display italic text-zinc-700 dark:text-zinc-300 mb-4 leading-relaxed"
+                      >
+                        "Selama bekerja bersama, Anda selalu menghadirkan desain
+                        media pembelajaran yang kreatif, efektif, professional
+                        dan sangat membantu dalam mempermudah pemahaman siswa."
+                      </p>
+                      <div
+                        class="font-bold text-primary-teal text-xs sm:text-sm uppercase tracking-wide"
+                      >
+                        Asih Dwi Arini, S.Pd, Gr
+                      </div>
+                      <div class="text-xs text-zinc-500 mt-1">Guru</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /carouselTrack -->
+            </div>
+
+            <!-- Carousel Controls -->
+            <div
+              class="carousel-controls flex justify-center items-center gap-4 mt-8"
+            >
+              <button
+                id="prevBtn"
+                class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-primary-teal/20 flex items-center justify-center text-primary-teal hover:bg-primary-teal hover:text-white hover:border-primary-teal transition-all flex-shrink-0"
+                aria-label="Previous"
+              >
+                <span class="material-symbols-outlined" style="font-size: 20px"
+                  >chevron_left</span
+                >
+              </button>
+              <div id="indicators" class="flex gap-2 items-center">
+                <span class="indicator testi-dot active" data-slide="0"></span>
+                <span class="indicator testi-dot" data-slide="1"></span>
+                <span class="indicator testi-dot" data-slide="2"></span>
+              </div>
+              <button
+                id="nextBtn"
+                class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-primary-teal/20 flex items-center justify-center text-primary-teal hover:bg-primary-teal hover:text-white hover:border-primary-teal transition-all flex-shrink-0"
+                aria-label="Next"
+              >
+                <span class="material-symbols-outlined" style="font-size: 20px"
+                  >chevron_right</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- /carousel-container -->
         </div>
-    </section>
+      </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <!-- CONTACT — index2 (tagline + WhatsApp ?text= + decorative icon)    -->
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <section id="contact" class="py-20 scroll-animate">
-        <div class="bg-primary-teal text-white rounded-3xl sm:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden">
-            <span class="material-symbols-outlined absolute top-6 right-6 sm:top-8 sm:right-8 opacity-10"
-                  style="font-size:72px; transform:rotate(12deg);">send</span>
-            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 leading-tight">Mari berkolaborasi</h2>
-            <p class="text-sm sm:text-base md:text-lg opacity-80 mb-8 max-w-lg mx-auto leading-relaxed px-2">
-                Wujudkan ide kreatif Anda menjadi karya visual yang nyata bersama saya.
-            </p>
-            <a href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
-               target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center justify-center gap-2 bg-white text-primary-teal px-6 sm:px-9 py-3.5 sm:py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
-                <span class="material-symbols-outlined" style="font-size:18px;">chat</span>
-                Hubungi via WhatsApp
-            </a>
+      <!-- ══════════════════════════════════════════════════════════════════ -->
+      <!-- CONTACT — index2 (tagline + WhatsApp ?text= + decorative icon)    -->
+      <!-- ══════════════════════════════════════════════════════════════════ -->
+      <section id="contact" class="py-20 scroll-animate">
+        <div
+          class="bg-primary-teal text-white rounded-3xl sm:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden"
+        >
+          <span
+            class="material-symbols-outlined absolute top-6 right-6 sm:top-8 sm:right-8 opacity-10"
+            style="font-size: 72px; transform: rotate(12deg)"
+            >send</span
+          >
+          <h2
+            class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 leading-tight"
+          >
+            Mari berkolaborasi
+          </h2>
+          <p
+            class="text-sm sm:text-base md:text-lg opacity-80 mb-8 max-w-lg mx-auto leading-relaxed px-2"
+          >
+            Wujudkan ide kreatif Anda menjadi karya visual yang nyata bersama
+            saya.
+          </p>
+          <a
+            href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 bg-white text-primary-teal px-6 sm:px-9 py-3.5 sm:py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-xl"
+          >
+            <span class="material-symbols-outlined" style="font-size: 18px"
+              >chat</span
+            >
+            Hubungi via WhatsApp
+          </a>
         </div>
-    </section>
+      </section>
+    </main>
 
-</main>
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- FOOTER — 3 kolom: sosial | maps | kontak                      -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<footer class="border-t border-black/5 dark:border-white/5">
-
-    <!-- Brand -->
-    <div class="text-center pt-12 pb-8 px-8">
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FOOTER — 3 kolom: sosial | maps | kontak                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <footer class="border-t border-black/5 dark:border-white/5">
+      <!-- Brand -->
+      <div class="text-center pt-12 pb-8 px-8">
         <p class="font-display text-2xl text-primary-teal mb-1">Adhi Wibowo</p>
-        <p class="text-zinc-400 text-xs tracking-widest uppercase">Digital Creative Designer</p>
-    </div>
+        <p class="text-zinc-400 text-xs tracking-widest uppercase">
+          Digital Creative Designer
+        </p>
+      </div>
 
-    <!-- Grid 2 kolom: maps kiri | kontak+sosial kanan -->
-    <div class="max-w-5xl mx-auto px-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-
+      <!-- Grid 2 kolom: maps kiri | kontak+sosial kanan -->
+      <div
+        class="max-w-5xl mx-auto px-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start"
+      >
         <!-- KIRI: Google Maps -->
         <div class="flex flex-col items-start gap-3">
-            <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Lokasi</span>
-            <div class="w-full rounded-2xl overflow-hidden shadow-md border border-black/5 dark:border-white/5" style="position:relative;padding-bottom:66.67%;height:0;">
-                <iframe
-                    src="https://maps.google.com/maps?width=600&height=400&hl=en&q=Alun-Alun%20Lama%20Ungaran&t=&z=18&ie=UTF8&iwloc=B&output=embed"
-                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-                    loading="lazy" title="Lokasi BW Indonesia">
-                </iframe>
-            </div>
-            <a href="https://maps.app.goo.gl/KxN98r9bRfMaFP7R9" target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-teal hover:underline">
-                <span class="material-symbols-outlined" style="font-size:15px;">location_on</span>
-                Buka di Google Maps
-            </a>
+          <span
+            class="text-xs font-bold uppercase tracking-widest text-zinc-400"
+            >Lokasi</span
+          >
+          <div
+            class="w-full rounded-2xl overflow-hidden shadow-md border border-black/5 dark:border-white/5"
+            style="position: relative; padding-bottom: 66.67%; height: 0"
+          >
+            <iframe
+              src="https://maps.google.com/maps?width=600&height=400&hl=en&q=Alun-Alun%20Lama%20Ungaran&t=&z=18&ie=UTF8&iwloc=B&output=embed"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+              style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+              "
+              loading="lazy"
+              title="Lokasi BW Indonesia"
+            >
+            </iframe>
+          </div>
+          <a
+            href="https://maps.app.goo.gl/KxN98r9bRfMaFP7R9"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-teal hover:underline"
+          >
+            <span class="material-symbols-outlined" style="font-size: 15px"
+              >location_on</span
+            >
+            Buka di Google Maps
+          </a>
         </div>
 
         <!-- KANAN: Kontak + Sosial Media -->
         <div class="flex flex-col items-center md:items-end gap-8">
+          <!-- Kontak -->
+          <div class="flex flex-col items-center md:items-end gap-3 w-full">
+            <span
+              class="text-xs font-bold uppercase tracking-widest text-zinc-400"
+              >Kontak</span
+            >
+            <a
+              href="mailto:kwibowo437@yahoo.com"
+              class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-primary-teal transition-colors"
+            >
+              <span class="material-symbols-outlined" style="font-size: 18px"
+                >mail</span
+              >
+              kwibowo437@yahoo.com
+            </a>
+            <a
+              href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-green-600 transition-colors"
+            >
+              <i class="fa-brands fa-whatsapp text-xl"></i>
+              0895610521818
+            </a>
+          </div>
 
-            <!-- Kontak -->
-            <div class="flex flex-col items-center md:items-end gap-3 w-full">
-                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Kontak</span>
-                <a href="mailto:kwibowo437@yahoo.com"
-                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-primary-teal transition-colors">
-                    <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
-                    kwibowo437@yahoo.com
-                </a>
-                <a href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
-                   target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-green-600 transition-colors">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    0895610521818
-                </a>
+          <!-- Sosial Media -->
+          <div class="flex flex-col items-center md:items-end gap-3 w-full">
+            <span
+              class="text-xs font-bold uppercase tracking-widest text-zinc-400"
+              >Sosial Media</span
+            >
+            <div class="flex gap-5 text-2xl">
+              <a
+                href="https://www.youtube.com/@bwmatx"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Youtube"
+                class="opacity-60 hover:opacity-100 hover:text-red-600 transition-all"
+              >
+                <i class="fa-brands fa-youtube"></i>
+              </a>
+              <a
+                href="https://www.tiktok.com/@bw_matx"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="TikTok"
+                class="opacity-60 hover:opacity-100 hover:text-zinc-800 dark:hover:text-white transition-all"
+              >
+                <i class="fa-brands fa-tiktok"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/bw_matx/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Instagram"
+                class="opacity-60 hover:opacity-100 hover:text-pink-600 transition-all"
+              >
+                <i class="fa-brands fa-instagram"></i>
+              </a>
             </div>
-
-            <!-- Sosial Media -->
-            <div class="flex flex-col items-center md:items-end gap-3 w-full">
-                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Sosial Media</span>
-                <div class="flex gap-5 text-2xl">
-                    <a href="https://www.youtube.com/@bwmatx" target="_blank" rel="noopener noreferrer"
-                       title="Youtube" class="opacity-60 hover:opacity-100 hover:text-red-600 transition-all">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@bw_matx" target="_blank" rel="noopener noreferrer"
-                       title="TikTok" class="opacity-60 hover:opacity-100 hover:text-zinc-800 dark:hover:text-white transition-all">
-                        <i class="fa-brands fa-tiktok"></i>
-                    </a>
-                    <a href="https://www.instagram.com/bw_matx/" target="_blank" rel="noopener noreferrer"
-                       title="Instagram" class="opacity-60 hover:opacity-100 hover:text-pink-600 transition-all">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-
+          </div>
         </div>
+      </div>
 
-    </div>
-
-    <!-- Copyright -->
-    <div class="border-t border-black/5 dark:border-white/5 py-6 text-center">
+      <!-- Copyright -->
+      <div class="border-t border-black/5 dark:border-white/5 py-6 text-center">
         <p class="text-zinc-400 text-xs">© 2025 my Portfolio. Credit by Awan</p>
-    </div>
+      </div>
+    </footer>
 
-</footer>
-
-<!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT — semua dari index2                                    -->
-<!-- Script header hide on scroll: DIHAPUS sesuai instruksi           -->
-<!-- ══════════════════════════════════════════════════════════════════ -->
-<script src="./js/new-script.js"></script>
-</body>
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- JAVASCRIPT — semua dari index2                                    -->
+    <!-- Script header hide on scroll: DIHAPUS sesuai instruksi           -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <script src="./js/new-script.js"></script>
+  </body>
 </html>
