@@ -715,7 +715,7 @@
                 >
                 <span
                   class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
-                  >Video</span
+                  >Beauty Moments</span
                 >
               </div>
               <a
@@ -914,11 +914,11 @@
             class="group relative bg-card-6 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
             style="min-height: 320px"
           >
-            <img
-              src="https://ik.imagekit.io/bwindonesiaimg/mg.jpg?updatedAt=1761712966941"
+            <video
+              src="https://ik.imagekit.io/bwindonesiaimg/Video%20Proj/Motion%20Graphic.mp4"
               class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-              alt="Motion Graphic"
-            />
+              autoplay loop muted playsinline
+            ></video>
             <div class="relative z-10">
               <span
                 class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
@@ -1335,23 +1335,63 @@
             overlay.setAttribute('aria-hidden', 'true');
             overlay.innerHTML = `
                 <div class="pgp-img-wrap"><img class="pgp-img" src="" alt=""></div>
-                <div class="pgp-body">
-                    <div class="pgp-title"></div>
-                    <div class="pgp-desc"></div>
-                    <div class="pgp-footer">
-                        <div class="pgp-tags"></div>
-                        <a class="pgp-more" href="#" target="_self">
-                            more <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-                        </a>
+                <div class="pgp-content-overlay">
+                    <div class="pgp-info-card">
+                        <div class="pgp-title"></div>
+                        <div class="pgp-desc"></div>
                     </div>
-                </div>`;
+                    <div class="pgp-tags-card"></div>
+                </div>
+                <a class="pgp-more-magnetic" href="#" target="_self">
+                    <span>more</span>
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </a>`;
             grid.appendChild(overlay);
 
             const pTitle  = overlay.querySelector('.pgp-title');
             const pDesc   = overlay.querySelector('.pgp-desc');
-            const pTags   = overlay.querySelector('.pgp-tags');
-            const pMore   = overlay.querySelector('.pgp-more');
+            const pTags   = overlay.querySelector('.pgp-tags-card');
+            const pMore   = overlay.querySelector('.pgp-more-magnetic');
             const imgWrap = overlay.querySelector('.pgp-img-wrap');
+
+            // ── Magnetic Logic Variables ──
+            let mouseX = 0, mouseY = 0;
+            let magX = 0, magY = 0;
+            let isHoveringPopup = false;
+            let rafId = null;
+
+            function renderMagnetic() {
+                if (!isHoveringPopup) {
+                    // Let CSS handle fade out, don't update positions
+                } else {
+                    const rect = overlay.getBoundingClientRect();
+                    const targetX = mouseX - rect.left;
+                    const targetY = mouseY - rect.top;
+                    
+                    // Initialize instantly on first hover
+                    if (magX === 0 && magY === 0) {
+                        magX = targetX;
+                        magY = targetY;
+                    }
+                    
+                    // Lerp for smooth exact tracking (0.2 is snappy but smooth)
+                    magX += (targetX - magX) * 0.2;
+                    magY += (targetY - magY) * 0.2;
+                }
+                
+                if (pMore) {
+                    pMore.style.translate = `${magX}px ${magY}px`;
+                }
+                
+                if (!isHoveringPopup) {
+                    magX = 0; magY = 0;
+                    if (pMore) pMore.style.translate = '';
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                    return;
+                }
+                rafId = requestAnimationFrame(renderMagnetic);
+            }
 
             // ── State machine ──────────────────────────────────────────────
             // States: 'hidden' | 'visible' | 'closing'
@@ -1389,13 +1429,38 @@
                 }
             }
 
+            function updateMorphBounds(article) {
+                const rect = article.getBoundingClientRect();
+                const gridRect = grid.getBoundingClientRect();
+                
+                // Calculate position relative to the grid wrapper
+                const startLeft = rect.left - gridRect.left;
+                const startTop = rect.top - gridRect.top;
+                
+                overlay.style.setProperty('--start-x', startLeft + 'px');
+                overlay.style.setProperty('--start-y', startTop + 'px');
+                overlay.style.setProperty('--start-w', rect.width + 'px');
+                overlay.style.setProperty('--start-h', rect.height + 'px');
+                
+                const endWidth = Math.min(760, grid.offsetWidth * 0.9);
+                const endHeight = endWidth * (9 / 16);
+                overlay.style.setProperty('--end-w', endWidth + 'px');
+                overlay.style.setProperty('--end-h', endHeight + 'px');
+            }
+
             // Immediately open popup with content from article
             function openWith(article) {
+                if (currentCard) {
+                    currentCard.classList.remove('pgp-card-active');
+                }
                 currentCard = article;
+                currentCard.classList.add('pgp-card-active');
+                
                 pendingCard = null;
                 fillContent(article);
+                updateMorphBounds(article);
                 overlay.classList.remove('pgp-closing');
-                // Force reflow so transition fires even if we just removed pgp-closing
+                // Force reflow
                 void overlay.offsetWidth;
                 overlay.classList.add('pgp-active');
                 state = 'visible';
@@ -1407,12 +1472,18 @@
                 state = 'closing';
                 overlay.classList.remove('pgp-active');
                 overlay.classList.add('pgp-closing');
+                
+                if (currentCard) {
+                    currentCard.classList.remove('pgp-card-active');
+                }
+                
                 closeTimer = setTimeout(() => {
                     overlay.classList.remove('pgp-closing');
                     state = 'hidden';
                     currentCard = null;
                     if (cb) cb();
-                }, CLOSE_DURATION);
+                    else if (pendingCard) openWith(pendingCard);
+                }, 400); // Match fast OUT CSS transition duration
             }
 
             // Called when a card is entered
@@ -1423,24 +1494,23 @@
                     openWith(article);
 
                 } else if (state === 'visible') {
-                    if (currentCard === article) return; // same card — no change
-                    // Different card: close current → open new
+                    if (currentCard === article) return; // same card
+                    
+                    // Liquid OUT then Liquid IN
                     pendingCard = article;
                     beginClose(() => {
                         if (pendingCard === article) openWith(article);
                     });
-
+                    
                 } else if (state === 'closing') {
-                    // Already closing (e.g. cursor left gallery then came back quickly)
-                    // Update the pending target; the existing close timer's cb will open it
-                    pendingCard = article;
-                    clearTimeout(closeTimer);
-                    closeTimer = setTimeout(() => {
-                        overlay.classList.remove('pgp-closing');
-                        state = 'hidden';
-                        currentCard = null;
-                        if (pendingCard) openWith(pendingCard);
-                    }, CLOSE_DURATION);
+                    if (currentCard === article) {
+                        // User hovered back to the same card that is closing. Reverse it smoothly!
+                        clearTimeout(closeTimer);
+                        openWith(article);
+                    } else {
+                        // Hovered a NEW card while old one is closing. Let it finish closing first.
+                        pendingCard = article;
+                    }
                 }
             }
 
@@ -1454,9 +1524,26 @@
                 }, PASS_THRESHOLD);
             }
 
-            // Entering popup cancels the hide timer (so "more" button stays clickable)
-            overlay.addEventListener('mouseenter', () => clearTimeout(passTimer));
-            overlay.addEventListener('mouseleave', onLeave);
+            // Entering popup cancels the hide timer and activates magnetic effect
+            overlay.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            overlay.addEventListener('mouseenter', (e) => {
+                clearTimeout(passTimer);
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                isHoveringPopup = true;
+                if (!rafId) {
+                    rafId = requestAnimationFrame(renderMagnetic);
+                }
+            });
+            
+            overlay.addEventListener('mouseleave', () => {
+                isHoveringPopup = false;
+                onLeave();
+            });
 
             cards.forEach(article => {
                 article.addEventListener('mouseenter', () => onCardEnter(article));

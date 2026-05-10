@@ -601,71 +601,75 @@ header nav * {
     /* ── Centered liquid popup overlay ── */
     .pgp-overlay {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.94);
-        width: min(680px, 90%);
-        background: rgba(255, 255, 255, 0.82);
-        backdrop-filter: blur(22px) saturate(180%);
-        -webkit-backdrop-filter: blur(22px) saturate(180%);
-        border: 1.5px solid rgba(255, 255, 255, 0.75);
+        top: var(--start-y, 50%);
+        left: var(--start-x, 50%);
+        width: var(--start-w, min(760px, 90%));
+        height: var(--start-h, 400px);
+        transform: translate(0, 0);
+        background: #000;
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 2rem;
         box-shadow:
-            0 32px 80px rgba(0, 0, 0, 0.16),
-            0 8px 24px rgba(0, 0, 0, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            0 32px 80px rgba(0, 0, 0, 0.4),
+            0 8px 24px rgba(0, 0, 0, 0.2);
         overflow: hidden;
         opacity: 0;
-        filter: blur(4px);
+        filter: blur(8px) brightness(1.2);
         pointer-events: none;
-        /* Base transition = fast close default */
         transition:
-            opacity 0.18s cubic-bezier(0.4, 0, 1, 1),
-            transform 0.18s cubic-bezier(0.4, 0, 1, 1),
-            filter 0.18s ease-in;
+            top 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            left 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.4s ease-out,
+            border-radius 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+            filter 0.55s cubic-bezier(0.22, 1, 0.36, 1);
         z-index: 100;
-        will-change: opacity, transform, filter;
+        will-change: top, left, width, height, transform, opacity, filter, border-radius;
     }
 
     .dark .pgp-overlay {
-        background: rgba(28, 28, 30, 0.82);
         border-color: rgba(255, 255, 255, 0.12);
         box-shadow:
-            0 32px 80px rgba(0, 0, 0, 0.5),
-            0 8px 24px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            0 32px 80px rgba(0, 0, 0, 0.6),
+            0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
-    /* Open state — slow smooth entry */
+    /* Open state — fully expanded */
     .pgp-overlay.pgp-active {
         opacity: 1;
-        filter: blur(0px);
-        transform: translate(-50%, -50%) scale(1);
+        filter: blur(0px) brightness(1);
+        top: 50%;
+        left: 50%;
+        width: var(--end-w, 760px);
+        height: var(--end-h, 427px);
+        transform: translate(-50%, -50%);
+        border-radius: 2.5rem;
         pointer-events: auto;
-        transition:
-            opacity 0.40s cubic-bezier(0.0, 0, 0.2, 1),
-            transform 0.40s cubic-bezier(0.0, 0, 0.2, 1),
-            filter 0.40s cubic-bezier(0.0, 0, 0.2, 1);
     }
 
-    /* Closing state — quicker, ease-out */
+    /* Closing state — morphs back to card */
     .pgp-overlay.pgp-closing {
+        top: var(--start-y, 50%);
+        left: var(--start-x, 50%);
+        width: var(--start-w, min(760px, 90%));
+        height: var(--start-h, 400px);
+        transform: translate(0, 0);
+        border-radius: 2rem;
         opacity: 0;
-        filter: blur(3px);
-        transform: translate(-50%, -50%) scale(0.96);
+        filter: blur(8px) brightness(0.8);
         pointer-events: none;
-        transition:
-            opacity 0.20s cubic-bezier(0.4, 0, 1, 1),
-            transform 0.20s cubic-bezier(0.4, 0, 1, 1),
-            filter 0.20s ease-in;
     }
 
-    /* Image section */
+    /* Image section - full cover */
     .pgp-img-wrap {
+        position: absolute;
+        inset: 0;
         width: 100%;
-        height: 300px;
-        overflow: hidden;
-        position: relative;
+        height: 100%;
+        z-index: 1;
+        background: #000;
     }
 
     .pgp-img {
@@ -673,125 +677,175 @@ header nav * {
         height: 100%;
         object-fit: cover;
         display: block;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        transform: scale(1.15);
     }
 
     .pgp-overlay.pgp-active .pgp-img {
-        transform: scale(1.04);
+        transform: scale(1);
     }
 
     /* Gradient fade bottom of image */
     .pgp-img-wrap::after {
         content: '';
         position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 48px;
-        background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.6));
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.1) 100%);
         pointer-events: none;
     }
 
     .dark .pgp-img-wrap::after {
-        background: linear-gradient(to bottom, transparent, rgba(28, 28, 30, 0.6));
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
     }
 
-    /* Content section */
-    .pgp-body {
-        padding: 16px 20px 20px;
+    /* Content section - overlay structure */
+    .pgp-content-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 2.5rem;
+        pointer-events: none; /* Let mouse interact with magnetic wrap */
+    }
+
+    /* Title card */
+    .pgp-info-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 1.25rem 1.5rem;
+        border-radius: 1.25rem;
+        margin-bottom: 0.75rem;
+        max-width: 65%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        transition-delay: 0.1s;
+    }
+
+    .dark .pgp-info-card {
+        background: rgba(0, 0, 0, 0.25);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .pgp-overlay.pgp-active .pgp-info-card {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     .pgp-title {
         font-family: 'Fraunces', serif;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 4px;
-        line-height: 1.25;
-    }
-
-    .dark .pgp-title {
-        color: #f5f5f5;
+        color: #fff;
+        margin-bottom: 0.3rem;
+        line-height: 1.2;
     }
 
     .pgp-desc {
-        font-size: 0.75rem;
-        color: #555;
-        line-height: 1.55;
-        margin-bottom: 14px;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.5;
     }
 
-    .dark .pgp-desc {
-        color: #aaa;
-    }
-
-    .pgp-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .pgp-tags {
+    /* Tags */
+    .pgp-tags-card {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 0.5rem;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        transition-delay: 0.15s;
+    }
+
+    .pgp-overlay.pgp-active .pgp-tags-card {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Hide Info and Tags smoothly when hovering overlay */
+    .pgp-overlay:hover .pgp-info-card,
+    .pgp-overlay:hover .pgp-tags-card {
+        opacity: 0;
+        filter: blur(8px);
+        transform: translateY(15px);
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        transition-delay: 0s;
+        pointer-events: none;
     }
 
     .pgp-tag {
-        font-size: 0.65rem;
+        font-size: 0.7rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        padding: 4px 12px;
-        border: 1.5px solid rgba(0, 0, 0, 0.18);
+        padding: 6px 14px;
         border-radius: 999px;
-        color: #444;
-        background: rgba(255, 255, 255, 0.5);
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     .dark .pgp-tag {
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #ccc;
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.1);
     }
 
-    .pgp-more {
-        flex-shrink: 0;
-        font-size: 0.8rem;
-        font-weight: 600;
-        padding: 8px 22px;
-        border: 1.5px solid rgba(9, 107, 91, 0.3);
-        border-radius: 999px;
-        color: #096b5b;
-        background: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        transition: background 0.22s ease-in-out, color 0.22s ease-in-out, border-color 0.22s ease-in-out;
-        white-space: nowrap;
-        cursor: pointer;
-        position: relative;
-        z-index: 110;
-        display: inline-flex;
+    /* Floating Cursor CTA */
+    .pgp-more-magnetic {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
         align-items: center;
         gap: 6px;
-    }
-
-    .dark .pgp-more {
-        color: #5eead4;
-        border-color: rgba(94, 234, 212, 0.3);
-        background: rgba(255, 255, 255, 0.08);
-    }
-
-    .pgp-more:hover {
-        background: #096b5b;
-        color: #fff;
-        border-color: #096b5b;
-    }
-
-    .dark .pgp-more:hover {
-        background: #5eead4;
+        padding: 12px 24px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.95);
         color: #096b5b;
-        border-color: #5eead4;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.85rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        opacity: 0;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.3s ease, background 0.25s, color 0.25s;
+        will-change: left, top;
+        cursor: pointer;
+        z-index: 110;
+        pointer-events: none; /* Let overlay catch first entry, JS will enable */
+    }
+
+    .dark .pgp-more-magnetic {
+        background: rgba(255, 255, 255, 0.1);
+        color: #5eead4;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .pgp-overlay:hover .pgp-more-magnetic {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .pgp-more-magnetic:hover {
+        background: #fff;
+        color: #000;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        transform: translate(-50%, -50%) !important;
+    }
+
+    .dark .pgp-more-magnetic:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
     }
 
     /* Card subtle lift on hover */
@@ -803,6 +857,25 @@ header nav * {
     .pgp-card-trigger:hover {
         transform: translateY(-3px);
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ── Liquid Media Dissolve for Source Card ── */
+    .pgp-card-trigger img[class*="absolute"],
+    .pgp-card-trigger video[class*="absolute"] {
+        transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
+                    filter 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                    clip-path 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        clip-path: circle(150% at 50% 50%);
+        will-change: opacity, transform, filter, clip-path;
+    }
+
+    .pgp-card-trigger.pgp-card-active img[class*="absolute"],
+    .pgp-card-trigger.pgp-card-active video[class*="absolute"] {
+        opacity: 0 !important;
+        filter: blur(12px) !important;
+        transform: scale(0.9) !important;
+        clip-path: circle(0% at 50% 50%) !important;
     }
 
 } /* end @media (hover: hover) and (pointer: fine) */
