@@ -170,34 +170,240 @@
     });
 
     // ──────────────────────────────────────────────────────────
-    // Particles — parallax mouse effect
+    // 7b. HERO CANVAS PARTICLE BACKGROUND — Antigravity Engine
+    //     Physics: velocity + friction + lerp + mouse influence
+    //     Desktop-only: matchMedia (hover:hover) and (pointer:fine)
+    //     Stopped on mobile/tablet — zero CPU on touchscreen
     // ──────────────────────────────────────────────────────────
-    const container = document.getElementById("particles");
-    const homeSection = document.getElementById("home");
+    (function () {
+        // VALID Detection: strictly desktop only
+        const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (!isDesktop) return;
 
-    for (let i = 0; i < 60; i++) {
-        const dot = document.createElement("div");
-        dot.className = "particle";
+        const canvas = document.getElementById('home-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const section = document.getElementById('home');
 
-        const size = Math.random() * 6 + 4;
-        dot.style.width  = size + "px";
-        dot.style.height = size + "px";
-        dot.style.left   = Math.random() * 100 + "%";
-        dot.style.top    = Math.random() * 100 + "%";
-        dot.dataset.speed = Math.random() * 3 + 1;
+        // ── Palette (matches website: primary-teal #096B5B) ──
+        const COLORS = [
+            { r: 9,   g: 107, b: 91  },  // primary-teal
+            { r: 20,  g: 184, b: 166 },  // teal-500
+            { r: 200, g: 232, b: 220 },  // accent-soft
+        ];
 
-        container.appendChild(dot);
-    }
+        // ── Config ──
+        // Density multiplier based on screen size so it never looks empty
+        const densityMult = window.innerWidth > 1400 ? 1 : window.innerWidth > 992 ? 0.8 : 0.6;
+        const COUNT       = Math.floor(250 * densityMult); // Increased significantly for full width
+        
+        const SPACING = window.innerWidth > 1024 ? 65 : 45; // grid spacing for neat distribution
+        const MOUSE_RADIUS = 380;  // large disturbance field size
+        const MOUSE_PUSH   = 1.2;  // push away force (creates the wave ripple)
+        const MOUSE_CURVE  = 0.4;  // tangential soft offset (creates flow instead of straight repel)
+        const SPRING       = 0.02; // elastic pull back to base grid (prevents overlaps)
+        const FRICTION     = 0.86; // liquid drag
+        const LERP_FACTOR  = 0.08; // smooth delayed cursor
 
-    homeSection.addEventListener("mousemove", function (e) {
-        const particles = container.querySelectorAll(".particle");
-        particles.forEach(function (p) {
-            const speed = p.dataset.speed;
-            const x = (window.innerWidth  / 2 - e.clientX) * speed * 0.02;
-            const y = (window.innerHeight / 2 - e.clientY) * speed * 0.02;
-            p.style.transform = `translate(${x}px, ${y}px)`;
+        let W = 0, H = 0;
+        let mouse = { x: -1000, y: -1000, active: false };
+        let smoothMouse = { x: -1000, y: -1000 };
+        let rafId = null;
+        let particles = [];
+        let resizeTimeout;
+
+        // ── Particle factory ──
+        function makeParticle(bx, by) {
+            const tier  = Math.random();           // 0-1 depth tier
+            const col   = COLORS[Math.floor(Math.random() * COLORS.length)];
+            
+            // Varied sizes but clearly defined
+            const size  = tier < 0.4 ? Math.random() * 1.5 + 1.5   // small (far)
+                        : tier < 0.75 ? Math.random() * 2.5 + 2.5  // medium
+                        : Math.random() * 4 + 3.5;                 // large (near)
+
+            // Stronger opacity so they don't look like fog
+            const opacity = tier < 0.4 ? 0.15 
+                          : tier < 0.75 ? 0.25 
+                          : 0.35;
+
+            const baseSpeed = tier < 0.4 ? 0.3 
+                            : tier < 0.75 ? 0.5 
+                            : 0.7;
+
+            return {
+                baseX: bx,
+                baseY: by,
+                x: bx + (Math.random() - 0.5) * 10,
+                y: by + (Math.random() - 0.5) * 10,
+                vx: 0,
+                vy: 0,
+                r:  col.r, g: col.g, b: col.b,
+                size, opacity, baseSpeed,
+                angle: Math.random() * Math.PI * 2,
+                spin: (Math.random() - 0.5) * 0.04,
+                curveDir: Math.random() > 0.5 ? 1 : -1 // Which way they curve when pushed
+            };
+        }
+
+        // ── Grid Build ──
+        function build() {
+            particles = [];
+            // Calculate grid to fill entire window width and section height
+            const cols = Math.ceil((window.innerWidth || 1000) / SPACING) + 2;
+            const rows = Math.ceil((section.offsetHeight || 1000) / SPACING) + 2;
+            const jitter = SPACING * 0.45; // Randomness offset so it doesn't look like a rigid grid
+
+            for (let r = -1; r < rows; r++) {
+                for (let c = -1; c < cols; c++) {
+                    const bx = c * SPACING + (Math.random() - 0.5) * jitter * 2;
+                    const by = r * SPACING + (Math.random() - 0.5) * jitter * 2;
+                    particles.push(makeParticle(bx, by));
+                }
+            }
+
+            if (W > 0 && H > 0 && !mouse.active) {
+                smoothMouse.x = W / 2;
+                smoothMouse.y = H / 2;
+            }
+        }
+
+        // ── Resize handler ──
+        function resize() {
+            // Use devicePixelRatio to fix blurriness on Retina/High-DPI screens
+            const dpr = window.devicePixelRatio || 1;
+            W = window.innerWidth; // Full viewport width
+            H = section.offsetHeight; // Full section height
+            canvas.width  = W * dpr;
+            canvas.height = H * dpr;
+            ctx.scale(dpr, dpr);
+        }
+
+        // ── Draw one frame ──
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+
+            // 1. Lerp the mouse position for delayed, smooth reaction
+            if (mouse.active) {
+                smoothMouse.x += (mouse.x - smoothMouse.x) * LERP_FACTOR;
+                smoothMouse.y += (mouse.y - smoothMouse.y) * LERP_FACTOR;
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                // 2. Ambient organic drifting around base position
+                p.angle += p.spin;
+                const driftX = Math.cos(p.angle) * p.baseSpeed * 12;
+                const driftY = Math.sin(p.angle) * p.baseSpeed * 12;
+                
+                const targetX = p.baseX + driftX;
+                const targetY = p.baseY + driftY;
+
+                // 3. Mouse Disturbance Field (Wave Flow)
+                let pushX = 0;
+                let pushY = 0;
+
+                if (mouse.active) {
+                    const dx = smoothMouse.x - p.x;
+                    const dy = smoothMouse.y - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < MOUSE_RADIUS) {
+                        // Smooth quadratic falloff so center pushes hard, edges push softly
+                        const forceStr = Math.pow((MOUSE_RADIUS - dist) / MOUSE_RADIUS, 2); 
+                        const angleToMouse = Math.atan2(dy, dx);
+                        
+                        // Push away from cursor
+                        const pushForce = forceStr * MOUSE_PUSH;
+                        
+                        // Curve slightly to make it flow/ripple rather than rigidly repel
+                        const curveForce = forceStr * MOUSE_CURVE;
+                        const curveAngle = angleToMouse + (Math.PI / 2) * p.curveDir;
+                        
+                        // Combine push away and rotational curve
+                        pushX = -(Math.cos(angleToMouse) * pushForce) + Math.cos(curveAngle) * curveForce;
+                        pushY = -(Math.sin(angleToMouse) * pushForce) + Math.sin(curveAngle) * curveForce;
+                    }
+                }
+
+                p.vx += pushX;
+                p.vy += pushY;
+
+                // 4. Spring elastic force pulling back to target (prevents overlapping/bunching)
+                p.vx += (targetX - p.x) * SPRING;
+                p.vy += (targetY - p.y) * SPRING;
+
+                // 5. Position update & Friction
+                p.x += p.vx;
+                p.y += p.vy;
+
+                p.vx *= FRICTION;
+                p.vy *= FRICTION;
+
+                // 6. Draw — crisp but soft
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${p.opacity})`;
+                ctx.fill();
+                
+                // Very subtle outer edge for definition
+                ctx.lineWidth = 0.5;
+                ctx.strokeStyle = `rgba(${p.r},${p.g},${p.b},${p.opacity * 0.6})`;
+                ctx.stroke();
+            }
+        }
+
+        function loop() {
+            draw();
+            rafId = requestAnimationFrame(loop);
+        }
+
+        function stop() {
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        }
+
+        // ── Mouse tracking ──
+        function onMouseMove(e) {
+            const rect = section.getBoundingClientRect();
+            mouse.x = e.clientX; // Global window X fits 100vw canvas perfectly
+            mouse.y = e.clientY - rect.top; // Relative Y to handle scrolling
+            if (!mouse.active) {
+                smoothMouse.x = mouse.x;
+                smoothMouse.y = mouse.y;
+                mouse.active = true;
+            }
+        }
+        function onMouseLeave() { 
+            mouse.active = false; 
+        }
+
+        // ── Visibility API: pause when tab hidden ──
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) stop(); else loop();
         });
-    });
+
+        // ── Emergency touch cleanup ──
+        document.addEventListener('touchstart', stop, { passive: true, once: true });
+
+        // ── Init ──
+        section.style.position = 'relative';  
+        resize();
+        build();
+
+        window.addEventListener('resize', function () { 
+            resize(); 
+            // Rebuild grid gracefully on resize so no gaps occur
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(build, 200);
+        }, { passive: true });
+        
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
+        document.addEventListener('mouseleave', onMouseLeave);
+
+        loop();
+    })();
+
 
     // ──────────────────────────────────────────────────────────
     // 8. SMOOTH SCROLL — index2

@@ -282,8 +282,9 @@
       >
         <h1
           class="font-display text-5xl sm:text-7xl md:text-9xl text-primary-teal leading-none tracking-tighter mb-8"
+          aria-label="Hi, I'm AWe"
         >
-          Hi, I'm AWe
+          <span id="typewriter-text" aria-hidden="true"></span><span class="typewriter-caret" aria-hidden="true"></span>
         </h1>
         <p
           class="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed px-2"
@@ -318,7 +319,7 @@
             >
           </a>
         </div>
-        <div id="particles"></div>
+        <canvas id="home-canvas" aria-hidden="true"></canvas>
       </section>
 
       <!-- ══════════════════ ABOUT — index2 (foto kanan desktop) ══════════════════ -->
@@ -405,11 +406,11 @@
                 >
                   <span
                     class="material-symbols-outlined text-primary-teal flex-shrink-0 text-3xl md:text-[20px]"
-                    >brush</span
+                    >design_services</span
                   >
                   <span
                     class="font-bold text-[10px] md:text-xs uppercase tracking-widest md:tracking-wide leading-tight text-center md:text-left px-1 md:px-0"
-                    >Graphic Design</span
+                    >UI/UX Design</span
                   >
                 </div>
                 <div
@@ -772,53 +773,7 @@
             </div>
           </article>
 
-          <!-- Card 3: Video Project -->
-          <article
-            class="group relative bg-card-1 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
-            style="min-height: 320px"
-          >
-            <img
-              src="https://ik.imagekit.io/bwindonesiaimg/Banner%20Video%20New.jpg?updatedAt=1762948787213"
-              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
-              alt="Video Project"
-            />
-            <div class="relative z-10">
-              <span
-                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
-                >Cinematic</span
-              >
-              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
-                Video Project
-              </h3>
-              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
-                Dokumentasi Visual Bergerak dengan engagement tinggi
-              </p>
-            </div>
-            <div class="relative z-10 flex justify-between items-end mt-6">
-              <div class="flex flex-wrap gap-1.5">
-                <span
-                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
-                  >Video</span
-                >
-                <span
-                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
-                  >Clip</span
-                >
-              </div>
-              <a
-                href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
-              >
-                <span class="material-symbols-outlined" style="font-size: 18px"
-                  >play_circle</span
-                >
-              </a>
-            </div>
-          </article>
-
-          <!-- Card 4: Graphic Design -->
+          <!-- Card 3: Graphic Design -->
           <article
             class="group relative bg-card-3 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
             style="min-height: 320px"
@@ -852,13 +807,57 @@
                 >
               </div>
               <a
+                href="gdesign.html"
+                class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
+              >
+                <span class="material-symbols-outlined" style="font-size: 18px"
+                  >arrow_outward</span
+                >
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4: Video Project -->
+          <article
+            class="group relative bg-card-1 rounded-2xl sm:rounded-[2rem] p-6 sm:p-7 flex flex-col justify-between overflow-hidden"
+            style="min-height: 320px"
+          >
+            <video
+              src="https://ik.imagekit.io/bwindonesiaimg/Video%20Proj/Teaser.mp4"
+              class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-110 transition-all duration-700"
+              autoplay loop muted playsinline
+            ></video>
+            <div class="relative z-10">
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-black/10 px-3 py-1 rounded-full inline-block"
+                >Cinematic</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl mt-3 leading-tight">
+                Video Project
+              </h3>
+              <p class="text-xs mt-1.5 opacity-70 leading-relaxed">
+                Dokumentasi Visual Bergerak dengan engagement tinggi
+              </p>
+            </div>
+            <div class="relative z-10 flex justify-between items-end mt-6">
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Video</span
+                >
+                <span
+                  class="text-xs font-bold uppercase tracking-wide bg-black/10 px-2 py-1 rounded-full"
+                  >Clip</span
+                >
+              </div>
+              <a
                 href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-11 h-11 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform shadow-lg ml-2"
               >
                 <span class="material-symbols-outlined" style="font-size: 18px"
-                  >arrow_outward</span
+                  >play_circle</span
                 >
               </a>
             </div>
@@ -1292,6 +1291,249 @@
     <!-- JAVASCRIPT — semua dari index2                                    -->
     <!-- Script header hide on scroll: DIHAPUS sesuai instruksi           -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- Portfolio grid popup — liquid state machine, desktop only -->
+    <script>
+    (function () {
+        // ── Layer 1: CSS media query capability check ──────────────────────
+        // Only runs on devices with real hover support AND fine pointer (mouse)
+        // This excludes: phones, tablets, stylus-only devices, hybrid touch+mouse
+        // when in touch mode, and any (hover:none) environment.
+        const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)');
+        if (!isDesktop.matches) return;
+
+        // ── Layer 2: Touch event emergency cleanup ─────────────────────────
+        // If somehow a touch event fires (e.g. rare hybrid device switching modes),
+        // forcibly clear all popup state to prevent stuck overlays.
+        function emergencyReset() {
+            const overlay = document.querySelector('.pgp-overlay');
+            if (overlay) {
+                overlay.classList.remove('pgp-active', 'pgp-closing');
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+            }
+        }
+        document.addEventListener('touchstart', emergencyReset, { passive: true });
+
+        // Timing constants (ms)
+        const CLOSE_DURATION = 200;  // matches CSS close transition
+        const PASS_THRESHOLD = 90;   // ignore hover if cursor moves through faster
+
+        function init() {
+            const section = document.getElementById('portfolio');
+            if (!section) return;
+            const grid = section.querySelector('div.grid');
+            if (!grid) return;
+
+            grid.classList.add('pgp-grid-wrap');
+            const cards = grid.querySelectorAll('article');
+            if (!cards.length) return;
+            cards.forEach(c => c.classList.add('pgp-card-trigger'));
+
+            // Build the single shared popup overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'pgp-overlay';
+            overlay.setAttribute('aria-hidden', 'true');
+            overlay.innerHTML = `
+                <div class="pgp-img-wrap"><img class="pgp-img" src="" alt=""></div>
+                <div class="pgp-body">
+                    <div class="pgp-title"></div>
+                    <div class="pgp-desc"></div>
+                    <div class="pgp-footer">
+                        <div class="pgp-tags"></div>
+                        <a class="pgp-more" href="#" target="_self">
+                            more <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>`;
+            grid.appendChild(overlay);
+
+            const pTitle  = overlay.querySelector('.pgp-title');
+            const pDesc   = overlay.querySelector('.pgp-desc');
+            const pTags   = overlay.querySelector('.pgp-tags');
+            const pMore   = overlay.querySelector('.pgp-more');
+            const imgWrap = overlay.querySelector('.pgp-img-wrap');
+
+            // ── State machine ──────────────────────────────────────────────
+            // States: 'hidden' | 'visible' | 'closing'
+            let state       = 'hidden';
+            let currentCard = null;   // card whose content is currently shown
+            let pendingCard = null;   // card queued to show after close finishes
+            let closeTimer  = null;   // setTimeout id for close duration
+            let passTimer   = null;   // setTimeout id for pass-through guard
+
+            // Inject content from a card into the popup
+            function fillContent(article) {
+                const mediaEl  = article.querySelector('img[class*="absolute"], video[class*="absolute"]');
+                const title    = article.querySelector('h3');
+                const desc     = article.querySelector('p');
+                const linkEl   = article.querySelector('a[href]');
+                const tagSpans = Array.from(article.querySelectorAll('.flex.flex-wrap.gap-1\\.5 > span'));
+
+                if (mediaEl && mediaEl.tagName.toLowerCase() === 'video') {
+                    imgWrap.innerHTML = `<video class="pgp-img" src="${mediaEl.getAttribute('src')}" autoplay loop muted playsinline></video>`;
+                } else if (mediaEl) {
+                    imgWrap.innerHTML = `<img class="pgp-img" src="${mediaEl.getAttribute('src')}" alt="${mediaEl.getAttribute('alt') || ''}" loading="lazy">`;
+                } else {
+                    imgWrap.innerHTML = `<img class="pgp-img" src="" alt="">`;
+                }
+
+                pTitle.textContent = title ? title.textContent.trim() : '';
+                pDesc.textContent  = desc  ? desc.textContent.trim()  : '';
+                pTags.innerHTML    = tagSpans.map(t => `<span class="pgp-tag">${t.textContent.trim()}</span>`).join('');
+
+                if (linkEl) {
+                    pMore.href   = linkEl.getAttribute('href') || '#';
+                    pMore.target = linkEl.getAttribute('target') || '_self';
+                    const rel    = linkEl.getAttribute('rel');
+                    rel ? pMore.setAttribute('rel', rel) : pMore.removeAttribute('rel');
+                }
+            }
+
+            // Immediately open popup with content from article
+            function openWith(article) {
+                currentCard = article;
+                pendingCard = null;
+                fillContent(article);
+                overlay.classList.remove('pgp-closing');
+                // Force reflow so transition fires even if we just removed pgp-closing
+                void overlay.offsetWidth;
+                overlay.classList.add('pgp-active');
+                state = 'visible';
+            }
+
+            // Begin close animation; call cb when done
+            function beginClose(cb) {
+                clearTimeout(closeTimer);
+                state = 'closing';
+                overlay.classList.remove('pgp-active');
+                overlay.classList.add('pgp-closing');
+                closeTimer = setTimeout(() => {
+                    overlay.classList.remove('pgp-closing');
+                    state = 'hidden';
+                    currentCard = null;
+                    if (cb) cb();
+                }, CLOSE_DURATION);
+            }
+
+            // Called when a card is entered
+            function onCardEnter(article) {
+                clearTimeout(passTimer);
+
+                if (state === 'hidden') {
+                    openWith(article);
+
+                } else if (state === 'visible') {
+                    if (currentCard === article) return; // same card — no change
+                    // Different card: close current → open new
+                    pendingCard = article;
+                    beginClose(() => {
+                        if (pendingCard === article) openWith(article);
+                    });
+
+                } else if (state === 'closing') {
+                    // Already closing (e.g. cursor left gallery then came back quickly)
+                    // Update the pending target; the existing close timer's cb will open it
+                    pendingCard = article;
+                    clearTimeout(closeTimer);
+                    closeTimer = setTimeout(() => {
+                        overlay.classList.remove('pgp-closing');
+                        state = 'hidden';
+                        currentCard = null;
+                        if (pendingCard) openWith(pendingCard);
+                    }, CLOSE_DURATION);
+                }
+            }
+
+            // Called when cursor leaves a card or the popup
+            function onLeave() {
+                clearTimeout(passTimer);
+                passTimer = setTimeout(() => {
+                    pendingCard = null;
+                    if (state === 'visible') beginClose(null);
+                    else if (state === 'closing') { /* already closing */ }
+                }, PASS_THRESHOLD);
+            }
+
+            // Entering popup cancels the hide timer (so "more" button stays clickable)
+            overlay.addEventListener('mouseenter', () => clearTimeout(passTimer));
+            overlay.addEventListener('mouseleave', onLeave);
+
+            cards.forEach(article => {
+                article.addEventListener('mouseenter', () => onCardEnter(article));
+                article.addEventListener('mouseleave', onLeave);
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
     <script src="./js/new-script.js"></script>
+    <!-- Typewriter hero animation — looping -->
+    <script>
+    (function () {
+        const TARGET      = "Hi, I'm AWe";
+        const TYPE_SPEED  = 120;    // ms per char while typing
+        const DEL_SPEED   = 38;    // ms per char while deleting (slightly faster)
+        const TYPE_JITTER = 20;    // ± ms natural jitter while typing
+        const DEL_JITTER  = 10;    // ± ms natural jitter while deleting
+        const PAUSE_AFTER_TYPE = 1800;  // ms pause after fully typed
+        const PAUSE_AFTER_DEL  = 520;   // ms pause after fully deleted
+        const START_DELAY      = 500;   // ms before first run
+
+        function runTypewriter() {
+            const el    = document.getElementById('typewriter-text');
+            const caret = document.querySelector('.typewriter-caret');
+            if (!el || !caret) return;
+
+            // Helper: pause blink (solid caret while busy)
+            function caretBusy()  { caret.style.animationPlayState = 'paused'; caret.style.opacity = '1'; }
+            // Helper: resume blink (idle)
+            function caretIdle()  { caret.style.animationPlayState = ''; caret.style.opacity = ''; }
+
+            function typePhase(cb) {
+                caretBusy();
+                let i = el.textContent.length;  // support restart from partial
+                (function typeNext() {
+                    if (i < TARGET.length) {
+                        el.textContent = TARGET.slice(0, ++i);
+                        setTimeout(typeNext, TYPE_SPEED + (Math.random() * TYPE_JITTER * 2 - TYPE_JITTER));
+                    } else {
+                        caretIdle();
+                        setTimeout(cb, PAUSE_AFTER_TYPE);
+                    }
+                })();
+            }
+
+            function deletePhase(cb) {
+                caretBusy();
+                (function delNext() {
+                    if (el.textContent.length > 0) {
+                        el.textContent = el.textContent.slice(0, -1);
+                        setTimeout(delNext, DEL_SPEED + (Math.random() * DEL_JITTER * 2 - DEL_JITTER));
+                    } else {
+                        caretIdle();
+                        setTimeout(cb, PAUSE_AFTER_DEL);
+                    }
+                })();
+            }
+
+            function loop() {
+                typePhase(() => deletePhase(loop));
+            }
+
+            setTimeout(loop, START_DELAY);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runTypewriter);
+        } else {
+            runTypewriter();
+        }
+    })();
+    </script>
   </body>
 </html>

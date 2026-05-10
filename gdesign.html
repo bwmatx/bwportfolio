@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Design Portfolio - BW Indonesia</title>
+    <link rel="icon" href="https://ik.imagekit.io/bwindonesiaimg/bw.png?updatedAt=1769883960687" type="image/png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- MAIN CSS (WAJIB) -->
+    <link rel="stylesheet" href="./css/new-styles.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "bg-warm": "#E8E0D0",
+                        "primary-teal": "#096B5B",
+                        "accent-soft": "#C8E8DC",
+                    },
+                    fontFamily: {
+                        display: ["Fraunces", "serif"],
+                        sans: ["Inter", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-warm text-zinc-800 font-sans transition-colors duration-300">
+    <!-- LOADING -->
+<div id="loadingScreen">
+    <span class="font-display text-4xl text-primary-teal" style="letter-spacing:-.04em;">AWe</span>
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+    <div id="loadingPercentage">0%</div>
+</div>
+
+    <!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4">
+    <nav class="w-full max-w-5xl flex justify-between items-center px-6 py-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg rounded-full border border-zinc-200 dark:border-zinc-700">
+        
+        <a href="index.html" class="font-display text-xl text-primary-teal tracking-tighter">Adhi Wibowo</a>
+
+        <!-- Desktop nav -->
+        <ul id="navLinks" class="hidden md:flex gap-5 text-sm font-medium">
+            <li><a href="index.html" class="hover:text-primary-teal transition-colors">Home</a></li>
+        </ul>
+
+        <div class="flex items-center gap-1">
+            <button id="darkModeToggle" aria-label="Toggle dark mode"
+                    class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+            </button>
+            <button id="mobileMenu" class="md:hidden p-2 rounded-full hover:bg-black/5 transition-colors" aria-label="Menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<!-- Mobile dropdown -->
+<div id="mobileMenuDropdown"
+     class="fixed top-20 left-4 right-4 z-40 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg rounded-3xl border border-zinc-200 dark:border-zinc-700 shadow-lg hidden max-w-5xl mx-auto">
+    <ul class="flex flex-col p-3 text-sm font-medium">
+        <li><a href="index.html" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Home</a></li>
+        <li><a href="#gallery"  class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Gallery</a></li>
+        <li><a href="#contact"  class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Contact</a></li>
+    </ul>
+</div>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-16 text-center scroll-animate">
+    <div class="max-w-3xl mx-auto px-4">
+        <h1 class="font-display text-4xl md:text-5xl text-primary-teal mb-4">
+            Graphic Design Portfolio
+        </h1>
+        <p class="text-zinc-600">
+            Menyampaikan Pesan Melalui Visual yang Menarik dan Modern...
+        </p>
+    </div>
+</section>
+
+    <!-- Filter Section -->
+    <section class="py-6">
+    <div class="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-3">
+
+        <button class="filter-btn active px-4 py-2 rounded-full bg-primary-teal text-white text-sm" data-filter="all">
+            Semua
+        </button>
+
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-filter="event">
+            Event
+        </button>
+
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-filter="sports">
+            Sports
+        </button>
+
+        <button class="filter-btn px-4 py-2 rounded-full bg-white border text-sm" data-filter="campaign">
+            Campaign
+        </button>
+
+    </div>
+</section>
+
+    <!-- Gallery Section -->
+<section id="gallery" class="py-12 scroll-animate">
+<div class="max-w-6xl mx-auto px-4">
+
+<div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+<!-- 1 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="sports">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/MU%20vs%20City.jpg?updatedAt=1762948374033" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="MU vs City">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Manchester United vs Man City</h3>
+<p class="text-sm opacity-80">Poster Pertandingan Sepakbola</p>
+</div>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="sports">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/UTD%20vs%20Forest.jpg?updatedAt=1762948679265" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="MU vs Forest">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Manchester United vs Nott Forest</h3>
+<p class="text-sm opacity-80">Poster Soccer - Digital Imaging</p>
+</div>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="event">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/Untitled-1.jpg?updatedAt=1762948614510" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Wayang Kulit Ki Fajar Arianto">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Wayang Kulit Ki Fajar Arianto</h3>
+<p class="text-sm opacity-80">Pagelaran Seni Budaya</p>
+</div>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="event">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/Wedding%20Nissa%20Arif.jpg" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Wedding Nissa Arif">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Wedding Nissa & Arif</h3>
+<p class="text-sm opacity-80">Desain Poster Pernikahan</p>
+</div>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="campaign">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/Poster%20Anti%20Korupsi.jpg" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Poster Anti Korupsi">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Lawan Korupsi</h3>
+<p class="text-sm opacity-80">Kampanye Sosial Publik</p>
+</div>
+</div>
+</div>
+
+<!-- 6 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="event">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/Pamflet%20Tayub.jpg?updatedAt=1762948851729" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Pamflet Tayub">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Tayub Bareng</h3>
+<p class="text-sm opacity-80">Pelestarian Budaya Lokal</p>
+</div>
+</div>
+</div>
+
+<!-- 7 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="event">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/Dalang%20rongewuan.jpg?updatedAt=1762948338842" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Dalang Rongewuan">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Dalang Rongewuan</h3>
+<p class="text-sm opacity-80">Poster Event Budaya</p>
+</div>
+</div>
+</div>
+
+<!-- 8 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="sports">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/UTD%20v%20Chealsea.jpg?updatedAt=1762948647836" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="MU vs Chelsea">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Manchester United vs Chelsea</h3>
+<p class="text-sm opacity-80">Poster Pertandingan Sepakbola</p>
+</div>
+</div>
+</div>
+
+<!-- 9 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="event">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/Wayang%20Kulit%20Pamfelt%208%20Agustus%202025.jpg" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Pamflet Wayang Kulit">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Pagelaran Wayang Kulit</h3>
+<p class="text-sm opacity-80">Pagelaran Seni Tradisional</p>
+</div>
+</div>
+</div>
+
+<!-- 10 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-category="event">
+<img src="https://ik.imagekit.io/bwindonesiaimg/Graphic-Design/pamflet%20wedding%20musik.jpg?updatedAt=1762948909326" class="w-full aspect-[4/5] object-cover transition duration-500 group-hover:scale-110" alt="Pamflet Wedding Musik">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+<div class="text-white">
+<h3>Unggul Pamenang Music</h3>
+<p class="text-sm opacity-80">Hiburan Resepsi Pernikahan</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-[9999]">
+
+  <div class="relative max-w-4xl w-full px-4 h-full flex flex-col items-center justify-center py-8">
+
+    <!-- Close -->
+    <button id="lightboxClose"
+      class="absolute top-4 right-4 text-white text-4xl hover:opacity-70 transition z-50 bg-black/40 w-12 h-12 rounded-full flex items-center justify-center">
+      ×
+    </button>
+
+    <!-- Image -->
+    <div class="relative w-full h-full flex items-center justify-center">
+        <img id="lightboxImage"
+          src=""
+          class="max-w-full max-h-full object-contain rounded-lg shadow-xl mx-auto">
+        
+        <!-- Prev -->
+        <button id="lightboxPrev"
+          class="absolute left-0 text-white text-4xl px-3 py-2 bg-black/40 hover:bg-black/70 rounded-full transition z-50">
+          ‹
+        </button>
+
+        <!-- Next -->
+        <button id="lightboxNext"
+          class="absolute right-0 text-white text-4xl px-3 py-2 bg-black/40 hover:bg-black/70 rounded-full transition z-50">
+          ›
+        </button>
+    </div>
+
+    <!-- Counter -->
+    <div id="lightboxCounter"
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm text-center opacity-80 bg-black/60 px-4 py-1.5 rounded-full z-50">
+      1 / 10
+    </div>
+
+  </div>
+</div>
+
+    <!-- Footer -->
+<footer id="contact" class="border-t border-black/5 dark:border-white/5">
+
+    <!-- Brand -->
+    <div class="text-center pt-12 pb-8 px-8">
+        <p class="font-display text-2xl text-primary-teal mb-1">Adhi Wibowo</p>
+        <p class="text-zinc-400 text-xs tracking-widest uppercase">Digital Creative Designer</p>
+    </div>
+
+    <!-- Grid 2 kolom: maps kiri | kontak+sosial kanan -->
+    <div class="max-w-5xl mx-auto px-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+        <!-- KIRI: Google Maps -->
+        <div class="flex flex-col items-start gap-3">
+            <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Lokasi</span>
+            <div class="w-full rounded-2xl overflow-hidden shadow-md border border-black/5 dark:border-white/5" style="position:relative;padding-bottom:66.67%;height:0;">
+                <iframe
+                    src="https://maps.google.com/maps?width=600&height=400&hl=en&q=Alun-Alun%20Lama%20Ungaran&t=&z=18&ie=UTF8&iwloc=B&output=embed"
+                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    loading="lazy" title="Lokasi BW Indonesia">
+                </iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/KxN98r9bRfMaFP7R9" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-teal hover:underline">
+                <span class="material-symbols-outlined" style="font-size:15px;">location_on</span>
+                Buka di Google Maps
+            </a>
+        </div>
+
+        <!-- KANAN: Kontak + Sosial Media -->
+        <div class="flex flex-col items-center md:items-end gap-8">
+
+            <!-- Kontak -->
+            <div class="flex flex-col items-center md:items-end gap-3 w-full">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Kontak</span>
+                <a href="mailto:kwibowo437@yahoo.com"
+                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-primary-teal transition-colors">
+                    <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
+                    kwibowo437@yahoo.com
+                </a>
+                <a href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
+                   target="_blank" rel="noopener noreferrer"
+                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-green-600 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    0895610521818
+                </a>
+            </div>
+
+            <!-- Sosial Media -->
+            <div class="flex flex-col items-center md:items-end gap-3 w-full">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Sosial Media</span>
+                <div class="flex gap-5 text-2xl">
+                    <a href="https://www.instagram.com/bw_matx/" target="_blank" rel="noopener noreferrer"
+                       title="Instagram" class="opacity-60 hover:opacity-100 hover:text-pink-600 transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/kawibowo" target="_blank" rel="noopener noreferrer"
+                       title="LinkedIn" class="opacity-60 hover:opacity-100 hover:text-blue-700 transition-all">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@bw_matx" target="_blank" rel="noopener noreferrer"
+                       title="TikTok" class="opacity-60 hover:opacity-100 hover:text-zinc-800 dark:hover:text-white transition-all">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@bwmatx" target="_blank" rel="noopener noreferrer"
+                       title="Youtube" class="opacity-60 hover:opacity-100 hover:text-red-600 transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-black/5 dark:border-white/5 py-6 text-center">
+        <p class="text-zinc-400 text-xs">© 2025 my Portfolio. Credit by Awan</p>
+    </div>
+
+</footer>
+
+<script>
+// Override navbar hide
+document.querySelector('header nav').style.transform = 'none';
+window.addEventListener('scroll', () => {
+    document.querySelector('header nav').style.transform = 'none';
+});
+
+// Loading Screen with Line Progress Bar
+let progressValue = 0;
+const progressBarFill = document.getElementById('progressBarFill');
+const loadingPercentage = document.getElementById('loadingPercentage');
+const loadingScreen = document.getElementById('loadingScreen');
+const body = document.body;
+
+let isStuckAt69 = false;
+let hasPaused = false;
+
+const loadingInterval = setInterval(function() {
+    if (progressValue >= 69 && progressValue < 70 && !hasPaused) {
+        progressValue = 69;
+        isStuckAt69 = true;
+        hasPaused = true;
+        setTimeout(() => isStuckAt69 = false, 1200);
+    } else if (!isStuckAt69) {
+        progressValue += Math.random() * 15;
+    }
+    
+    if (progressValue >= 100 && !isStuckAt69) {
+        progressValue = 100;
+        clearInterval(loadingInterval);
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            body.classList.remove('loading');
+            setTimeout(() => loadingScreen.style.display = 'none', 1000);
+        }, 300);
+    }
+    
+    progressBarFill.style.width = progressValue + '%';
+    loadingPercentage.textContent = Math.floor(progressValue) + '%';
+}, 100);
+
+// Dark Mode Toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const isDarkMode = localStorage.getItem('darkMode') === 'true';
+if (isDarkMode) {
+    document.documentElement.classList.add('dark');
+    if (themeIcon) themeIcon.textContent = 'light_mode';
+}
+
+darkModeToggle?.addEventListener('click', function() {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('darkMode', isDark);
+    if (themeIcon) themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    this.classList.add('ripple');
+    setTimeout(() => this.classList.remove('ripple'), 600);
+});
+
+// ── Filter Functionality — animasi fade-out → random-enter → fade-in ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const galleryItems = document.querySelectorAll('.gallery-item');
+
+galleryItems.forEach(item => {
+    item.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+});
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.add('ripple');
+        setTimeout(() => this.classList.remove('ripple'), 600);
+
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const filterValue = this.getAttribute('data-filter');
+
+        galleryItems.forEach(item => {
+            if (item.style.display !== 'none') {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.92) translateY(8px)';
+            }
+        });
+
+        setTimeout(() => {
+            galleryItems.forEach((item, i) => {
+                const match = filterValue === 'all' ||
+                              item.getAttribute('data-category') === filterValue;
+
+                if (!match) {
+                    item.style.display = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.92) translateY(8px)';
+                } else {
+                    const randX = (Math.random() - 0.5) * 24; 
+                    const randY = 14 + Math.random() * 20;    
+                    const delay = i * 45;                      
+
+                    item.style.display = 'block';
+                    item.style.transition = 'none'; 
+                    item.style.opacity = '0';
+                    item.style.transform =
+                        `scale(0.88) translate(${randX}px, ${randY}px)`;
+
+                    setTimeout(() => {
+                        item.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.22,0.61,0.36,1)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1) translate(0, 0)';
+                    }, delay + 30);
+                }
+            });
+        }, 360);
+    });
+});
+
+// Lightbox Functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+const lightboxCounter = document.getElementById('lightboxCounter');
+
+let currentImageIndex = 0;
+let visibleImages = [];
+
+function updateVisibleImages() {
+    visibleImages = Array.from(galleryItems).filter(item => 
+        window.getComputedStyle(item).display !== 'none'
+    );
+}
+
+function openLightbox(index) {
+    updateVisibleImages();
+    currentImageIndex = index;
+    const imgSrc = visibleImages[index].querySelector('img').src;
+    const imgAlt = visibleImages[index].querySelector('img').alt;
+    lightboxImage.src = imgSrc;
+    lightboxImage.alt = imgAlt;
+    lightboxCounter.textContent = `${index + 1} / ${visibleImages.length}`;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function showNextImage() {
+    currentImageIndex = (currentImageIndex + 1) % visibleImages.length;
+    const imgSrc = visibleImages[currentImageIndex].querySelector('img').src;
+    const imgAlt = visibleImages[currentImageIndex].querySelector('img').alt;
+    lightboxImage.src = imgSrc;
+    lightboxImage.alt = imgAlt;
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${visibleImages.length}`;
+}
+
+function showPrevImage() {
+    currentImageIndex = (currentImageIndex - 1 + visibleImages.length) % visibleImages.length;
+    const imgSrc = visibleImages[currentImageIndex].querySelector('img').src;
+    const imgAlt = visibleImages[currentImageIndex].querySelector('img').alt;
+    lightboxImage.src = imgSrc;
+    lightboxImage.alt = imgAlt;
+    lightboxCounter.textContent = `${currentImageIndex + 1} / ${visibleImages.length}`;
+}
+
+galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+        updateVisibleImages();
+        const visibleIndex = visibleImages.indexOf(item);
+        openLightbox(visibleIndex);
+    });
+});
+
+lightboxClose?.addEventListener('click', closeLightbox);
+lightboxNext?.addEventListener('click', showNextImage);
+lightboxPrev?.addEventListener('click', showPrevImage);
+
+lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowRight') showNextImage();
+    else if (e.key === 'ArrowLeft') showPrevImage();
+});
+
+// Scroll Animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+}, observerOptions);
+
+document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+// Navbar Scroll Effect
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar?.classList.add('scrolled');
+            } else {
+                navbar?.classList.remove('scrolled');
+            }
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+// Mobile Menu Toggle
+const mobileMenuBtn = document.getElementById('mobileMenu');
+const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+
+mobileMenuBtn?.addEventListener('click', function() {
+    mobileMenuDropdown?.classList.toggle('hidden');
+    this.classList.toggle('active');
+    
+    // Ripple effect
+    this.classList.add('ripple');
+    setTimeout(() => this.classList.remove('ripple'), 300);
+});
+
+// Close dropdown saat klik link
+document.querySelectorAll('#mobileMenuDropdown a').forEach(link => {
+    link.addEventListener('click', function() {
+        mobileMenuDropdown?.classList.add('hidden');
+        mobileMenuBtn?.classList.remove('active');
+    });
+});
+
+// Close dropdown saat klik outside
+document.addEventListener('click', function(event) {
+    const isClickInsideDropdown = mobileMenuDropdown?.contains(event.target);
+    const isClickOnMenuBtn = mobileMenuBtn?.contains(event.target);
+    
+    if (!isClickInsideDropdown && !isClickOnMenuBtn && !mobileMenuDropdown?.classList.contains('hidden')) {
+        mobileMenuDropdown?.classList.add('hidden');
+        mobileMenuBtn?.classList.remove('active');
+    }
+});
+</script>
+</body>
+</html>
