@@ -359,19 +359,13 @@
                 Digital Creative Designer
               </p>
               <div
-                class="space-y-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6"
+                class="space-y-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6 text-justify hyphens-auto"
               >
                 <p>
-                  Saya adalah seorang designer dan editor dengan pengalaman
-                  lebih dari 5 tahun dalam menciptakan solusi digital yang
-                  inovatif. Keahlian saya meliputi Fotographer, Videographer,
-                  Motion Graphics dan UI/UX Design.
+                  Saya adalah seorang designer dan editor dengan pengalaman lebih dari 5 tahun di bidang Photography dan Videography, khususnya dalam visual storytelling, editing, dan visual kreatif. Selain itu, saya juga memiliki ketertarikan di bidang Motion Graphics dan UI/UX Design.
                 </p>
                 <p>
-                  Saya percaya bahwa desain yang baik adalah perpaduan sempurna
-                  antara estetika dan fungsionalitas. Setiap proyek adalah
-                  kesempatan untuk menciptakan sesuatu yang bermakna dan
-                  berdampak.
+                  Saat ini saya tengah berfokus pada pengembangan karier di bidang <span class="font-bold text-primary-teal">UI/UX Design</span> dengan pendekatan yang mengutamakan keseimbangan antara visual aesthetics, user experience, dan fungsionalitas produk untuk menciptakan pengalaman digital yang efektif, modern, dan user-centered.
                 </p>
               </div>
 
@@ -585,7 +579,6 @@
         >
           Software
         </h2>
-        <div class="linear-underline" aria-hidden="true"></div>
 
         <div class="tools-grid max-w-4xl mx-auto px-2">
           <!-- Adobe Photoshop -->
@@ -672,6 +665,62 @@
           </div>
         </div>
       </section>
+
+      <!-- ══════════════════ RECENT PROJECT ══════════════════ -->
+      <section id="recent-project" class="py-12 scroll-animate">
+        <h2
+          class="font-display text-3xl sm:text-4xl md:text-5xl text-primary-teal text-center mb-10"
+        >
+          Recent Project
+        </h2>
+
+        <!-- rp-card: no color bg, no overlay — clean image preview -->
+        <article
+          id="rp-card"
+          class="rp-card group relative rounded-2xl sm:rounded-[2rem] overflow-hidden max-w-3xl mx-auto"
+          style="aspect-ratio: 5/4"
+        >
+          <!-- Clean image, no opacity overlay -->
+          <img
+            src="https://ik.imagekit.io/bwindonesiaimg/UIUX-Design/LinkedIn%20-%20Skripsi%20Manager.png"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            alt="Portfolio App Design"
+          />
+
+          <!-- Bottom info bar — always visible, sits on top -->
+          <div
+            class="absolute inset-x-0 bottom-0 flex justify-between items-end p-5 sm:p-6"
+            style="background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)"
+          >
+            <div>
+              <span
+                class="text-xs font-bold uppercase tracking-wide bg-white/15 backdrop-blur-sm border border-white/20 text-white px-3 py-1 rounded-full inline-block mb-2"
+                >UI/UX Design</span
+              >
+              <h3 class="font-display text-xl sm:text-2xl leading-tight text-white">
+                Skripsi Manager App
+              </h3>
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <span class="text-xs font-bold uppercase tracking-wide bg-white/15 backdrop-blur-sm border border-white/15 text-white px-2 py-0.5 rounded-full">Flutter</span>
+                <span class="text-xs font-bold uppercase tracking-wide bg-white/15 backdrop-blur-sm border border-white/15 text-white px-2 py-0.5 rounded-full">Mobile App</span>
+                <span class="text-xs font-bold uppercase tracking-wide bg-white/15 backdrop-blur-sm border border-white/15 text-white px-2 py-0.5 rounded-full">Android Studio</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Magnetic CTA — rounded-rect, desktop only, injected via JS -->
+          <a
+            id="rp-magnetic-btn"
+            href="#portfolio"
+            class="rp-magnetic-btn"
+            aria-label="View project"
+          >
+            <span>more</span>
+            <span class="material-symbols-outlined" style="font-size:15px">arrow_forward</span>
+          </a>
+        </article>
+      </section>
+
 
       <!-- ══════════════════════════════════════════════════════════════════ -->
       <!-- PORTFOLIO — index2 (6 cards lengkap dengan deskripsi + dual tag)  -->
@@ -1622,5 +1671,73 @@
         }
     })();
     </script>
+    <!-- Recent Project — Magnetic button (no popup), reuses lerp/rAF pattern from portfolio system -->
+    <script>
+    (function () {
+        // Only run on true pointer devices (desktop)
+        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+        function initRP() {
+            const card = document.getElementById('rp-card');
+            const btn  = document.getElementById('rp-magnetic-btn');
+            if (!card || !btn) return;
+
+            let mouseX = 0, mouseY = 0;
+            let magX = 0,   magY = 0;
+            let isHovering = false;
+            let rafId = null;
+
+            // Same lerp approach as existing pgp magnetic system
+            function renderMagnetic() {
+                if (!isHovering) {
+                    magX = 0; magY = 0;
+                    btn.style.left = '';
+                    btn.style.top  = '';
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                    return;
+                }
+                const rect = card.getBoundingClientRect();
+                const targetX = mouseX - rect.left;
+                const targetY = mouseY - rect.top;
+
+                // Snap on first frame
+                if (magX === 0 && magY === 0) { magX = targetX; magY = targetY; }
+
+                // Lerp — smooth follow (0.18 = snappy but soft, same as portfolio)
+                magX += (targetX - magX) * 0.18;
+                magY += (targetY - magY) * 0.18;
+
+                btn.style.left = magX + 'px';
+                btn.style.top  = magY + 'px';
+
+                rafId = requestAnimationFrame(renderMagnetic);
+            }
+
+            card.addEventListener('mouseenter', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                isHovering = true;
+                if (!rafId) rafId = requestAnimationFrame(renderMagnetic);
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                isHovering = false;
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initRP);
+        } else {
+            initRP();
+        }
+    })();
+    </script>
   </body>
+
 </html>

@@ -881,3 +881,74 @@ header nav * {
 } /* end @media (hover: hover) and (pointer: fine) */
 
 
+
+
+
+/* ══════════════════════════════════════════════════════
+   RECENT PROJECT — #recent-project
+   Magnetic button (no popup), clean image card
+   Desktop only via @media (hover: hover) and (pointer: fine)
+══════════════════════════════════════════════════════ */
+
+/* Base card */
+.rp-card {
+    display: block;
+    cursor: default;
+}
+
+/* Magnetic CTA button — hidden by default */
+.rp-magnetic-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;                /* hidden on mobile */
+    align-items: center;
+    gap: 6px;
+    padding: 11px 22px;
+    border-radius: 12px;          /* rounded-rect, not circle */
+    background: rgba(255, 255, 255, 0.95);
+    color: #096b5b;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.28s ease, background 0.2s, color 0.2s, box-shadow 0.2s;
+    will-change: left, top;
+    pointer-events: none;
+    z-index: 20;
+    white-space: nowrap;
+}
+
+.dark .rp-magnetic-btn {
+    background: rgba(255, 255, 255, 0.12);
+    color: #5eead4;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Desktop-only activation */
+@media (hover: hover) and (pointer: fine) {
+    .rp-magnetic-btn {
+        display: flex;
+    }
+
+    .rp-card:hover .rp-magnetic-btn {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .rp-magnetic-btn:hover {
+        background: #fff;
+        color: #000;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .dark .rp-magnetic-btn:hover {
+        background: rgba(255, 255, 255, 0.22);
+        color: #fff;
+    }
+}
