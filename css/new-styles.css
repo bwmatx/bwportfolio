@@ -212,27 +212,151 @@ header nav a.nav-active::after {
             transform: translateY(0);
         }
 
-        /* ── Dark Mode ── */
-        .dark body { background-color: #1a2e26; }
+        /* ══════════════════════════════════════════════════════════════════
+           GLOBAL DARK MODE — All pages, all components
+           Teal accent #096B5B  →  warm cream #e9e0d1  in dark mode
+           ══════════════════════════════════════════════════════════════════ */
 
-        /* Navbar links (desktop + mobile dropdown) -> white in dark mode */
+        /* ── Base ── */
+        .dark body { background-color: #1a2e26; color: #e6efe8; }
+
+        /* ── Navbar ── */
         .dark header a,
         .dark header nav a,
-        .dark #mobileMenuDropdown a {
-        color: #ffffff !important;
-        }
-        /* About: 4 skill cards text + material icons -> white in dark mode */
-        /* Targets immediate children of #about .grid (structure used in your file) */
+        .dark #mobileMenuDropdown a { color: #ffffff !important; }
+        .dark header nav a.font-display { color: #e9e0d1 !important; }
+
+        /* ── All teal text → warm cream in dark ── */
+        .dark .text-primary-teal,
+        .dark [class*="text-primary-teal"] { color: #e9e0d1 !important; }
+
+        /* ── All teal backgrounds → dark teal tint ── */
+        .dark .bg-primary-teal { background-color: #e9e0d1 !important; color: #1a2e26 !important; }
+        .dark .bg-primary-teal * { color: #1a2e26 !important; }
+
+        /* ── Teal border → muted warm border ── */
+        .dark .border-primary-teal { border-color: rgba(233,224,209,0.3) !important; }
+        .dark [class*="border-primary-teal"] { border-color: rgba(233,224,209,0.2) !important; }
+
+        /* ── Teal hover ring ── */
+        .dark [class*="hover:text-primary-teal"]:hover { color: #e9e0d1 !important; }
+        .dark [class*="hover:bg-primary-teal"]:hover { background-color: rgba(233,224,209,0.15) !important; }
+
+        /* ── Accent soft bg ── */
+        .dark .bg-accent-soft\/30 { background-color: rgba(255,255,255,0.04) !important; }
+
+        /* ── Body warm bg ── */
+        .dark .bg-bg-warm { background-color: #1a2e26 !important; }
+
+        /* ── About skill cards ── */
         .dark #about .grid > div,
         .dark #about .grid > div .font-bold,
-        .dark #about .grid > div .material-symbols-outlined {
-        color: #ffffff !important;
-        }
-        /* If skill card icons are SVG IMG instead of material-symbols, use this fallback to increase contrast */
+        .dark #about .grid > div .material-symbols-outlined { color: #ffffff !important; }
         .dark #about .grid > div img,
-        .dark #about .grid > div svg {
-        filter: brightness(200%) contrast(120%) !important;
+        .dark #about .grid > div svg { filter: brightness(200%) contrast(120%) !important; }
+
+        /* ── Portfolio cards (clean image style) ── */
+        .dark .pgp-card-trigger { box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+
+        /* ── pc-btn (static portfolio card button) ── */
+        .dark .pc-btn {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.18);
+            color: #fff;
         }
+        .dark .pc-btn:hover {
+            background: rgba(255,255,255,0.22);
+            color: #e9e0d1;
+        }
+
+        /* ── Recent Project magnetic button in dark ── */
+        .dark .rp-magnetic-btn {
+            background: rgba(255,255,255,0.1);
+            color: #e9e0d1;
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .dark .rp-magnetic-btn:hover {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        /* ── pgp popup magnetic CTA in dark ── */
+        .dark .pgp-more-magnetic {
+            background: rgba(255,255,255,0.1);
+            color: #e9e0d1;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .dark .pgp-more-magnetic:hover {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        /* ── Filter buttons (wedding, gdesign, graduation pages) ── */
+        .dark .filter-btn:not(.active) {
+            background: rgba(255,255,255,0.06);
+            color: #c8d8cc;
+            border-color: rgba(255,255,255,0.12);
+        }
+        .dark .filter-btn:not(.active):hover {
+            background: rgba(233,224,209,0.12);
+            color: #e9e0d1;
+            border-color: rgba(233,224,209,0.3);
+        }
+        .dark .filter-btn.active {
+            background: #e9e0d1 !important;
+            color: #1a2e26 !important;
+            border-color: #e9e0d1 !important;
+            box-shadow: 0 8px 25px rgba(233,224,209,0.15);
+        }
+
+        /* ── Tool / Software cards ── */
+        .dark .tool-item { background: rgba(28,42,36,0.65); border-color: rgba(255,255,255,0.06); }
+        .dark .tool-name { color: #e6efe8; }
+        .dark .tool-item:hover .tool-icon img { filter: brightness(180%) !important; }
+
+        /* ── Language skill cards ── */
+        .dark .language-item { background: rgba(255,255,255,0.04) !important; border-color: rgba(255,255,255,0.08) !important; }
+        .dark .language-item .text-primary-teal { color: #e9e0d1 !important; }
+
+        /* ── Footer ── */
+        .dark footer { background-color: #162420; }
+        .dark footer p.text-zinc-400,
+        .dark footer span.text-zinc-400 { color: #8aa898 !important; }
+        .dark footer a.text-primary-teal { color: #e9e0d1 !important; }
+        .dark footer a.text-zinc-600 { color: #c8d8cc !important; }
+        .dark footer .border-black\/5 { border-color: rgba(255,255,255,0.06) !important; }
+
+        /* ── Contact section inputs/labels ── */
+        .dark input, .dark textarea, .dark select {
+            background: rgba(255,255,255,0.06) !important;
+            border-color: rgba(255,255,255,0.12) !important;
+            color: #e6efe8 !important;
+        }
+        .dark input::placeholder, .dark textarea::placeholder { color: #8aa898 !important; }
+        .dark label { color: #c8d8cc !important; }
+
+        /* ── CTA buttons: bg-zinc-800 → stays dark, text white ── */
+        .dark .bg-zinc-800 { background-color: rgba(255,255,255,0.08) !important; }
+        .dark .hover\:bg-black:hover { background-color: rgba(255,255,255,0.15) !important; }
+
+        /* ── Dividers ── */
+        .dark .border-black\/5 { border-color: rgba(255,255,255,0.06) !important; }
+        .dark .border-t.border-black\/5 { border-top-color: rgba(255,255,255,0.06) !important; }
+
+        /* ── Testimonial cards ── */
+        .dark .testi-slide > div { background: rgba(255,255,255,0.04) !important; border-color: rgba(255,255,255,0.08) !important; }
+        .dark .testi-dot { background: rgba(233,224,209,0.25); }
+        .dark .testi-dot.active { background: #e9e0d1; }
+
+        /* ── Scroll progress bar ── */
+        .dark #scroll-progress { background: linear-gradient(90deg, #e9e0d1, #8aa898); }
+
+        /* ── Loading screen dark ── */
+        .dark #loadingScreen { background: #1a2e26; }
+        .dark .progress-bar-wrap { background: rgba(233,224,209,0.15); }
+        .dark .progress-bar-fill { background: #e9e0d1; }
+        .dark #loadingPercentage { color: rgba(233,224,209,0.55); }
 
                 /* ===== Tools / Software section styles (add into existing <style>) ===== */
         #tools { --card-bg: rgba(255,255,255,0.6); }
@@ -952,3 +1076,44 @@ header nav * {
         color: #fff;
     }
 }
+
+/* ── Portfolio Card Button (.pc-btn) — static rounded-rect, no magnetic ── */
+.pc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+}
+
+.pc-btn:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Portfolio Card: consistent bottom-right button alignment ── */
+.pgp-card-trigger {
+    display: flex;
+    flex-direction: column;
+}
+/* Info bar row: tags flex-1 left, pc-btn flex-shrink right */
+.pgp-card-trigger .pc-btn {
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+
