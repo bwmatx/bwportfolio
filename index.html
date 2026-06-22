@@ -13,11 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&display=swap"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome via cdnjs (untuk footer social icons) -->
     <link
       rel="stylesheet"
@@ -44,8 +40,8 @@
               "card-6": "#FFD6A5",
             },
             fontFamily: {
-              display: ["Fraunces", "serif"],
-              sans: ["Inter", "sans-serif"],
+              display: ["Poppins", "sans-serif"],
+              sans: ["Poppins", "sans-serif"],
             },
           },
         },
@@ -144,7 +140,7 @@
         <a
           href="#home"
           class="font-display text-xl text-primary-teal tracking-tighter"
-          >Adhi Wibowo</a
+          >adhiwibowo</a
         >
 
         <!-- Desktop nav -->
@@ -196,15 +192,10 @@
         </ul>
 
         <div class="flex items-center gap-1">
-          <!-- Dark mode toggle — index2 (Material Symbols + localStorage) -->
-          <button
-            id="darkModeToggle"
-            aria-label="Toggle dark mode"
-            class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-          >
-            <span class="material-symbols-outlined" id="themeIcon"
-              >dark_mode</span
-            >
+          <!-- Theme Toggle — Sliding Sun/Moon Switch -->
+          <button class="theme-toggle" aria-label="Toggle dark mode">
+              <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           </button>
           <!-- Mobile hamburger -->
           <button
@@ -424,7 +415,7 @@
               <!-- Download CV — center di mobile, left di desktop -->
               <div class="flex justify-center md:justify-start">
                 <a
-                  href="https://drive.google.com/file/d/1Kfi4Ve-uQkGVU1oqxOlClsSIYJcFYuhW/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1Kfi4Ve-uQkGVU1oqxOlClsSIYJcFYuhW/view"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-2 bg-zinc-800 dark:bg-zinc-700 text-white px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-black dark:hover:bg-zinc-600 transition-colors"
@@ -821,7 +812,7 @@
             style="min-height: 320px"
             data-title="Video Project"
             data-desc="Dokumentasi Visual Bergerak dengan engagement tinggi"
-            data-link="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing"
+            data-link="videoproject.html"
           >
             <video
               src="https://ik.imagekit.io/bwindonesiaimg/Video%20Proj/Teaser.mp4"
@@ -836,7 +827,7 @@
                   <span class="text-xs font-bold uppercase tracking-wide bg-white/15 backdrop-blur-sm border border-white/15 text-white px-2 py-0.5 rounded-full">Video</span>
                   <span class="text-xs font-bold uppercase tracking-wide bg-white/15 backdrop-blur-sm border border-white/15 text-white px-2 py-0.5 rounded-full">Clip</span>
                 </div>
-                <a href="https://drive.google.com/drive/folders/1oKTTk9dBfYzQ-k2a6wL2n9ebXL6ASjEn?usp=sharing" target="_blank" rel="noopener noreferrer" class="pc-btn">more <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle">arrow_forward</span></a>
+                <a href="videoproject.html" class="pc-btn">more <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle">arrow_forward</span></a>
               </div>
             </div>
           </article>
@@ -1496,6 +1487,7 @@
         }
     })();
     </script>
+    <script src="./js/themetoggle.js"></script>
     <script src="./js/new-script.js"></script>
     <!-- Typewriter hero animation — looping -->
     <script>

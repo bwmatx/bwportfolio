@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Project - adhiwibowo</title>
+    <link rel="icon" href="https://ik.imagekit.io/bwindonesiaimg/logo_update_2026/Logo%20Black%202026.png" type="image/png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- MAIN CSS (WAJIB) -->
+    <link rel="stylesheet" href="./css/new-styles.css">
+
+    <!-- Video.js -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@videojs/html/cdn/video-ui.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "bg-warm": "#E8E0D0",
+                        "primary-teal": "#096B5B",
+                        "accent-soft": "#C8E8DC",
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                        sans: ["Poppins", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/video.css">
+</head>
+<body class="bg-bg-warm text-zinc-800 font-sans transition-colors duration-300">
+    <!-- LOADING -->
+<div id="loadingScreen">
+    <span class="font-display text-4xl text-primary-teal" style="letter-spacing:-.04em;">AWe</span>
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+    <div id="loadingPercentage">0%</div>
+</div>
+
+    <!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4">
+    <nav class="w-full max-w-5xl flex justify-between items-center px-6 py-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg rounded-full border border-zinc-200 dark:border-zinc-700">
+        
+        <a href="index.html" class="font-display text-xl text-primary-teal tracking-tighter">Adhi Wibowo</a>
+
+        <!-- Desktop nav -->
+        <ul id="navLinks" class="hidden md:flex gap-5 text-sm font-medium">
+            <li><a href="index.html" class="hover:text-primary-teal transition-colors">Home</a></li>
+        </ul>
+
+        <div class="flex items-center gap-1">
+            <!-- Theme Toggle — Sliding Sun/Moon Switch -->
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button id="mobileMenu" class="md:hidden p-2 rounded-full hover:bg-black/5 transition-colors" aria-label="Menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<!-- Mobile dropdown -->
+<div id="mobileMenuDropdown"
+     class="fixed top-20 left-4 right-4 z-40 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg rounded-3xl border border-zinc-200 dark:border-zinc-700 shadow-lg hidden max-w-5xl mx-auto">
+    <ul class="flex flex-col p-3 text-sm font-medium">
+        <li><a href="index.html" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Home</a></li>
+        <li><a href="gdesign.html" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Graphic Design</a></li>
+        <li><a href="videoproject.html" class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors text-primary-teal font-bold">Video Project</a></li>
+        <li><a href="#contact"  class="block px-4 py-3 rounded-2xl hover:bg-primary-teal/10 hover:text-primary-teal transition-colors">Contact</a></li>
+    </ul>
+</div>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-16 text-center scroll-animate">
+    <div class="max-w-3xl mx-auto px-4">
+        <h1 class="font-display text-4xl md:text-5xl text-primary-teal mb-4">
+            Video Project
+        </h1>
+        <p class="text-zinc-600">
+            Visual stories crafted through motion, editing, and cinematic experiences.
+        </p>
+    </div>
+</section>
+
+    <!-- Filter Section -->
+    <section class="py-6">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col items-center gap-4">
+        <!-- Level 1 Filters -->
+        <div class="flex flex-wrap justify-center gap-3">
+            <button class="filter-btn-l1 active px-6 py-2 rounded-full bg-primary-teal text-white text-sm transition" data-format="landscape">
+                Landscape
+            </button>
+            <button class="filter-btn-l1 px-6 py-2 rounded-full bg-white border text-zinc-600 hover:text-zinc-800 text-sm hover:bg-zinc-50 transition" data-format="portrait">
+                Portrait
+            </button>
+        </div>
+        
+        <!-- Level 2 Filters (Landscape) -->
+        <div id="landscape-filters" class="flex flex-wrap justify-center gap-3 transition-all duration-300">
+            <button class="filter-btn-l2 active px-4 py-2 rounded-full bg-primary-teal text-white text-sm transition" data-category="teasers">
+                Teasers
+            </button>
+            <button class="filter-btn-l2 px-4 py-2 rounded-full bg-white border text-zinc-600 hover:text-zinc-800 text-sm hover:bg-zinc-50 transition" data-category="wedding">
+                Wedding Films
+            </button>
+            <button class="filter-btn-l2 px-4 py-2 rounded-full bg-white border text-zinc-600 hover:text-zinc-800 text-sm hover:bg-zinc-50 transition" data-category="documentaries">
+                Documentaries
+            </button>
+        </div>
+    </div>
+</section>
+
+    <!-- Gallery Section -->
+<section id="gallery" class="py-12 scroll-animate">
+<div class="max-w-6xl mx-auto px-4">
+
+<div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+<!-- Landscape Video 1 (Teasers) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-format="landscape" data-category="teasers" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_SALSABILA_YUSUF.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_SALSABILA_YUSUF.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Salsabila & Yusuf</h3>
+    <p class="text-white/80 text-sm">Teasers</p>
+</div>
+</div>
+
+<!-- Landscape Video 2 (Teasers) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-format="landscape" data-category="teasers" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_ASTRI_HANA.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_ASTRI_HANA.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Astri & Hana</h3>
+    <p class="text-white/80 text-sm">Teasers</p>
+</div>
+</div>
+
+<!-- Landscape Video 3 (Teasers) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-format="landscape" data-category="teasers" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_YUKO_ICHA.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_YUKO_ICHA.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Yuko & Icha</h3>
+    <p class="text-white/80 text-sm">Teasers</p>
+</div>
+</div>
+
+<!-- Landscape Video 4 (Teasers) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-format="landscape" data-category="teasers" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_INDRI_JULY.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_INDRI_JULY.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Indri & July</h3>
+    <p class="text-white/80 text-sm">Teasers</p>
+</div>
+</div>
+
+<!-- Landscape Video 5 (Teasers) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-format="landscape" data-category="teasers" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_DEMA_BISMA.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_DEMA_BISMA.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Dema & Bisma</h3>
+    <p class="text-white/80 text-sm">Teasers</p>
+</div>
+</div>
+
+<!-- Landscape Video 6 (Teasers) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group" data-format="landscape" data-category="teasers" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_EGG_ALISYA_SYAHRUL.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/TEASER_EGG_ALISYA_SYAHRUL.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Alisya & Syahrul</h3>
+    <p class="text-white/80 text-sm">Teasers</p>
+</div>
+</div>
+
+<!-- Landscape Video 7 (Wedding Films) -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="landscape" data-category="wedding" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/Clip_DEMA_BISMA.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/landscape/Clip_DEMA_BISMA.mp4#t=0.1" class="w-full aspect-[16/9] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Dema & Bisma Wedding Clip</h3>
+    <p class="text-white/80 text-sm">Wedding Films</p>
+</div>
+</div>
+
+<!-- Documentaries Empty State -->
+<div class="gallery-item w-full md:col-span-2 hidden" data-format="landscape" data-category="documentaries">
+    <div class="flex flex-col items-center justify-center py-20 bg-white/50 border border-zinc-200 dark:bg-zinc-800/50 dark:border-zinc-700 rounded-2xl text-center shadow-sm backdrop-blur-sm">
+        <span class="material-symbols-outlined text-6xl text-zinc-300 dark:text-zinc-600 mb-4">videocam_off</span>
+        <h3 class="font-display text-2xl text-primary-teal mb-2">Belum ada Video</h3>
+        <p class="text-zinc-500 dark:text-zinc-400">Oh No, no video in there, wait for next update</p>
+    </div>
+</div>
+
+<!-- Portrait Video 1 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="portrait" data-category="portrait" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/1.mp4?updatedAt=1782149447697">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/1.mp4?updatedAt=1782149447697#t=0.1" class="w-full aspect-[9/16] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Portrait Story 1</h3>
+    <p class="text-white/80 text-sm">Portrait</p>
+</div>
+</div>
+
+<!-- Portrait Video 2 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="portrait" data-category="portrait" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/tyas_spmb.mp4">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/tyas_spmb.mp4#t=0.1" class="w-full aspect-[9/16] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Portrait Story 2</h3>
+    <p class="text-white/80 text-sm">Portrait</p>
+</div>
+</div>
+
+<!-- Portrait Video 3 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="portrait" data-category="portrait" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/2.mp4?updatedAt=1782149432401">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/2.mp4?updatedAt=1782149432401#t=0.1" class="w-full aspect-[9/16] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Portrait Story 3</h3>
+    <p class="text-white/80 text-sm">Portrait</p>
+</div>
+</div>
+
+<!-- Portrait Video 4 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="portrait" data-category="portrait" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/3.mp4?updatedAt=1782149432369">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/3.mp4?updatedAt=1782149432369#t=0.1" class="w-full aspect-[9/16] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Portrait Story 4</h3>
+    <p class="text-white/80 text-sm">Portrait</p>
+</div>
+</div>
+
+<!-- Portrait Video 5 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="portrait" data-category="portrait" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/4.mp4?updatedAt=1782149432124">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/4.mp4?updatedAt=1782149432124#t=0.1" class="w-full aspect-[9/16] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Portrait Story 5</h3>
+    <p class="text-white/80 text-sm">Portrait</p>
+</div>
+</div>
+
+<!-- Portrait Video 6 -->
+<div class="gallery-item relative overflow-hidden rounded-xl cursor-pointer group hidden" data-format="portrait" data-category="portrait" data-video="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/5.mp4?updatedAt=1782149442298">
+<video src="https://ik.imagekit.io/bwindonesiaimg/video_js/potrait/5.mp4?updatedAt=1782149442298#t=0.1" class="w-full aspect-[9/16] object-cover transition duration-500 group-hover:scale-110" preload="metadata" muted playsinline></video>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center p-4">
+    <div class="text-white w-16 h-16 rounded-full bg-primary-teal/80 flex items-center justify-center backdrop-blur-md shadow-lg transition transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+    </div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition">
+    <h3 class="text-white font-bold">Portrait Story 6</h3>
+    <p class="text-white/80 text-sm">Portrait</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Video Modal -->
+<div id="videoModal" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden items-center justify-center z-[9999] opacity-0 transition-opacity duration-300">
+  <div class="relative w-full max-w-[1920px] h-full flex flex-col items-center justify-center p-4 md:p-8">
+    <!-- Close -->
+    <button id="videoModalClose" class="absolute top-4 right-4 text-white text-4xl hover:opacity-70 transition z-50 bg-black/40 hover:bg-black/80 w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer">&times;</button>
+    
+    <!-- Video Player Container (1920x1080 bounds) -->
+    <div class="w-full h-full max-h-full flex items-center justify-center relative overflow-hidden rounded-xl shadow-2xl">
+      <div id="playerContainer" class="w-full h-full flex justify-center items-center">
+<video-player>
+  <media-container class="media-default-skin media-default-skin--video">
+    <video src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM/highest.mp4" playsinline></video>
+
+    <!-- Remove poster element -->
+
+    <media-buffering-indicator class="media-buffering-indicator">
+      <div class="media-surface">
+        <media-icon name="spinner" class="media-icon"></media-icon>
+      </div>
+    </media-buffering-indicator>
+
+    <media-error-dialog class="media-error">
+      <div class="media-error__dialog media-surface">
+        <div class="media-error__content">
+          <media-alert-dialog-title class="media-error__title">Something went wrong.</media-alert-dialog-title>
+          <media-alert-dialog-description class="media-error__description"></media-alert-dialog-description>
+        </div>
+        <div class="media-error__actions">
+          <media-alert-dialog-close class="media-button media-button--primary">OK</media-alert-dialog-close>
+        </div>
+      </div>
+    </media-error-dialog>
+
+    <media-controls class="media-surface media-controls">
+      <media-tooltip-group>
+        <div class="media-button-group">
+          <media-play-button commandfor="play-tooltip" class="media-button media-button--subtle media-button--icon media-button--play">
+            <media-icon name="restart" class="media-icon media-icon--restart"></media-icon>
+            <media-icon name="play" class="media-icon media-icon--play"></media-icon>
+            <media-icon name="pause" class="media-icon media-icon--pause"></media-icon>
+          </media-play-button>
+          <media-tooltip id="play-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+
+          <media-seek-button commandfor="seek-backward-tooltip" seconds="-10" class="media-button media-button--subtle media-button--icon media-button--seek">
+            <span class="media-icon__container">
+              <media-icon name="seek" class="media-icon media-icon--flipped"></media-icon>
+              <span class="media-icon__label">10</span>
+            </span>
+          </media-seek-button>
+          <media-tooltip id="seek-backward-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+
+          <media-seek-button commandfor="seek-forward-tooltip" seconds="10" class="media-button media-button--subtle media-button--icon media-button--seek">
+            <span class="media-icon__container">
+              <media-icon name="seek" class="media-icon"></media-icon>
+              <span class="media-icon__label">10</span>
+            </span>
+          </media-seek-button>
+          <media-tooltip id="seek-forward-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+        </div>
+
+        <div class="media-time-controls">
+          <media-time type="current" class="media-time"></media-time>
+          <media-time-slider class="media-slider">
+            <media-slider-track class="media-slider__track">
+              <media-slider-fill class="media-slider__fill"></media-slider-fill>
+              <media-slider-buffer class="media-slider__buffer"></media-slider-buffer>
+            </media-slider-track>
+            <media-slider-thumb class="media-slider__thumb"></media-slider-thumb>
+
+            <div class="media-surface media-preview media-slider__preview">
+              <media-slider-thumbnail class="media-preview__thumbnail"></media-slider-thumbnail>
+              <media-slider-value type="pointer" class="media-time media-preview__time"></media-slider-value>
+              <media-icon name="spinner" class="media-preview__spinner media-icon"></media-icon>
+            </div>
+          </media-time-slider>
+          <media-time type="duration" class="media-time"></media-time>
+        </div>
+
+        <div class="media-button-group">
+          <media-playback-rate-menu-trigger commandfor="playback-rate-menu" class="media-button media-button--subtle media-button--icon media-button--playback-rate"></media-playback-rate-menu-trigger>
+          <media-playback-rate-menu id="playback-rate-menu" side="top" align="center" class="media-surface media-popover media-menu media-menu--playback-rate">
+            <media-playback-rate-options class="media-menu__group">
+              <template>
+                <media-menu-radio-item class="media-menu__item">
+                  <span data-part="label"></span>
+                  <media-menu-item-indicator force-mount class="media-menu__indicator">
+                    <media-icon name="check" class="media-icon"></media-icon>
+                  </media-menu-item-indicator>
+                </media-menu-radio-item>
+              </template>
+            </media-playback-rate-options>
+          </media-playback-rate-menu>
+
+          <media-mute-button commandfor="video-volume-popover" class="media-button media-button--subtle media-button--icon media-button--mute">
+            <media-icon name="volume-off" class="media-icon media-icon--volume-off"></media-icon>
+            <media-icon name="volume-low" class="media-icon media-icon--volume-low"></media-icon>
+            <media-icon name="volume-high" class="media-icon media-icon--volume-high"></media-icon>
+          </media-mute-button>
+
+          <media-popover id="video-volume-popover" open-on-hover delay="200" close-delay="100" side="top" class="media-surface media-popover media-popover--volume">
+            <media-volume-slider class="media-slider" orientation="vertical" thumb-alignment="edge">
+              <media-slider-track class="media-slider__track">
+                <media-slider-fill class="media-slider__fill"></media-slider-fill>
+              </media-slider-track>
+              <media-slider-thumb class="media-slider__thumb media-slider__thumb--persistent"></media-slider-thumb>
+            </media-volume-slider>
+          </media-popover>
+
+          <media-captions-button commandfor="captions-tooltip" class="media-button media-button--subtle media-button--icon media-button--captions">
+            <media-icon name="captions-off" class="media-icon media-icon--captions-off"></media-icon>
+            <media-icon name="captions-on" class="media-icon media-icon--captions-on"></media-icon>
+          </media-captions-button>
+          <media-tooltip id="captions-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+
+          <media-cast-button commandfor="cast-tooltip" class="media-button media-button--subtle media-button--icon media-button--cast">
+            <media-icon name="cast-enter" class="media-icon media-icon--cast-enter"></media-icon>
+            <media-icon name="cast-exit" class="media-icon media-icon--cast-exit"></media-icon>
+          </media-cast-button>
+          <media-tooltip id="cast-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+
+          <media-pip-button commandfor="pip-tooltip" class="media-button media-button--subtle media-button--icon media-button--pip">
+            <media-icon name="pip-enter" class="media-icon media-icon--pip-enter"></media-icon>
+            <media-icon name="pip-exit" class="media-icon media-icon--pip-exit"></media-icon>
+          </media-pip-button>
+          <media-tooltip id="pip-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+
+          <media-fullscreen-button commandfor="fullscreen-tooltip" class="media-button media-button--subtle media-button--icon media-button--fullscreen">
+            <media-icon name="fullscreen-enter" class="media-icon media-icon--fullscreen-enter"></media-icon>
+            <media-icon name="fullscreen-exit" class="media-icon media-icon--fullscreen-exit"></media-icon>
+          </media-fullscreen-button>
+          <media-tooltip id="fullscreen-tooltip" side="top" class="media-surface media-tooltip"></media-tooltip>
+        </div>
+      </media-tooltip-group>
+    </media-controls>
+
+    <div class="media-overlay"></div>
+
+    <!-- Hotkeys -->
+    <media-hotkey keys="Space" action="togglePaused"></media-hotkey>
+    <media-hotkey keys="k" action="togglePaused"></media-hotkey>
+    <media-hotkey keys="m" action="toggleMuted"></media-hotkey>
+    <media-hotkey keys="f" action="toggleFullscreen"></media-hotkey>
+    <media-hotkey keys="c" action="toggleSubtitles"></media-hotkey>
+    <media-hotkey keys="i" action="togglePictureInPicture"></media-hotkey>
+    <media-hotkey keys="ArrowRight" action="seekStep" value="5"></media-hotkey>
+    <media-hotkey keys="ArrowLeft" action="seekStep" value="-5"></media-hotkey>
+    <media-hotkey keys="l" action="seekStep" value="10"></media-hotkey>
+    <media-hotkey keys="j" action="seekStep" value="-10"></media-hotkey>
+    <media-hotkey keys="ArrowUp" action="volumeStep" value="0.05"></media-hotkey>
+    <media-hotkey keys="ArrowDown" action="volumeStep" value="-0.05"></media-hotkey>
+    <media-hotkey keys="0-9" action="seekToPercent"></media-hotkey>
+    <media-hotkey keys="Home" action="seekToPercent" value="0"></media-hotkey>
+    <media-hotkey keys="End" action="seekToPercent" value="100"></media-hotkey>
+    <media-hotkey keys=">" action="speedUp"></media-hotkey>
+    <media-hotkey keys="<" action="speedDown"></media-hotkey>
+
+    <!-- Gestures -->
+    <media-gesture type="tap" action="togglePaused" pointer="mouse" region="center"></media-gesture>
+    <media-gesture type="tap" action="toggleControls" pointer="touch"></media-gesture>
+    <media-gesture type="doubletap" action="seekStep" value="-10" region="left"></media-gesture>
+    <media-gesture type="doubletap" action="toggleFullscreen" region="center"></media-gesture>
+    <media-gesture type="doubletap" action="seekStep" value="10" region="right"></media-gesture>
+
+    <!-- Input Feedback -->
+    <media-status-announcer></media-status-announcer>
+    <div class="media-input-feedback">
+      <media-volume-indicator hidden class="media-surface media-input-feedback-island media-input-feedback-island--volume">
+        <media-volume-indicator-fill class="media-input-feedback-island__content">
+          <media-icon name="volume-high" class="media-icon media-icon--volume-high"></media-icon>
+          <media-icon name="volume-low" class="media-icon media-icon--volume-low"></media-icon>
+          <media-icon name="volume-off" class="media-icon media-icon--volume-off"></media-icon>
+          <media-volume-indicator-value class="media-input-feedback-island__value"></media-volume-indicator-value>
+        </media-volume-indicator-fill>
+      </media-volume-indicator>
+      <media-status-indicator
+        hidden
+        actions="toggleSubtitles toggleFullscreen togglePictureInPicture"
+        class="media-surface media-input-feedback-island media-input-feedback-island--status"
+      >
+        <div class="media-input-feedback-island__content">
+          <media-icon name="captions-on" class="media-icon media-icon--captions-on"></media-icon>
+          <media-icon name="captions-off" class="media-icon media-icon--captions-off"></media-icon>
+          <media-icon name="fullscreen-enter" class="media-icon media-icon--fullscreen-enter"></media-icon>
+          <media-icon name="fullscreen-exit" class="media-icon media-icon--fullscreen-exit"></media-icon>
+          <media-icon name="pip-enter" class="media-icon media-icon--pip-enter"></media-icon>
+          <media-icon name="pip-exit" class="media-icon media-icon--pip-exit"></media-icon>
+          <media-status-indicator-value class="media-input-feedback-island__value"></media-status-indicator-value>
+        </div>
+      </media-status-indicator>
+      <media-seek-indicator hidden class="media-input-feedback-bubble">
+        <media-icon name="chevron" class="media-icon media-icon--seek"></media-icon>
+        <media-seek-indicator-value class="media-time"></media-seek-indicator-value>
+      </media-seek-indicator>
+      <media-status-indicator hidden actions="togglePaused" class="media-input-feedback-bubble">
+        <media-icon name="play" class="media-icon media-icon--play"></media-icon>
+        <media-icon name="pause" class="media-icon media-icon--pause"></media-icon>
+      </media-status-indicator>
+    </div>
+
+  </media-container>
+</video-player>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Footer -->
+<footer id="contact" class="border-t border-black/5 dark:border-white/5">
+
+    <!-- Brand -->
+    <div class="text-center pt-12 pb-8 px-8">
+        <p class="font-display text-2xl text-primary-teal mb-1">Adhi Wibowo</p>
+        <p class="text-zinc-400 text-xs tracking-widest uppercase">Digital Creative Designer</p>
+    </div>
+
+    <!-- Grid 2 kolom: maps kiri | kontak+sosial kanan -->
+    <div class="max-w-5xl mx-auto px-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+        <!-- KIRI: Google Maps -->
+        <div class="flex flex-col items-start gap-3">
+            <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Lokasi</span>
+            <div class="w-full rounded-2xl overflow-hidden shadow-md border border-black/5 dark:border-white/5" style="position:relative;padding-bottom:66.67%;height:0;">
+                <iframe
+                    src="https://maps.google.com/maps?width=600&height=400&hl=en&q=Alun-Alun%20Lama%20Ungaran&t=&z=18&ie=UTF8&iwloc=B&output=embed"
+                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    loading="lazy" title="Lokasi BW Indonesia">
+                </iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/KxN98r9bRfMaFP7R9" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-teal hover:underline">
+                <span class="material-symbols-outlined" style="font-size:15px;">location_on</span>
+                Buka di Google Maps
+            </a>
+        </div>
+
+        <!-- KANAN: Kontak + Sosial Media -->
+        <div class="flex flex-col items-center md:items-end gap-8">
+
+            <!-- Kontak -->
+            <div class="flex flex-col items-center md:items-end gap-3 w-full">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Kontak</span>
+                <a href="mailto:kwibowo437@yahoo.com"
+                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-primary-teal transition-colors">
+                    <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
+                    kwibowo437@yahoo.com
+                </a>
+                <a href="https://wa.me/62895610521818?text=Halo,%20saya%20ingin%20berkolaborasi%20dengan%20anda%20tentang..."
+                   target="_blank" rel="noopener noreferrer"
+                   class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-green-600 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    0895610521818
+                </a>
+            </div>
+
+            <!-- Sosial Media -->
+            <div class="flex flex-col items-center md:items-end gap-3 w-full">
+                <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Sosial Media</span>
+                <div class="flex gap-5 text-2xl">
+                    <a href="https://www.instagram.com/bw_matx/" target="_blank" rel="noopener noreferrer"
+                       title="Instagram" class="opacity-60 hover:opacity-100 hover:text-pink-600 transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/kawibowo" target="_blank" rel="noopener noreferrer"
+                       title="LinkedIn" class="opacity-60 hover:opacity-100 hover:text-blue-700 transition-all">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@bw_matx" target="_blank" rel="noopener noreferrer"
+                       title="TikTok" class="opacity-60 hover:opacity-100 hover:text-zinc-800 dark:hover:text-white transition-all">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@bwmatx" target="_blank" rel="noopener noreferrer"
+                       title="Youtube" class="opacity-60 hover:opacity-100 hover:text-red-600 transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-black/5 dark:border-white/5 py-6 text-center">
+        <p class="text-zinc-400 text-xs">© 2025 my Portfolio. Credit by Awan</p>
+    </div>
+
+</footer>
+
+<script>
+// Override navbar hide
+document.querySelector('header nav').style.transform = 'none';
+window.addEventListener('scroll', () => {
+    document.querySelector('header nav').style.transform = 'none';
+});
+
+// Loading Screen with Line Progress Bar
+let progressValue = 0;
+const progressBarFill = document.getElementById('progressBarFill');
+const loadingPercentage = document.getElementById('loadingPercentage');
+const loadingScreen = document.getElementById('loadingScreen');
+const body = document.body;
+
+let isStuckAt69 = false;
+let hasPaused = false;
+
+const loadingInterval = setInterval(function() {
+    if (progressValue >= 69 && progressValue < 70 && !hasPaused) {
+        progressValue = 69;
+        isStuckAt69 = true;
+        hasPaused = true;
+        setTimeout(() => isStuckAt69 = false, 1200);
+    } else if (!isStuckAt69) {
+        progressValue += Math.random() * 15;
+    }
+    
+    if (progressValue >= 100 && !isStuckAt69) {
+        progressValue = 100;
+        clearInterval(loadingInterval);
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            body.classList.remove('loading');
+            setTimeout(() => loadingScreen.style.display = 'none', 1000);
+        }, 300);
+    }
+    
+    progressBarFill.style.width = progressValue + '%';
+    loadingPercentage.textContent = Math.floor(progressValue) + '%';
+}, 100);
+
+// Dark mode handled by themetoggle.js
+
+// Scroll Animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+}, observerOptions);
+
+document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+// Navbar Scroll Effect
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar?.classList.add('scrolled');
+            } else {
+                navbar?.classList.remove('scrolled');
+            }
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+// Mobile Menu Toggle
+const mobileMenuBtn = document.getElementById('mobileMenu');
+const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+
+mobileMenuBtn?.addEventListener('click', function() {
+    mobileMenuDropdown?.classList.toggle('hidden');
+    this.classList.toggle('active');
+    
+    // Ripple effect
+    this.classList.add('ripple');
+    setTimeout(() => this.classList.remove('ripple'), 300);
+});
+
+// Close dropdown saat klik link
+document.querySelectorAll('#mobileMenuDropdown a').forEach(link => {
+    link.addEventListener('click', function() {
+        mobileMenuDropdown?.classList.add('hidden');
+        mobileMenuBtn?.classList.remove('active');
+    });
+});
+
+// Close dropdown saat klik outside
+document.addEventListener('click', function(event) {
+    const isClickInsideDropdown = mobileMenuDropdown?.contains(event.target);
+    const isClickOnMenuBtn = mobileMenuBtn?.contains(event.target);
+    
+    if (!isClickInsideDropdown && !isClickOnMenuBtn && !mobileMenuDropdown?.classList.contains('hidden')) {
+        mobileMenuDropdown?.classList.add('hidden');
+        mobileMenuBtn?.classList.remove('active');
+    }
+});
+</script>
+<script src="js/video.js"></script>
+<script src="./js/themetoggle.js"></script>
+</body>
+</html>

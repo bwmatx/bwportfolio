@@ -56,25 +56,8 @@
     });
 
     // ──────────────────────────────────────────────────────────
-    // 3. DARK MODE TOGGLE — index2
-    //    Material Symbols + localStorage
-    //    ID: darkModeToggle, themeIcon
+    // 3. DARK MODE TOGGLE — now handled by js/themetoggle.js
     // ──────────────────────────────────────────────────────────
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const themeIcon      = document.getElementById('themeIcon');
-    const htmlEl         = document.documentElement;
-
-    if (localStorage.getItem('darkMode') === 'true') {
-        htmlEl.classList.add('dark');
-        themeIcon.textContent = 'light_mode';
-    }
-
-    darkModeToggle.addEventListener('click', function () {
-        htmlEl.classList.toggle('dark');
-        const isDark = htmlEl.classList.contains('dark');
-        localStorage.setItem('darkMode', isDark);
-        themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-    });
 
     // ──────────────────────────────────────────────────────────
     // 4. MOBILE MENU — index2 (dropdown, bukan fullscreen overlay)
@@ -407,45 +390,8 @@
 
     // ──────────────────────────────────────────────────────────
     // 8. SMOOTH SCROLL — index2
-    //    Custom easing (easeInOutCubic) + offset 90px navbar fixed
-    //    Menggantikan default browser anchor jump dengan animasi halus
+    //    Native smooth scroll
     // ──────────────────────────────────────────────────────────
-
-    /**
-     * easeInOutCubic — kurva animasi S yang natural & sangat smooth
-     */
-    function easeInOutCubic(t) {
-        return t < 0.5
-            ? 4 * t * t * t
-            : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
-
-    /**
-     * smoothScrollTo — scroll ke posisi Y dengan animasi frame-by-frame
-     * @param {number} targetY   posisi akhir (px dari atas dokumen)
-     * @param {number} duration  durasi animasi dalam milidetik
-     */
-    function smoothScrollTo(targetY, duration) {
-        const startY    = window.scrollY;
-        const distance  = targetY - startY;
-        let   startTime = null;
-
-        function step(timestamp) {
-            if (!startTime) startTime = timestamp;
-            const elapsed  = timestamp - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const ease     = easeInOutCubic(progress);
-
-            window.scrollTo(0, startY + distance * ease);
-
-            if (progress < 1) requestAnimationFrame(step);
-        }
-
-        requestAnimationFrame(step);
-    }
-
-    // Intercept semua anchor internal (href="#section-id")
-    const NAVBAR_OFFSET = 90; // tinggi navbar fixed
 
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
@@ -457,8 +403,11 @@
 
             e.preventDefault();
 
-            const targetY = target.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET;
-            smoothScrollTo(targetY, 900); // 900ms — smooth tapi tidak lambat
+            // Native smooth scrolling (CSS scroll-margin-top handles the 90px offset)
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
             // Tutup mobile dropdown jika terbuka
             mobileMenuDropdown.classList.add('hidden');
