@@ -432,7 +432,6 @@ header nav a.nav-active::after {
             background: #e9e0d1 !important;
             color: #1a2e26 !important;
             border-color: #e9e0d1 !important;
-            box-shadow: 0 8px 25px rgba(233,224,209,0.15);
         }
 
         /* ── Tool / Software cards ── */
@@ -635,7 +634,6 @@ header nav a.nav-active::after {
     background: #096B5B !important; /* primary-teal */
     color: white !important;
     border-color: #096B5B !important;
-    box-shadow: 0 8px 25px rgba(9, 107, 91, 0.3);
     transform: translateY(-2px);
 }
 
